@@ -1,0 +1,44 @@
+name: CI Backend
+on: [push, pull_request]
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Cache yarn modules
+        uses: c-hive/gha-yarn-cache@v2
+      - name: Install dependencies
+        run: yarn install
+      - name: Run lint command
+        run: yarn lint
+  test:
+    name: Test
+    needs: lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Cache yarn modules
+        uses: c-hive/gha-yarn-cache@v2
+      - name: Install dependencies
+        run: yarn install
+      - name: Run build command
+        run: yarn build
