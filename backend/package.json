@@ -1,8 +1,8 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "Express API",
+  "private": true,
   "author": "Bernd Storath <bernd@kaaaxcreators.de>",
   "license": "MIT",
   "scripts": {
@@ -28,23 +28,5 @@
     "prettier": "^2.5.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
-  },
-  "repository": {
-    "url": "git+https://github.com/<user>/<repo>.git",
-    "type": "git"
-  },
-  "homepage": "https://github.com/<user>/<repo>#readme",
-  "bugs": {
-    "url": "https://github.com/<user>/<repo>/issues"
-  },
-  "funding": {
-    "type": "individual",
-    "url": "https://www.buymeacoffee.com/kaaaxcreators"
-  },
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
   }
 }
