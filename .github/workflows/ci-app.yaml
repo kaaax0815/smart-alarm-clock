@@ -1,12 +1,12 @@
 name: CI App
 on: [push, pull_request]
+defaults:
+  run:
+    working-directory: app
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - name: Checkout
@@ -25,9 +25,6 @@ jobs:
     name: Test
     needs: lint
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - name: Checkout
