@@ -1,3 +1,8 @@
+⚠️ 🚧 WIP 🚧 this Repo is Work in Progress ⚠️
+
+---
+---
+
 # Smart Alarm Clock
 
 ## Uses Raspberry Pi 4 2GB with a 5" LCD Display
@@ -7,12 +12,12 @@ Components:
 - [5" LCD Display](https://www.waveshare.com/wiki/5inch_HDMI_LCD)
 
 Folder Stucture:
-| Folder | Description |
-|--------|-------------|
-| app | React Native App |
-| backend | Express / SocketIO API |
-| frontend | Electron App |
-| scripts | Helper scripts |
+| Folder   | Description            |
+|----------|------------------------|
+| app      | React Native App       |
+| backend  | Express / SocketIO API |
+| frontend | Electron App           |
+| scripts  | Helper scripts         |
 
 ### 📜 License
 
