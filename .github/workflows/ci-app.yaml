@@ -1,5 +1,11 @@
-name: CI App
-on: [push, pull_request]
+name: CI app
+on:
+  push:
+    paths:
+    - 'app/**'
+  pull_request:
+    paths:
+    - 'app/**'
 defaults:
   run:
     working-directory: app
@@ -15,8 +21,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-      - name: Cache yarn modules
-        uses: c-hive/gha-yarn-cache@v2
       - name: Install dependencies
         run: yarn install
       - name: Run lint command
@@ -33,8 +37,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-      - name: Cache yarn modules
-        uses: c-hive/gha-yarn-cache@v2
       - name: Install dependencies
         run: yarn install
       - name: Run build command
