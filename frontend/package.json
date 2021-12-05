@@ -13,7 +13,9 @@
     "test": "react-scripts test",
     "dev": "cross-env BROWSER=none yarn start",
     "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
-    "electron:prod": "yarn build && tsc -p electron && cross-env ELECTRON=production electron .",
+    "electron:prod": "yarn electron:build && yarn electron:start",
+    "electron:build": "yarn build && tsc -p electron",
+    "electron:start": "cross-env ELECTRON=production electron .",
     "eject": "react-scripts eject",
     "lint": "eslint . --ignore-path ./.gitignore",
     "lint:fix": "eslint . --ignore-path ./.gitignore --fix"
@@ -25,9 +27,12 @@
     "@mui/material": "^5.2.2",
     "electron-devtools-installer": "^3.2.0",
     "execa": "^6.0.0",
+    "locale-codes": "^1.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "socket.io-client": "^4.4.0",
+    "timezones-list": "^3.0.1",
     "typescript": "^4.5.2"
   },
   "devDependencies": {

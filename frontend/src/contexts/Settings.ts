@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 import { createContext } from 'react';
 
 const settingsContext = createContext({
   shown: false,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-  setShown: (shown: boolean) => {}
+  setShown: (shown: boolean) => {},
+  locale: 'de-DE',
+  setLocale: (locale: string) => {},
+  timezone: 'Europe/Berlin',
+  setTimezone: (timezone: string) => {}
 });
 
 export default settingsContext;

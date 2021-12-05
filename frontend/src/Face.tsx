@@ -9,15 +9,19 @@ import SettingsContext from './contexts/Settings';
 import Settings from './Settings';
 
 function Face(): JSX.Element {
-  const { shown } = useContext(SettingsContext);
-  if (shown) {
+  const settingsContext = useContext(SettingsContext);
+  if (settingsContext.shown) {
     return <Settings />;
   }
   return (
     <div className="Face">
       <SettingsButton />
-      <Clock className="Clock" locale="de-DE" />
-      <Date className="Date" />
+      <Clock
+        className="Clock"
+        locale={settingsContext.locale}
+        timeZone={settingsContext.timezone}
+      />
+      <Date className="Date" locale={settingsContext.locale} timeZone={settingsContext.timezone} />
     </div>
   );
 }

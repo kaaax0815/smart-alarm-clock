@@ -1,6 +1,4 @@
-import { exec as _exec } from 'child_process';
-import { promisify } from 'util';
+import { execaCommandSync as exec } from 'execa';
 
-const exec = promisify(_exec);
 (window as Window & typeof globalThis & exec).exec = exec;
 export type exec = { exec: typeof exec };
