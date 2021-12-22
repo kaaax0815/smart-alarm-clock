@@ -1,10 +1,9 @@
 import { Router } from 'express';
 
-import testController from './Controllers/test';
-import testMiddleware from './Middlewares/test';
+import settingsController from './Controllers/settings';
 
 const router = Router();
 
-router.get('/', testMiddleware, testController);
+router.get('/settings', settingsController);
 
 export default router;

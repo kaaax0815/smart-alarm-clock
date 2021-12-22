@@ -9,12 +9,18 @@
     "lint": "eslint . --ignore-path ./.gitignore",
     "lint:fix": "eslint . --ignore-path ./.gitignore --fix",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
-    "socket.io": "^4.4.0"
+    "express-winston": "^4.2.0",
+    "helmet": "^4.6.0",
+    "node-json-db": "^1.4.1",
+    "socket.io": "^4.4.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

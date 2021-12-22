@@ -33,10 +33,12 @@ import timeZones from 'timezones-list';
 import { exec as Iexec } from '../electron/preload';
 import SettingsBar from './components/SettingsBar';
 import SettingsContext from './contexts/Settings';
+import { SocketContext } from './contexts/Socket';
 
 export default function Settings(): JSX.Element {
   const exec = (window as Window & typeof globalThis & Iexec).exec;
   const settingsContext = useContext(SettingsContext);
+  const socketContext = useContext(SocketContext);
   // Shutdown Dialog
   const [openShutdown, setOpenShutdown] = useState(false);
   async function shutdownClose() {
@@ -55,6 +57,7 @@ export default function Settings(): JSX.Element {
   function localeClose() {
     setOpenLocale(false);
     settingsContext.setLocale(locale);
+    socketContext.emit('update-value', { type: 'locale', value: locale });
   }
   // Timezone Dialog
   const [openTimezone, setOpenTimezone] = useState(false);
@@ -62,6 +65,7 @@ export default function Settings(): JSX.Element {
   async function timezoneClose() {
     setOpenTimezone(false);
     settingsContext.setTimezone(timezone);
+    socketContext.emit('update-value', { type: 'timezone', value: timezone });
   }
   return (
     <div className="Settings">
