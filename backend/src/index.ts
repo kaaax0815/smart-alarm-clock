@@ -7,6 +7,8 @@ import { Server } from 'socket.io';
 import logger from './logger';
 import Routes from './routes';
 import socket from './socket';
+import jwt from './token';
+export const JWT = new jwt();
 
 config();
 
@@ -24,7 +26,7 @@ app.use(
 
 app.use(logger);
 
-app.use('/', Routes);
+app.use('/api/', Routes);
 
 const server = app.listen(process.env.PORT || 8080, () => {
   console.log('Server is running');

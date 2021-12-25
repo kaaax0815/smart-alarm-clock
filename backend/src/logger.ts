@@ -1,18 +1,8 @@
 import { Router } from 'express';
-import expressWinston from 'express-winston';
-import winston from 'winston';
+import morgan from 'morgan';
 
 const router = Router();
 
-router.use(
-  expressWinston.logger({
-    transports: [new winston.transports.Console()],
-    format: winston.format.combine(winston.format.colorize(), winston.format.json()),
-    meta: true,
-    msg: 'HTTP {{req.method}} {{req.url}}',
-    expressFormat: true,
-    colorize: true
-  })
-);
+router.use(morgan('tiny'));
 
 export default router;

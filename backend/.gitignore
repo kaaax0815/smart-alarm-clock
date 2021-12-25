@@ -119,3 +119,7 @@ dist
 
 # database
 database.json
+
+# keys
+private-key.pem
+public-key.pem

@@ -9,7 +9,7 @@
 
 Components:
 - [Raspberry Pi 4 Model B (2GB)](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
-- [5" LCD Display](https://www.waveshare.com/wiki/5inch_HDMI_LCD)
+- [7" LCD Display](https://www.waveshare.com/wiki/7inch_HDMI_LCD_(B))
 
 Folder Stucture:
 | Folder   | Description            |
