@@ -13,7 +13,7 @@ function App(): JSX.Element {
   const [shown, setShown] = React.useState(false);
   const [locale, setLocale] = React.useState('');
   const [timezone, setTimezone] = React.useState('');
-  fetch(`http://localhost:${process.env.REACT_APP_SOCKETIO_PORT}/settings`)
+  fetch(`http://localhost:${process.env.REACT_APP_SOCKETIO_PORT}/api/settings`)
     .then((response) => response.json())
     .then((settings) => {
       setLocale(settings.locale);
