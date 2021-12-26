@@ -36,7 +36,7 @@ echo "Configure Bash"
 sed -i '6,9 s/^/#/' .bashrc
 
 echo "X11"
-sudo apt-get install -y xorg unclutter screen
+sudo apt-get install -y xorg unclutter screen libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0
 sudo raspi-config nonint do_boot_behaviour B2
 echo "export DISPLAY=:0.0" >> .bashrc
 echo "# Start X11 on login
