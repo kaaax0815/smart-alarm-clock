@@ -31,9 +31,9 @@ import { useContext, useState } from 'react';
 import timeZones from 'timezones-list';
 
 import { exec as Iexec } from '../../electron/preload';
-import SettingsBar from '../components/SettingsBar';
-import SettingsContext from '../contexts/Face/Settings';
 import { SocketContext } from '../contexts/Socket';
+import SettingsBar from './components/SettingsBar';
+import SettingsContext from './contexts/Settings';
 
 export default function Settings(): JSX.Element {
   const exec = (window as Window & typeof globalThis & Iexec).exec;
@@ -202,8 +202,8 @@ export default function Settings(): JSX.Element {
               label="Locale"
               onChange={(ev) => setLocale(ev.target.value as string)}
             >
-              {allLocales.map((aLocale) => (
-                <MenuItem value={aLocale.tag}>
+              {allLocales.map((aLocale, index) => (
+                <MenuItem value={aLocale.tag} key={aLocale.tag + index}>
                   {aLocale.location ? aLocale.name + '/' + aLocale.location : aLocale.name}
                 </MenuItem>
               ))}
@@ -242,8 +242,10 @@ export default function Settings(): JSX.Element {
               label="Timezone"
               onChange={(ev) => setTimezone(ev.target.value as string)}
             >
-              {timeZones.map((timezone) => (
-                <MenuItem value={timezone.tzCode}>{timezone.label}</MenuItem>
+              {timeZones.map((timezone, index) => (
+                <MenuItem value={timezone.tzCode} key={timezone.tzCode + index}>
+                  {timezone.label}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
