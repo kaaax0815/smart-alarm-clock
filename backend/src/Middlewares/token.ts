@@ -3,7 +3,11 @@ import { NextFunction, Request, Response } from 'express';
 import { JWT } from '../index';
 
 function token(req: Request, res: Response, next: NextFunction) {
-  if (req.socket.remoteAddress === '127.0.0.1' || req.socket.remoteAddress === '::1') {
+  if (
+    req.socket.remoteAddress === '127.0.0.1' ||
+    req.socket.remoteAddress === '::1' ||
+    req.socket.remoteAddress === '::ffff:127.0.0.1'
+  ) {
     return next();
   }
   const token = req.header('Authorization');

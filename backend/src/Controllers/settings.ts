@@ -5,7 +5,8 @@ import db from '../database';
 function settings(_req: Request, res: Response) {
   const locale = db.getData('/locale');
   const timezone = db.getData('/timezone');
-  res.json({ locale, timezone });
+  const location = db.getData('/location');
+  res.json({ locale, timezone, location });
 }
 
 export default settings;

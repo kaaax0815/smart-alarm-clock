@@ -31,9 +31,9 @@ import { useContext, useState } from 'react';
 import timeZones from 'timezones-list';
 
 import { exec as Iexec } from '../../electron/preload';
+import SettingsContext from '../contexts/Settings';
 import { SocketContext } from '../contexts/Socket';
 import SettingsBar from './components/SettingsBar';
-import SettingsContext from './contexts/Settings';
 
 export default function Settings(): JSX.Element {
   const exec = (window as Window & typeof globalThis & Iexec).exec;

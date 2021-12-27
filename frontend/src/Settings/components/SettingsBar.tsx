@@ -15,7 +15,7 @@ export default function SettingsBar(): JSX.Element {
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={() => {
-              navigate('/face');
+              navigate('/');
             }}
           >
             <BackIcon />

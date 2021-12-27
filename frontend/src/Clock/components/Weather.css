@@ -1,0 +1,9 @@
+.__Weather {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.__Weather > div {
+  flex: 0 0 auto;
+}
