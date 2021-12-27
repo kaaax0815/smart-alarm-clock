@@ -2,8 +2,6 @@
 import { createContext } from 'react';
 
 const settingsContext = createContext({
-  shown: false,
-  setShown: (shown: boolean) => {},
   locale: 'de-DE',
   setLocale: (locale: string) => {},
   timezone: 'Europe/Berlin',

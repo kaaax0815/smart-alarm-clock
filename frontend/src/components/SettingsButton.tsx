@@ -2,20 +2,19 @@ import './SettingsButton.css';
 
 import { Close, Settings } from '@mui/icons-material';
 import { Fab } from '@mui/material';
-import { useContext } from 'react';
-
-import SettingsContext from '../contexts/Settings';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function SettingsButton(): JSX.Element {
-  const { shown, setShown } = useContext(SettingsContext);
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Fab
       className="__SettingsButton-Fab"
       onClick={() => {
-        setShown(!shown);
+        navigate('/face/settings');
       }}
     >
-      {shown ? <Close /> : <Settings />}
+      {location.pathname === '/face/settings' ? <Close /> : <Settings />}
     </Fab>
   );
 }

@@ -19,6 +19,6 @@ export default function Clock({
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [clock]);
+  });
   return <p ref={clock} className={className}></p>;
 }

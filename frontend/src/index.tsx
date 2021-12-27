@@ -1,38 +1,21 @@
 import './index.css';
 
-import { CircularProgress } from '@mui/material';
-import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import SettingsContext from './contexts/Settings';
 import { socket, SocketContext } from './contexts/Socket';
-import Face from './Face';
+import FaceRouter from './Face/Router';
 
 function App(): JSX.Element {
-  const [loading, setLoading] = React.useState(true);
-  const [shown, setShown] = React.useState(false);
-  const [locale, setLocale] = React.useState('');
-  const [timezone, setTimezone] = React.useState('');
-  fetch(`http://localhost:${process.env.REACT_APP_SOCKETIO_PORT}/api/settings`)
-    .then((response) => response.json())
-    .then((settings) => {
-      setLocale(settings.locale);
-      setTimezone(settings.timezone);
-      setLoading(false);
-    });
-  if (loading) {
-    return <CircularProgress color="inherit" />;
-  }
   return (
-    <React.StrictMode>
+    <BrowserRouter>
       <SocketContext.Provider value={socket}>
-        <SettingsContext.Provider
-          value={{ shown, setShown, locale, setLocale, timezone, setTimezone }}
-        >
-          <Face />
-        </SettingsContext.Provider>
+        <Routes>
+          <Route path="/face" element={<FaceRouter run={'face'} />} />
+          <Route path="/face/settings" element={<FaceRouter run={'settings'} />} />
+        </Routes>
       </SocketContext.Provider>
-    </React.StrictMode>
+    </BrowserRouter>
   );
 }
 

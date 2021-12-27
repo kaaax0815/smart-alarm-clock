@@ -1,4 +1,4 @@
-import { execaCommandSync as exec } from 'execa';
+import { execaCommandSync as execa } from 'execa';
 
-(window as Window & typeof globalThis & exec).exec = exec;
-export type exec = { exec: typeof exec };
+(window as Window & typeof globalThis & exec).exec = execa;
+export type exec = { exec: typeof execa };

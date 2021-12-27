@@ -1,11 +1,9 @@
 import { ArrowBack as BackIcon } from '@mui/icons-material';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
-import { useContext } from 'react';
-
-import SettingsContext from '../contexts/Settings';
+import { useNavigate } from 'react-router-dom';
 
 export default function SettingsBar(): JSX.Element {
-  const { setShown } = useContext(SettingsContext);
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -17,7 +15,7 @@ export default function SettingsBar(): JSX.Element {
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={() => {
-              setShown(false);
+              navigate('/face');
             }}
           >
             <BackIcon />
