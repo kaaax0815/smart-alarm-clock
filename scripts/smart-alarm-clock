@@ -1,0 +1,50 @@
+#/bin/bash
+
+build() {
+  echo "Building"
+  cd /home/pi/smart-alarm-clock
+  cd frontend
+  yarn electron:build
+  cd ../backend
+  yarn build
+}
+
+install() {
+  echo "Installing"
+  cd /home/pi/smart-alarm-clock
+  cd frontend
+  yarn install
+  cd ../backend
+  yarn install
+}
+
+isInstalled() {
+  cd /home/pi/smart-alarm-clock
+  if [ -d "frontend/node_modules" ] && [ -d "backend/node_modules" ]; then
+    echo "Already installed"
+    return 0
+  else
+    echo "Not installed"
+    install
+  fi
+}
+
+isBuilt() {
+  cd /home/pi/smart-alarm-clock
+  if [ -d "frontend/build" ] && [ -d "backend/dist" ]; then
+    echo "Already built"
+    return 0
+  else
+    echo "Not built"
+    build
+  fi
+}
+
+isInstalled
+isBuilt
+echo "Starting"
+cd /home/pi/smart-alarm-clock/backend
+yarn start &
+cd ../frontend
+yarn electron:start &
+wait $(jobs -rp)

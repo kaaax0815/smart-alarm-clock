@@ -35,7 +35,7 @@ EOF
 echo "Configure Bash"
 sed -i '6,9 s/^/#/' .bashrc
 
-echo "X11"
+echo "Setup and Configure X11"
 sudo apt-get install -y xorg unclutter screen libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0
 sudo raspi-config nonint do_boot_behaviour B2
 echo "export DISPLAY=:0.0" >> .bashrc
@@ -45,6 +45,12 @@ if [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then
 fi
 export DISPLAY=:0.0" >> .profile
 sudo sed -i 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
+echo "# Disable screen blanking and power saving
+xset s off
+xset s 0 0
+xset -dpms
+# start smart-alarm-clock
+/home/pi/smart-alarm-clock/smart-alarm-clock &" >> .xsessionrc
 
 echo "Done. Rebooting..."
 sudo reboot
