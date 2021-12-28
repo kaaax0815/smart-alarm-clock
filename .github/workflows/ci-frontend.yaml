@@ -57,4 +57,4 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Run build command
-        run: yarn build
+        run: yarn electron:build
