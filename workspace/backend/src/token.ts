@@ -6,7 +6,7 @@ class JWT {
   constructor() {
     this.privateKey = readFileSync('./private-key.pem').toString('utf-8');
   }
-  public sign(payload: any): string {
+  public sign(payload: Record<string, unknown>): string {
     return jwt.sign(payload, this.privateKey, {
       algorithm: 'RS256',
       audience: 'de:kaaaxcreators:smartalarmclock:devices',
