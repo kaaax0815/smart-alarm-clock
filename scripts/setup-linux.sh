@@ -41,7 +41,7 @@ sudo apt-get install -y xorg unclutter screen libnss3 libatk1.0-0 libatk-bridge2
 sudo raspi-config nonint do_boot_behaviour B2
 echo "# Start X11 on login
 if [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then
-  exec startx
+  exec startx -- -nocursor
 fi
 export DISPLAY=:0.0" >> .profile
 echo "export DISPLAY=:0.0" | sudo tee -a /root/.profile
