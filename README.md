@@ -5,19 +5,18 @@
 
 # Smart Alarm Clock
 
-## Uses Raspberry Pi 4 2GB with a 5" LCD Display
+## Uses Raspberry Pi 4 2GB with a 7" LCD Display
 
 Components:
 - [Raspberry Pi 4 Model B (2GB)](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
 - [7" LCD Display](https://www.waveshare.com/wiki/7inch_HDMI_LCD_(B))
 
 Folder Stucture:
-| Folder   | Description            |
-|----------|------------------------|
-| app      | React Native App       |
-| backend  | Express / SocketIO API |
-| frontend | Electron App           |
-| scripts  | Helper scripts         |
+| Folder    | Description        |
+|-----------|--------------------|
+| app       | React Native App   |
+| workspace | Raspberry Pi Files |
+| scripts   | Helper scripts     |
 
 ### 📜 License
 

@@ -12,9 +12,6 @@ build() {
 install() {
   echo "Installing"
   cd /home/pi/smart-alarm-clock
-  cd frontend
-  yarn install
-  cd ../backend
   yarn install
 }
 
