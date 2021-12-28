@@ -2,13 +2,13 @@ name: CI frontend
 on:
   push:
     paths:
-    - 'frontend/**'
+    - 'workspace/frontend/**'
   pull_request:
     paths:
-    - 'frontend/**'
+    - 'workspace/frontend/**'
 defaults:
   run:
-    working-directory: frontend
+    working-directory: workspace/frontend
 jobs:
   lint:
     name: Lint

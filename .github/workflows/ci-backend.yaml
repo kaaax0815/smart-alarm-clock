@@ -2,13 +2,13 @@ name: CI backend
 on:
   push:
     paths:
-    - 'backend/**'
+    - 'workspace/backend/**'
   pull_request:
     paths:
-    - 'backend/**'
+    - 'workspace/backend/**'
 defaults:
   run:
-    working-directory: backend
+    working-directory: workspace/backend
 jobs:
   lint:
     name: Lint
