@@ -42,6 +42,5 @@ isBuilt
 echo "Starting"
 cd /home/pi/smart-alarm-clock/backend
 yarn start &
-cd ../frontend
-yarn electron:start &
+sudo -i -- sh -c 'cd /home/pi/smart-alarm-clock/frontend && yarn electron:start --no-sandbox'
 wait $(jobs -rp)
