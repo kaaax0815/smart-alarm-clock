@@ -6,15 +6,17 @@ const settingsContext = createContext({
   setLocale: (locale: string) => {},
   timezone: '',
   setTimezone: (timezone: string) => {},
-  location: { city: '', state: '', countryCode: '' },
+  location: { city: '', countryCode: '', lat: 0, lon: 0 },
   setLocation: ({
     city,
-    state,
-    countryCode
+    countryCode,
+    lat,
+    lon
   }: {
     city: string;
-    state: string;
     countryCode: string;
+    lat: number;
+    lon: number;
   }) => {}
 });
 

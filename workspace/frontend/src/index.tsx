@@ -10,12 +10,18 @@ import SettingsContext from './contexts/Settings';
 import { socket, SocketContext } from './contexts/Socket';
 import Settings from './Settings/Settings';
 import Start from './Start';
+import Weather from './Weather';
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [locale, setLocale] = useState('');
   const [timezone, setTimezone] = useState('');
-  const [location, setLocation] = useState({ city: '', state: '', countryCode: '' });
+  const [location, setLocation] = useState({
+    city: '',
+    countryCode: '',
+    lat: 0,
+    lon: 0
+  });
   useEffect(() => {
     fetch(`http://localhost:${process.env.REACT_APP_SOCKETIO_PORT}/api/settings`)
       .then((response) => response.json())
@@ -39,6 +45,7 @@ function App(): JSX.Element {
             <Route path="/" element={<Start />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/clock" element={<ClockFace />} />
+            <Route path="/weather" element={<Weather />} />
           </Routes>
         </SettingsContext.Provider>
       </SocketContext.Provider>

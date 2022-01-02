@@ -11,6 +11,9 @@ function Start(): JSX.Element {
         <li>
           <Link to="/clock">Clock</Link>
         </li>
+        <li>
+          <Link to="/weather">Weather</Link>
+        </li>
       </ul>
     </div>
   );

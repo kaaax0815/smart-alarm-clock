@@ -2,10 +2,10 @@ import './Face.css';
 
 import { useContext } from 'react';
 
+import StartButton from '../components/StartButton';
 import SettingsContext from '../contexts/Settings';
 import Clock from './components/Clock';
 import Date from './components/Date';
-import StartButton from './components/StartButton';
 import Weather from './components/Weather';
 function Face(): JSX.Element {
   const settingsContext = useContext(SettingsContext);

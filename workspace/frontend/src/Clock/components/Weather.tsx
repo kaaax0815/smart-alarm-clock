@@ -1,197 +1,47 @@
 import './Weather.css';
+import 'moment/min/locales';
 
 import { CircularProgress } from '@mui/material';
-import OpenWeatherMap from 'openweathermap-ts';
+import moment from 'moment';
+import { DailyDataBlock, OpenWeatherMap, Units } from 'owm-onecall-api';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import SettingsContext from '../../contexts/Settings';
 
 function Weather(): JSX.Element {
+  const navigate = useNavigate();
   const settingsContext = useContext(SettingsContext);
   const [loading, setLoading] = useState(true);
-  const [weather, setWeather] = useState<ThreeHours | Record<string, never>>({});
+  const [weather, setWeather] = useState<DailyDataBlock[] | Record<string, never>>({});
   useEffect(() => {
-    const openWeather = new OpenWeatherMap({
-      apiKey: process.env.REACT_APP_OPEN_WEATHER_API_KEY!
+    const openWeather = new OpenWeatherMap(process.env.REACT_APP_OPEN_WEATHER_API_KEY!, {
+      units: Units.Metric
     });
-    openWeather.setUnits('metric');
-    openWeather
-      .getThreeHourForecastByCityName({
-        cityName: settingsContext.location.city,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        countryCode: settingsContext.location.countryCode as any,
-        state: settingsContext.location.state
-      })
-      .then((data) => {
-        setWeather(data);
-        setLoading(false);
-      });
+    openWeather.week(settingsContext.location.lat, settingsContext.location.lon).then((data) => {
+      setWeather(data.daily);
+      setLoading(false);
+    });
   }, [settingsContext.location]);
+  moment.locale(settingsContext.locale);
   if (loading) {
     return <CircularProgress color="inherit" />;
   }
   return (
-    <div className="__Weather">
-      {weather.list.map((item) => (
-        <div>{item.main.temp} °C</div>
+    <div className="__Weather" onClick={() => navigate('/weather')}>
+      {weather.map((item) => (
+        <div className="__Weather-Card" key={item.dt}>
+          <div className="__Weather-Card-Date">{moment.unix(item.dt).calendar().split(' ')[0]}</div>
+          <img
+            className="__Weather-Card-Icon"
+            src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
+            alt={item.weather[0].description}
+          />
+          <div className="__Weather-Card-Temp">{Math.round(item.temp.day)}°C</div>
+        </div>
       ))}
     </div>
   );
 }
 
 export default Weather;
-
-export interface ThreeHours {
-  cod: string;
-  message: number;
-  cnt: number;
-  list: (
-    | {
-        dt: number;
-        main: {
-          temp: number;
-          temp_min: number;
-          temp_max: number;
-          pressure: number;
-          sea_level: number;
-          grnd_level: number;
-          humidity: number;
-          temp_kf: number;
-        };
-        weather: {
-          id: number;
-          main: string;
-          description: string;
-          icon: string;
-        }[];
-        clouds: {
-          all: number;
-        };
-        wind: {
-          speed: number;
-          deg: number;
-        };
-        sys: {
-          pod: string;
-        };
-        dt_txt: string;
-        rain?: undefined;
-        snow?: undefined;
-      }
-    | {
-        dt: number;
-        main: {
-          temp: number;
-          temp_min: number;
-          temp_max: number;
-          pressure: number;
-          sea_level: number;
-          grnd_level: number;
-          humidity: number;
-          temp_kf: number;
-        };
-        weather: {
-          id: number;
-          main: string;
-          description: string;
-          icon: string;
-        }[];
-        clouds: {
-          all: number;
-        };
-        wind: {
-          speed: number;
-          deg: number;
-        };
-        rain: {
-          '3h': number;
-        };
-        sys: {
-          pod: string;
-        };
-        dt_txt: string;
-        snow?: undefined;
-      }
-    | {
-        dt: number;
-        main: {
-          temp: number;
-          temp_min: number;
-          temp_max: number;
-          pressure: number;
-          sea_level: number;
-          grnd_level: number;
-          humidity: number;
-          temp_kf: number;
-        };
-        weather: {
-          id: number;
-          main: string;
-          description: string;
-          icon: string;
-        }[];
-        clouds: {
-          all: number;
-        };
-        wind: {
-          speed: number;
-          deg: number;
-        };
-        rain: {
-          '3h': number;
-        };
-        snow: {
-          '3h': number;
-        };
-        sys: {
-          pod: string;
-        };
-        dt_txt: string;
-      }
-    | {
-        dt: number;
-        main: {
-          temp: number;
-          temp_min: number;
-          temp_max: number;
-          pressure: number;
-          sea_level: number;
-          grnd_level: number;
-          humidity: number;
-          temp_kf: number;
-        };
-        weather: {
-          id: number;
-          main: string;
-          description: string;
-          icon: string;
-        }[];
-        clouds: {
-          all: number;
-        };
-        wind: {
-          speed: number;
-          deg: number;
-        };
-        rain: {
-          '3h'?: undefined;
-        };
-        snow: {
-          '3h'?: undefined;
-        };
-        sys: {
-          pod: string;
-        };
-        dt_txt: string;
-      }
-  )[];
-  city: {
-    id: number;
-    name: string;
-    coord: {
-      lat: number;
-      lon: number;
-    };
-    country: string;
-  };
-}

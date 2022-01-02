@@ -14,8 +14,9 @@ function initializeDatabase() {
   db.push('/locale', 'de-DE');
   db.push('/timezone', 'Europe/Berlin');
   db.push('/location/city', 'Berlin');
-  db.push('/location/state', 'Berlin');
   db.push('/location/countryCode', 'DE');
+  db.push('/location/lat', 52.5170365);
+  db.push('/location/lon', 13.3888599);
   db.push('/initialized', true);
 }
 

@@ -4,6 +4,10 @@
   overflow-x: auto;
 }
 
-.__Weather > div {
-  flex: 0 0 auto;
+.__Weather-Card {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem 0; 
 }
