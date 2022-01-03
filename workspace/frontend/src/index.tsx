@@ -1,37 +1,20 @@
 import './index.css';
 
 import { CircularProgress } from '@mui/material';
-import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import ClockFace from './Clock/Face';
 import SettingsContext from './contexts/Settings';
 import { socket, SocketContext } from './contexts/Socket';
+import useSettings from './hooks/useSettings';
 import Settings from './Settings/Settings';
 import Start from './Start';
 import Weather from './Weather';
 
 function App(): JSX.Element {
-  const [loading, setLoading] = useState(true);
-  const [locale, setLocale] = useState('');
-  const [timezone, setTimezone] = useState('');
-  const [location, setLocation] = useState({
-    city: '',
-    countryCode: '',
-    lat: 0,
-    lon: 0
-  });
-  useEffect(() => {
-    fetch(`http://localhost:${process.env.REACT_APP_SOCKETIO_PORT}/api/settings`)
-      .then((response) => response.json())
-      .then((settings) => {
-        setLocale(settings.locale);
-        setTimezone(settings.timezone);
-        setLocation(settings.location);
-        setLoading(false);
-      });
-  }, []);
+  const { loading, locale, setLocale, timezone, setTimezone, location, setLocation } =
+    useSettings();
   if (loading) {
     return <CircularProgress color="inherit" />;
   }
