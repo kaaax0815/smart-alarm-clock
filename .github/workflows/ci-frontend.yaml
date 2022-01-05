@@ -58,8 +58,6 @@ jobs:
         run: yarn install
       - name: Build Backend
         run: yarn build
-        defaults:
-          run:
-            working-directory: workspace/backend
+        working-directory: workspace/backend
       - name: Run build command
         run: yarn electron:build
