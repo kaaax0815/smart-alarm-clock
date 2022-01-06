@@ -10,27 +10,10 @@ defaults:
   run:
     working-directory: workspace/frontend
 jobs:
-  install:
-      name: install
-      runs-on: ubuntu-latest
-      if: "!contains(github.event.head_commit.message, '[skip ci]')"
-      defaults:
-        run:
-          working-directory: workspace
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-        - name: Setup Node.js
-          uses: actions/setup-node@v2
-          with:
-              node-version: 16
-        - name: Install Dependencies
-          run: yarn install
   lint:
     name: Lint
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    needs: install
     steps:
       - name: Checkout
         uses: actions/checkout@v2
