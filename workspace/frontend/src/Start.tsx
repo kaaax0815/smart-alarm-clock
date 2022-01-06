@@ -1,20 +1,23 @@
+import './Start.css';
+
 import { Link } from 'react-router-dom';
 
 import SettingsButton from './components/SettingsButton';
 
 function Start(): JSX.Element {
   return (
-    <div>
+    <div className="Start">
       <SettingsButton />
-      <h1>List of available Programs</h1>
-      <ul>
-        <li>
-          <Link to="/clock">Clock</Link>
-        </li>
-        <li>
-          <Link to="/weather">Weather</Link>
-        </li>
-      </ul>
+      <h1>Available Programs</h1>
+      <div className="grid">
+        <Link to="/clock" className="card">
+          <h2>⏰ Clock</h2>
+        </Link>
+
+        <Link to="/weather" className="card">
+          <h2>☁️ Weather</h2>
+        </Link>
+      </div>
     </div>
   );
 }
