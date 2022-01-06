@@ -1,4 +1,4 @@
-import { Language as TimezoneIcon } from '@mui/icons-material';
+import { LocationOn as LocationIcon } from '@mui/icons-material';
 import {
   Button,
   Dialog,
@@ -13,7 +13,8 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Select
+  Select,
+  TextField
 } from '@mui/material';
 import { countries } from 'country-code-lookup';
 import { useContext, useState } from 'react';
@@ -29,6 +30,7 @@ function Location() {
   const [countryCode, setCountryCode] = useState(settingsContext.location.countryCode);
   async function locationClose() {
     setOpenLocation(false);
+    // not settingsContext with lat and lon could be bad
     socketContext.emit('update-value', { type: 'location', value: { city, countryCode } });
   }
   return {
@@ -58,6 +60,12 @@ function Location() {
                 </MenuItem>
               ))}
             </Select>
+            <TextField
+              id="select-location-city"
+              label="City"
+              value={city}
+              onChange={(ev) => setCity(ev.target.value as string)}
+            />
           </FormControl>
         </DialogContent>
         <DialogActions>
@@ -83,7 +91,7 @@ function Location() {
       >
         <ListItemButton>
           <ListItemIcon>
-            <TimezoneIcon />
+            <LocationIcon />
           </ListItemIcon>
           <ListItemText primary="Location" />
         </ListItemButton>

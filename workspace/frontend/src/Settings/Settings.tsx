@@ -14,6 +14,7 @@ export default function Settings(): JSX.Element {
   const timezone = Timezone();
   const shutdown = Shutdown();
   const reboot = Reboot();
+  const location = Location();
   return (
     <div className="Settings">
       <SettingsBar />
@@ -23,6 +24,7 @@ export default function Settings(): JSX.Element {
           <List>
             {locale.item}
             {timezone.item}
+            {location.item}
           </List>
         </nav>
         <Divider />
@@ -38,6 +40,7 @@ export default function Settings(): JSX.Element {
       {timezone.dialog}
       {shutdown.dialog}
       {reboot.dialog}
+      {location.dialog}
     </div>
   );
 }
