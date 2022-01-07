@@ -6,9 +6,9 @@ function settings(req: Request, res: Response) {
   const locale = req.body.locale;
   const timezone = req.body.timezone;
   const location = req.body.location;
-  db.push('/locale', locale);
-  db.push('/timezone', timezone);
-  db.push('/location', location);
+  locale && db.push('/locale', locale);
+  timezone && db.push('/timezone', timezone);
+  location && db.push('/location', location);
   res.json({ status: 'success' });
 }
 
