@@ -19,17 +19,16 @@ import { all as allLocales } from 'locale-codes';
 import { useContext, useState } from 'react';
 
 import SettingsContext from '../../contexts/Settings';
-import { SocketContext } from '../../contexts/Socket';
+import { postAPI, PostEndpoints } from '../../utils/api';
 
 function Locale() {
   const settingsContext = useContext(SettingsContext);
-  const socketContext = useContext(SocketContext);
   const [openLocale, setOpenLocale] = useState(false);
   const [locale, setLocale] = useState(settingsContext.locale);
   function localeClose() {
     setOpenLocale(false);
     settingsContext.setLocale(locale);
-    socketContext.emit('update-value', { type: 'locale', value: locale });
+    postAPI(PostEndpoints.Settings, { locale });
   }
   return {
     dialog: (

@@ -1,6 +1,8 @@
 import { defaultDatabase } from 'backend';
 import { useEffect, useState } from 'react';
 
+import { getAPI, GetEndpoints } from '../utils/api';
+
 function useSettings() {
   const [loading, setLoading] = useState(true);
   const [locale, setLocale] = useState(defaultDatabase.locale);
@@ -9,16 +11,10 @@ function useSettings() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(
-        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/settings`
-      );
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const data = await response.json();
-      setLocale(data.locale);
-      setTimezone(data.timezone);
-      setLocation(data.location);
+      const response = await getAPI(GetEndpoints.Settings);
+      setLocale(response.locale);
+      setTimezone(response.timezone);
+      setLocation(response.location);
       setLoading(false);
     })();
   }, []);

@@ -19,17 +19,17 @@ import { useContext, useState } from 'react';
 import timeZones from 'timezones-list';
 
 import SettingsContext from '../../contexts/Settings';
-import { SocketContext } from '../../contexts/Socket';
+import { postAPI, PostEndpoints } from '../../utils/api';
 
 function Timezone() {
   const settingsContext = useContext(SettingsContext);
-  const socketContext = useContext(SocketContext);
+
   const [openTimezone, setOpenTimezone] = useState(false);
   const [timezone, setTimezone] = useState(settingsContext.timezone);
   async function timezoneClose() {
     setOpenTimezone(false);
     settingsContext.setTimezone(timezone);
-    socketContext.emit('update-value', { type: 'timezone', value: timezone });
+    postAPI(PostEndpoints.Settings, { timezone });
   }
   return {
     dialog: (

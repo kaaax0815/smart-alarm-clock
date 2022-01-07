@@ -20,18 +20,18 @@ import { countries } from 'country-code-lookup';
 import { useContext, useState } from 'react';
 
 import SettingsContext from '../../contexts/Settings';
-import { SocketContext } from '../../contexts/Socket';
+import { postAPI, PostEndpoints } from '../../utils/api';
 
 function Location() {
   const settingsContext = useContext(SettingsContext);
-  const socketContext = useContext(SocketContext);
   const [openLocation, setOpenLocation] = useState(false);
   const [city, setCity] = useState(settingsContext.location.city);
   const [countryCode, setCountryCode] = useState(settingsContext.location.countryCode);
   async function locationClose() {
-    setOpenLocation(false);
-    // not settingsContext with lat and lon could be bad
-    socketContext.emit('update-value', { type: 'location', value: { city, countryCode } });
+    postAPI(PostEndpoints.Settings, { location: { city, countryCode } }).then((result) => {
+      settingsContext.setLocation(result.db.location);
+      setOpenLocation(false);
+    });
   }
   return {
     dialog: (
@@ -44,6 +44,7 @@ function Location() {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Current Country Code is: {settingsContext.location.countryCode}
+            Current City is: {settingsContext.location.city}
           </DialogContentText>
           <FormControl fullWidth>
             <InputLabel id="select-location-cc-label">Country Code</InputLabel>
