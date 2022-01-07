@@ -1,10 +1,12 @@
 import { Router } from 'express';
 
-import settingsController from './Controllers/settings';
+import getSettingsController from './Controllers/getSettings';
+import postSettingsController from './Controllers/postSettings';
 import JWTMiddleware from './Middlewares/token';
 
 const router = Router();
 
-router.get('/settings', JWTMiddleware, settingsController);
+router.get('/settings', JWTMiddleware, getSettingsController);
+router.post('/settings', JWTMiddleware, postSettingsController);
 
 export default router;
