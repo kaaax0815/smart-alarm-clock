@@ -26,6 +26,8 @@ app.use(
 
 app.use(logger);
 
+app.use(Express.json());
+
 app.use('/api/', Routes);
 
 const server = app.listen(process.env.PORT || 8080, () => {
