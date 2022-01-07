@@ -10,7 +10,7 @@ function useSettings() {
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        `http://localhost:${process.env.REACT_APP_SOCKETIO_PORT}/api/settings`
+        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/settings`
       );
       if (!response.ok) {
         throw new Error(response.statusText);
