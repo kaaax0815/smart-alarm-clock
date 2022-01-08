@@ -14,6 +14,9 @@ async function postSettings(
   timezone && db.push('/timezone', timezone);
   if (location) {
     const [lat, lon] = await getGeoLocation(location.city, location.countryCode);
+    if (lat === undefined || lon === undefined) {
+      return;
+    }
     location.lat = lat;
     location.lon = lon;
     db.push('/location', location);
@@ -32,6 +35,7 @@ async function getGeoLocation(
     { responseType: 'json' }
   );
   if (locationResponse.data.length === 0) {
+    console.error(`Could not find location: ${city}, ${countryCode}`);
     return [undefined, undefined];
   }
   return [locationResponse.data[0].lat, locationResponse.data[0].lon];
