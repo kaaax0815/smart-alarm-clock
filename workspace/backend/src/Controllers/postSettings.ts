@@ -14,12 +14,11 @@ async function postSettings(
   timezone && db.push('/timezone', timezone);
   if (location) {
     const [lat, lon] = await getGeoLocation(location.city, location.countryCode);
-    if (lat === undefined || lon === undefined) {
-      return;
+    if (lat !== undefined && lon !== undefined) {
+      location.lat = lat;
+      location.lon = lon;
+      db.push('/location', location);
     }
-    location.lat = lat;
-    location.lon = lon;
-    db.push('/location', location);
   }
   res.json({ status: 'success', db: db.getData('/') });
 }
