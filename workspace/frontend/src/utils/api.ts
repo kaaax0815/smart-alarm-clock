@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export async function getAPI(
-  endpoint: GetEndpoints,
-  params?: Record<string, string>
-): Promise<Record<string, any>> {
+import * as Models from 'backend';
+
+export async function getAPI<T extends GetEndpoints>(
+  endpoint: T,
+  params?: GetParams<T>
+): Promise<GetResponse<T>> {
   const url = buildURL(endpoint);
   const query = params ? `?${encodeQueryData(params)}` : '';
   const response = await fetch(url + query, {
@@ -14,10 +16,10 @@ export async function getAPI(
   return response.json();
 }
 
-export async function postAPI(
-  endpoint: PostEndpoints,
-  body: Record<string, any>
-): Promise<Record<string, any>> {
+export async function postAPI<T extends PostEndpoints>(
+  endpoint: T,
+  body: PostRequest<T>
+): Promise<PostResponse<T>> {
   const url = buildURL(endpoint);
   const response = await fetch(url, {
     method: 'POST',
@@ -32,8 +34,13 @@ export async function postAPI(
   return response.json();
 }
 
-export function buildURL(path: string): string {
-  return `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api${path}`;
+/**
+ * Builds the URL for the given endpoint.
+ * @param endpoint The endpoint to build the URL for.
+ * @returns The URL for the given endpoint.
+ */
+export function buildURL(endpoint: string): string {
+  return `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api${endpoint}`;
 }
 
 export enum GetEndpoints {
@@ -44,10 +51,35 @@ export enum PostEndpoints {
   Settings = '/settings'
 }
 
-function encodeQueryData(data: Record<string, string>): string {
+/**
+ * Encodes en object into a query string
+ * @param data Params for the request
+ * @returns The query string
+ * @example
+ * { test: 'test', test2: 'lül' } => 'test=test&test2=l%C3%BCl'
+ */
+function encodeQueryData<T extends GetEndpoints>(data: GetParams<T>): string {
   const ret = [];
   for (const d in data) {
     ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
   }
   return ret.join('&');
 }
+
+// Helper Types to correctly type the API
+
+export type PostRequest<Endpoint extends PostEndpoints> = Endpoint extends PostEndpoints.Settings
+  ? Models.postSettingsRequest
+  : never;
+
+export type PostResponse<Endpoint extends PostEndpoints> = Endpoint extends PostEndpoints.Settings
+  ? Models.postSettingsResponse
+  : never;
+
+export type GetParams<Endpoint extends GetEndpoints> = Endpoint extends 's'
+  ? Record<string, string>
+  : never;
+
+export type GetResponse<Endpoint extends GetEndpoints> = Endpoint extends GetEndpoints.Settings
+  ? Models.getSettingsResponse
+  : never;
