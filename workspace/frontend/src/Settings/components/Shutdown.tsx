@@ -13,14 +13,11 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-import { exec as Iexec } from '../../../electron/preload';
-
 function Shutdown() {
-  const exec = (window as Window & typeof globalThis & Iexec).exec;
   const [openShutdown, setOpenShutdown] = useState(false);
   async function shutdownClose() {
     setOpenShutdown(false);
-    exec('sudo poweroff');
+    window.exec('sudo poweroff');
   }
   return {
     dialog: (

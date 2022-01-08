@@ -13,14 +13,11 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-import { exec as Iexec } from '../../../electron/preload';
-
 function Reboot() {
-  const exec = (window as Window & typeof globalThis & Iexec).exec;
   const [openReboot, setOpenReboot] = useState(false);
   async function rebootClose() {
     setOpenReboot(false);
-    exec('sudo reboot');
+    window.exec('sudo reboot');
   }
   return {
     dialog: (
