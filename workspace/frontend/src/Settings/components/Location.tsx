@@ -29,8 +29,8 @@ function Location() {
   const [countryCode, setCountryCode] = useState(settingsContext.location.countryCode);
   async function locationClose() {
     postAPI(PostEndpoints.Settings, { location: { city, countryCode } }).then((result) => {
-      settingsContext.setLocation(result.db.location);
       setOpenLocation(false);
+      settingsContext.setLocation(result.db.location);
     });
   }
   return {
@@ -44,6 +44,7 @@ function Location() {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Current Country Code is: {settingsContext.location.countryCode}
+            <br />
             Current City is: {settingsContext.location.city}
           </DialogContentText>
           <FormControl fullWidth>
