@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { Response } from 'express';
 
 import db from '../database';
-import { IPostSettings, Request } from '../Models';
+import { postSettingsRequest, postSettingsResponse, Request, Response } from '../Models';
 
-async function postSettings(req: Request<IPostSettings>, res: Response) {
+async function postSettings(
+  req: Request<postSettingsRequest>,
+  res: Response<postSettingsResponse>
+) {
   const locale = req.body.locale;
   const timezone = req.body.timezone;
   const location = req.body.location;

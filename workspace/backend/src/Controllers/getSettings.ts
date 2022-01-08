@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
-
 import db from '../database';
+import { getSettingsResponse, Request, Response } from '../Models';
 
-function getSettings(_req: Request, res: Response) {
+function getSettings(req: Request, res: Response<getSettingsResponse>) {
   const locale = db.getData('/locale');
   const timezone = db.getData('/timezone');
   const location = db.getData('/location');

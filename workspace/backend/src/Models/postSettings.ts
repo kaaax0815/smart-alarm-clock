@@ -1,4 +1,6 @@
-export interface IPostSettings {
+import { database } from './index';
+
+export interface postSettingsRequest {
   locale?: string;
   timezone?: string;
   location?: {
@@ -7,4 +9,9 @@ export interface IPostSettings {
     lat?: number;
     lon?: number;
   };
+}
+
+export interface postSettingsResponse {
+  status: string;
+  db: database;
 }

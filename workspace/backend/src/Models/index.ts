@@ -1,3 +1,4 @@
 export * from './postSettings';
+export * from './getSettings';
 export * from './database';
-export * from './Request';
+export * from './Express';
