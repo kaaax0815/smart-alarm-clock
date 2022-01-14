@@ -14,7 +14,7 @@ function Weather(): JSX.Element {
   const { data: weatherData, status: weatherStatus } = useWeather();
   const navigate = useNavigate();
   const settingsContext = useContext(SettingsContext);
-  const [weather, setWeather] = useState<DailyDataBlock[] | Record<string, never>>({});
+  const [weather, setWeather] = useState<DailyDataBlock[] | Record<string, never>[]>([]);
   useEffect(() => {
     if (weatherStatus === 'success') {
       setWeather(weatherData!.daily!);
