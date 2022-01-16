@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Models from 'backend';
+export * as Models from 'backend';
 
 export async function getAPI<T extends GetEndpoints>(
   endpoint: T,

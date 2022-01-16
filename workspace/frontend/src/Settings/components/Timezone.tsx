@@ -15,21 +15,25 @@ import {
   MenuItem,
   Select
 } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import timeZones from 'timezones-list';
 
-import SettingsContext from '../../contexts/Settings';
-import { postAPI, PostEndpoints } from '../../utils/api';
+import { useSettings, useUpdateSettings } from '../../hooks/useSettings';
 
 function Timezone() {
-  const settingsContext = useContext(SettingsContext);
-
+  const { data: settingsData, status: settingsStatus } = useSettings();
+  const updateSettings = useUpdateSettings();
   const [openTimezone, setOpenTimezone] = useState(false);
-  const [timezone, setTimezone] = useState(settingsContext.timezone);
+  const [timezone, setTimezone] = useState(settingsData?.timezone);
+  if (settingsStatus !== 'success') {
+    return {
+      dialog: null,
+      item: null
+    };
+  }
   async function timezoneClose() {
     setOpenTimezone(false);
-    settingsContext.setTimezone(timezone);
-    postAPI(PostEndpoints.Settings, { timezone });
+    updateSettings.mutate({ timezone });
   }
   return {
     dialog: (
@@ -41,7 +45,7 @@ function Timezone() {
         <DialogTitle id="alert-dialog-title">Timezone</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Current Timezone is: {settingsContext.timezone}
+            Current Timezone is: {settingsData!.timezone}
           </DialogContentText>
           <FormControl fullWidth>
             <InputLabel id="select-timezone-label">Timezone</InputLabel>

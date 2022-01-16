@@ -17,21 +17,24 @@ import {
   TextField
 } from '@mui/material';
 import { countries } from 'country-code-lookup';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
-import SettingsContext from '../../contexts/Settings';
-import { postAPI, PostEndpoints } from '../../utils/api';
+import { useSettings, useUpdateSettings } from '../../hooks/useSettings';
 
 function Location() {
-  const settingsContext = useContext(SettingsContext);
+  const updateSettings = useUpdateSettings();
+  const { data: settingsData, status: settingsStatus } = useSettings();
   const [openLocation, setOpenLocation] = useState(false);
-  const [city, setCity] = useState(settingsContext.location.city);
-  const [countryCode, setCountryCode] = useState(settingsContext.location.countryCode);
+  const [city, setCity] = useState(settingsData?.location.city);
+  const [countryCode, setCountryCode] = useState(settingsData?.location.countryCode);
+  if (settingsStatus !== 'success') {
+    return {
+      dialog: null,
+      item: null
+    };
+  }
   async function locationClose() {
-    postAPI(PostEndpoints.Settings, { location: { city, countryCode } }).then((result) => {
-      setOpenLocation(false);
-      settingsContext.setLocation(result.db.location);
-    });
+    updateSettings.mutate({ location: { city: city || '', countryCode: countryCode || '' } });
   }
   return {
     dialog: (
@@ -43,9 +46,9 @@ function Location() {
         <DialogTitle id="alert-dialog-title">Location</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Current Country Code is: {settingsContext.location.countryCode}
+            Current Country Code is: {settingsData!.location.countryCode}
             <br />
-            Current City is: {settingsContext.location.city}
+            Current City is: {settingsData!.location.city}
           </DialogContentText>
           <FormControl fullWidth>
             <InputLabel id="select-location-cc-label">Country Code</InputLabel>

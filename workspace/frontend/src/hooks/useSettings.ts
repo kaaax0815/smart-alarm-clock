@@ -1,24 +1,34 @@
-import { defaultDatabase } from 'backend';
-import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { getAPI, GetEndpoints } from '../utils/api';
+import { getAPI, GetEndpoints, Models, postAPI, PostEndpoints } from '../utils/api';
 
-function useSettings() {
-  const [loading, setLoading] = useState(true);
-  const [locale, setLocale] = useState(defaultDatabase.locale);
-  const [timezone, setTimezone] = useState(defaultDatabase.timezone);
-  const [location, setLocation] = useState(defaultDatabase.location);
+export function useSettings() {
+  return useQuery('settings', () => getAPI(GetEndpoints.Settings), { staleTime: 1000 * 60 * 5 });
+}
 
-  useEffect(() => {
-    (async () => {
-      const response = await getAPI(GetEndpoints.Settings);
-      setLocale(response.locale);
-      setTimezone(response.timezone);
-      setLocation(response.location);
-      setLoading(false);
-    })();
-  }, []);
-  return { loading, locale, setLocale, timezone, setTimezone, location, setLocation };
+const settings = Models.defaultDatabase;
+
+export function useUpdateSettings() {
+  const queryClient = useQueryClient();
+  return useMutation<Models.postSettingsResponse, unknown, Models.postSettingsRequest, unknown>(
+    (settings) => postAPI(PostEndpoints.Settings, settings),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries('settings');
+        const prev = queryClient.getQueryData('settings');
+        queryClient.setQueryData<Models.postSettingsRequest>('settings', (old) => {
+          return { ...old, ...settings };
+        });
+        return prev;
+      },
+      onError: (_error, _vars, prev) => {
+        queryClient.setQueryData('settings', prev);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries('settings');
+      }
+    }
+  );
 }
 
 export default useSettings;

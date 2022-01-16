@@ -3,30 +3,22 @@ import 'moment/min/locales';
 
 import { CircularProgress } from '@mui/material';
 import moment from 'moment';
-import { DailyDataBlock } from 'owm-onecall-api';
-import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import SettingsContext from '../../contexts/Settings';
+import useSettings from '../../hooks/useSettings';
 import useWeather from '../../hooks/useWeather';
 
 function Weather(): JSX.Element {
   const { data: weatherData, status: weatherStatus } = useWeather();
   const navigate = useNavigate();
-  const settingsContext = useContext(SettingsContext);
-  const [weather, setWeather] = useState<DailyDataBlock[] | Record<string, never>[]>([]);
-  useEffect(() => {
-    if (weatherStatus === 'success') {
-      setWeather(weatherData!.daily!);
-    }
-  }, [weatherData, weatherStatus]);
-  moment.locale(settingsContext.locale);
-  if (weatherStatus !== 'success') {
+  const { data: settingsData, status: settingsStatus } = useSettings();
+  moment.locale(settingsData!.locale);
+  if (weatherStatus !== 'success' || settingsStatus !== 'success') {
     return <CircularProgress color="inherit" />;
   }
   return (
     <div className="__Weather" onClick={() => navigate('/weather')}>
-      {weather.map((item) => (
+      {weatherData!.daily!.map((item) => (
         <div className="__Weather-Card" key={item.dt}>
           <div className="__Weather-Card-Date">{moment.unix(item.dt).calendar().split(' ')[0]}</div>
           <img

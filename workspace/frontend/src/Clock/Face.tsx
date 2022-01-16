@@ -1,23 +1,22 @@
 import './Face.css';
 
-import { useContext } from 'react';
+import { CircularProgress } from '@mui/material';
 
 import StartButton from '../components/StartButton';
-import SettingsContext from '../contexts/Settings';
+import useSettings from '../hooks/useSettings';
 import Clock from './components/Clock';
 import Date from './components/Date';
 import Weather from './components/Weather';
 function Face(): JSX.Element {
-  const settingsContext = useContext(SettingsContext);
+  const { data: settingsData, status: settingsStatus } = useSettings();
+  if (settingsStatus !== 'success') {
+    return <CircularProgress />;
+  }
   return (
     <div className="Face">
       <StartButton />
-      <Clock
-        className="Clock"
-        locale={settingsContext.locale}
-        timeZone={settingsContext.timezone}
-      />
-      <Date className="Date" locale={settingsContext.locale} timeZone={settingsContext.timezone} />
+      <Clock className="Clock" locale={settingsData!.locale} timeZone={settingsData!.timezone} />
+      <Date className="Date" locale={settingsData!.locale} timeZone={settingsData!.timezone} />
       <Weather />
     </div>
   );
