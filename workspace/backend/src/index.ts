@@ -6,7 +6,7 @@ import { Server } from 'socket.io';
 
 import logger from './logger';
 import Routes from './routes';
-import socket from './socket';
+import SocketIO from './socket';
 import jwt from './token';
 export const JWT = new jwt();
 
@@ -34,7 +34,7 @@ const server = app.listen(process.env.PORT || 8080, () => {
   console.log('Server is running');
 });
 
-socket(
+export const socketIO = new SocketIO(
   new Server(server, {
     cors: {
       origin

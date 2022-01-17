@@ -1,23 +1,37 @@
 import { JsonDB } from 'node-json-db';
 
-const db = new JsonDB('database', true);
-initializeDatabase();
+import { socketIO } from './index';
 
-function initializeDatabase() {
-  try {
-    if (db.getData('/initialized') === true) {
-      return;
-    }
-  } catch {
-    console.log('Database not initialized');
+class CustomDB extends JsonDB {
+  constructor(path: string) {
+    super(path, true);
+    this.initializeDatabase();
   }
-  db.push('/locale', 'de-DE');
-  db.push('/timezone', 'Europe/Berlin');
-  db.push('/location/city', 'Berlin');
-  db.push('/location/countryCode', 'DE');
-  db.push('/location/lat', 52.5170365);
-  db.push('/location/lon', 13.3888599);
-  db.push('/initialized', true);
+  initializeDatabase() {
+    try {
+      if (this.getData('/initialized') === true) {
+        return;
+      }
+    } catch {
+      console.log('Database not initialized');
+    }
+    this.push('/locale', 'de-DE');
+    this.push('/timezone', 'Europe/Berlin');
+    this.push('/location/city', 'Berlin');
+    this.push('/location/countryCode', 'DE');
+    this.push('/location/lat', 52.5170365);
+    this.push('/location/lon', 13.3888599);
+    this.push('/initialized', true);
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  push(dataPath: string, data: any, override?: boolean): void {
+    super.push(dataPath, data, override);
+    socketIO.sockets.forEach((socket) => {
+      socket.emit('databaseChange');
+    });
+  }
 }
+
+const db = new CustomDB('database');
 
 export default db;

@@ -3,12 +3,19 @@ import { ExtendedError } from 'socket.io/dist/namespace';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 
 import socketAuth from './Middlewares/socketAuth';
-
-function socketIO(io: Server) {
-  io.use(socketAuth);
-  io.on('connection', () => {
-    // do nothing for now
-  });
+class SocketIO {
+  server: Server;
+  sockets: Socket[] = [];
+  constructor(server: Server) {
+    this.server = server;
+    this.server.use(socketAuth);
+    this.server.on('connection', (socket: Socket) => {
+      this.sockets.push(socket);
+      socket.on('disconnect', () => {
+        this.sockets = this.sockets.filter((s) => s.id !== socket.id);
+      });
+    });
+  }
 }
 
 export type MiddlewareSocket =
@@ -17,4 +24,4 @@ export type MiddlewareSocket =
 
 export type MiddlewareNext = (err?: ExtendedError | undefined) => void;
 
-export default socketIO;
+export default SocketIO;
