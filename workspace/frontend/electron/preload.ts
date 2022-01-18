@@ -1,7 +1,7 @@
-import { commandSync as execa } from 'execa';
+import { execSync } from 'child_process';
 
-window.exec = execa;
-export type exec = typeof execa;
+window.exec = execSync;
+export type exec = typeof execSync;
 
 declare global {
   interface Window {
