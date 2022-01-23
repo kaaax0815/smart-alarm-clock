@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useSettings from '../../hooks/useSettings';
 import useWeather from '../../hooks/useWeather';
+import WeatherIcon from '../../icons/weather';
 
 function Weather(): JSX.Element {
   const { data: weatherData, status: weatherStatus } = useWeather();
@@ -21,10 +22,10 @@ function Weather(): JSX.Element {
       {weatherData!.daily!.map((item) => (
         <div className="__Weather-Card" key={item.dt}>
           <div className="__Weather-Card-Date">{moment.unix(item.dt).calendar().split(' ')[0]}</div>
-          <img
+          <WeatherIcon
+            id={item.weather[0].icon}
             className="__Weather-Card-Icon"
-            src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
-            alt={item.weather[0].description}
+            title={item.weather[0].description}
           />
           <div className="__Weather-Card-Temp">{Math.round(item.temp.day)}°C</div>
         </div>

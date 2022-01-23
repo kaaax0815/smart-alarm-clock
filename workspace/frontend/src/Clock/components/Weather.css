@@ -11,3 +11,8 @@
   align-items: center;
   padding: 0 1rem 0; 
 }
+
+.__Weather-Card-Icon {
+  width: 3rem;
+  height: 3rem;
+}
