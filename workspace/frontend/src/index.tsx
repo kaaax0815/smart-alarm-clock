@@ -1,5 +1,6 @@
 import './index.css';
 
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -15,20 +16,22 @@ import Weather from './Weather';
 function App(): JSX.Element {
   const queryClient = new QueryClient();
   return (
-    <HashRouter basename="/">
-      <QueryClientProvider client={queryClient}>
-        <SocketContext.Provider value={socket}>
-          <HandleSocket />
-          <Routes>
-            <Route path="/" element={<Start />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/clock" element={<ClockFace />} />
-            <Route path="/weather" element={<Weather />} />
-          </Routes>
-        </SocketContext.Provider>
-        <ReactQueryDevtools initialIsOpen={true} />
-      </QueryClientProvider>
-    </HashRouter>
+    <StrictMode>
+      <HashRouter basename="/">
+        <QueryClientProvider client={queryClient}>
+          <SocketContext.Provider value={socket}>
+            <HandleSocket />
+            <Routes>
+              <Route path="/" element={<Start />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/clock" element={<ClockFace />} />
+              <Route path="/weather" element={<Weather />} />
+            </Routes>
+          </SocketContext.Provider>
+          <ReactQueryDevtools initialIsOpen={true} />
+        </QueryClientProvider>
+      </HashRouter>
+    </StrictMode>
   );
 }
 
