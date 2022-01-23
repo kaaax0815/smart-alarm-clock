@@ -2,7 +2,6 @@ import { JWT } from '../index';
 import { MiddlewareNext, MiddlewareSocket } from '../socket';
 
 function socketAuth(socket: MiddlewareSocket, next: MiddlewareNext) {
-  console.log(socket.handshake.address);
   if (
     socket.handshake.address === '127.0.0.1' ||
     socket.handshake.address === '::1' ||
