@@ -27,16 +27,22 @@ async function getGeoLocation(
   city: string,
   countryCode: string
 ): Promise<[lat: number | undefined, lon: number | undefined]> {
-  const locationResponse = await axios.get(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
-      city
-    )},${encodeURIComponent(countryCode)}&limit=1&appid=${process.env.OPEN_WEATHER_API_KEY}`,
-    { responseType: 'json' }
-  );
-  if (locationResponse.data.length === 0) {
-    console.error(`Could not find location: ${city}, ${countryCode}`);
+  try {
+    const locationResponse = await axios.get(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+        city
+      )},${encodeURIComponent(countryCode)}&limit=1&appid=${process.env.OPEN_WEATHER_API_KEY}`,
+      { responseType: 'json' }
+    );
+    if (locationResponse.data.length === 0) {
+      console.error(`Could not find location: ${city}, ${countryCode}`);
+      return [undefined, undefined];
+    }
+    return [locationResponse.data[0].lat, locationResponse.data[0].lon];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    console.error(e.message || e);
     return [undefined, undefined];
   }
-  return [locationResponse.data[0].lat, locationResponse.data[0].lon];
 }
 export default postSettings;
