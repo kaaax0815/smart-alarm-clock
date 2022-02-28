@@ -1,6 +1,6 @@
 import './StartButton.css';
 
-import { Home } from '@mui/icons-material';
+import { Apps } from '@mui/icons-material';
 import { Fab } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ function StartButton(): JSX.Element {
         navigate('/');
       }}
     >
-      <Home />
+      <Apps />
     </Fab>
   );
 }
