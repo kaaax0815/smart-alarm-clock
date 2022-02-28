@@ -41,7 +41,7 @@ export async function postAPI<T extends PostEndpoints>(
  * @returns The URL for the given endpoint.
  */
 export function buildURL(endpoint: string): string {
-  return `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api${endpoint}`;
+  return `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api${endpoint}`;
 }
 
 export enum GetEndpoints {

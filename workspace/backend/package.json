@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Express API",
   "private": true,
-  "main": "dist/Models/index.js",
+  "main": "src/Models/index.js",
   "types": "dist/Models/index.d.ts",
   "author": "Bernd Storath <bernd@kaaaxcreators.de>",
   "license": "MIT",

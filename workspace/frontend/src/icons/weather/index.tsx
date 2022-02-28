@@ -1,5 +1,4 @@
-import { WeatherIcon } from 'owm-onecall-api';
-
+import { WeatherIcon } from '../../utils/onecall/types';
 // Based on <https://openweathermap.org/weather-conditions#Icon-list>
 import { ReactComponent as ScatteredCloudsDay } from './SVG/cloudy.svg';
 import { ReactComponent as ScatteredCloudsNight } from './SVG/cloudy.svg';
