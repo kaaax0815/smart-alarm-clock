@@ -1,5 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
+
+import { init as initOnboard } from './onboard';
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -26,6 +28,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+  initOnboard(ipcMain);
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
