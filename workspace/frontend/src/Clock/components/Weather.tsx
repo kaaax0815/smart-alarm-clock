@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useWeather from '../../hooks/useWeather';
 import WeatherIcon from '../../icons/weather';
-import { relativeFromUnix } from '../../utils/date';
+import { relativeDaysFromUnix } from '../../utils/date';
 
 function Weather(): JSX.Element {
   const { data: weatherData, status: weatherStatus } = useWeather();
@@ -17,7 +17,7 @@ function Weather(): JSX.Element {
     <div className="__Weather" onClick={() => navigate('/weather')}>
       {weatherData!.daily!.map((item) => (
         <div className="__Weather-Card" key={item.dt}>
-          <div className="__Weather-Card-Date">{relativeFromUnix(item.dt)}</div>
+          <div className="__Weather-Card-Date">{relativeDaysFromUnix(item.dt)}</div>
           <WeatherIcon
             id={item.weather[0].icon}
             className="__Weather-Card-Icon"

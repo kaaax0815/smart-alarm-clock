@@ -1,0 +1,12 @@
+.Hourly {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+.Hourly > div {
+  border: 1px solid #000;
+  padding: 1rem;
+}

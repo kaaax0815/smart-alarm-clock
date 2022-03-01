@@ -1,12 +1,17 @@
 import './index.css';
 
 import StartButton from '../components/StartButton';
+import Header from './Header';
+import Hero from './Hero';
+import Hourly from './Hourly';
 
 function Weather(): JSX.Element {
   return (
     <div className="Weather">
       <StartButton />
-      <h1>Weather</h1>
+      <Header />
+      <Hero />
+      <Hourly />
     </div>
   );
 }
