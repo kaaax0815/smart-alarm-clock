@@ -7,10 +7,8 @@ async function postSettings(
   req: Request<postSettingsRequest>,
   res: Response<postSettingsResponse>
 ) {
-  const locale = req.body.locale;
   const timezone = req.body.timezone;
   const location = req.body.location;
-  locale && db.push('/locale', locale);
   timezone && db.push('/timezone', timezone);
   if (location) {
     const [lat, lon] = await getGeoLocation(location.city, location.countryCode);

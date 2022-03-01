@@ -1,7 +1,6 @@
 import { database } from './index';
 
 export interface postSettingsRequest {
-  locale?: string;
   timezone?: string;
   location?: {
     city: string;

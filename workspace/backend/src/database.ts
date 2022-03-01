@@ -15,7 +15,6 @@ class CustomDB extends JsonDB {
     } catch {
       console.log('Database not initialized');
     }
-    this.push('/locale', 'de-DE');
     this.push('/timezone', 'Europe/Berlin');
     this.push('/location/city', 'Berlin');
     this.push('/location/countryCode', 'DE');

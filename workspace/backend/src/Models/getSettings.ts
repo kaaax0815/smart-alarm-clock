@@ -1,5 +1,4 @@
 export type getSettingsResponse = {
-  locale: string;
   timezone: string;
   location: {
     city: string;
