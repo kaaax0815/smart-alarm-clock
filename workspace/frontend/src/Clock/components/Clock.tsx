@@ -2,15 +2,13 @@ import React, { useEffect } from 'react';
 
 export default function Clock({
   className,
-  locale,
   timeZone
 }: {
   className: string;
-  locale?: string;
   timeZone?: string;
 }): JSX.Element {
   const clock = React.useRef<HTMLParagraphElement>(null);
-  const fToRun = () => new window.Date().toLocaleTimeString(locale, { timeZone });
+  const fToRun = () => new window.Date().toLocaleTimeString('de', { timeZone });
   useEffect(() => {
     if (clock.current !== null) {
       clock.current.innerHTML = fToRun();

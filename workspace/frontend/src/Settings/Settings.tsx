@@ -2,7 +2,6 @@ import './Settings.css';
 
 import { Box, Divider, List, ListSubheader } from '@mui/material';
 
-import Locale from './components/Locale';
 import Location from './components/Location';
 import Reboot from './components/Reboot';
 import SettingsBar from './components/SettingsBar';
@@ -10,7 +9,6 @@ import Shutdown from './components/Shutdown';
 import Timezone from './components/Timezone';
 
 export default function Settings(): JSX.Element {
-  const locale = Locale();
   const timezone = Timezone();
   const shutdown = Shutdown();
   const reboot = Reboot();
@@ -22,7 +20,6 @@ export default function Settings(): JSX.Element {
         <ListSubheader disableSticky>Geographic</ListSubheader>
         <nav aria-label="geographic settings">
           <List>
-            {locale.item}
             {timezone.item}
             {location.item}
           </List>
@@ -36,7 +33,6 @@ export default function Settings(): JSX.Element {
           </List>
         </nav>
       </Box>
-      {locale.dialog}
       {timezone.dialog}
       {shutdown.dialog}
       {reboot.dialog}

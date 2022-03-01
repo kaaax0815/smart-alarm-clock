@@ -15,8 +15,8 @@ function Face(): JSX.Element {
   return (
     <div className="Face">
       <StartButton />
-      <Clock className="Clock" locale={settingsData!.locale} timeZone={settingsData!.timezone} />
-      <Date className="Date" locale={settingsData!.locale} timeZone={settingsData!.timezone} />
+      <Clock className="Clock" timeZone={settingsData!.timezone} />
+      <Date className="Date" timeZone={settingsData!.timezone} />
       <Weather />
     </div>
   );
