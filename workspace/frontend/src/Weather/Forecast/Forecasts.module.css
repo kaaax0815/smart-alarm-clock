@@ -1,0 +1,8 @@
+.Forecasts {
+  display: flex;
+  flex-direction: row;
+}
+
+.Forecasts > div[data-selected="true"] {
+  border: 1px solid #000;
+}
