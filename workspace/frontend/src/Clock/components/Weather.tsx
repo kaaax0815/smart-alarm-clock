@@ -1,11 +1,10 @@
-import './Weather.css';
-
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import useWeather from '../../hooks/useWeather';
 import WeatherIcon from '../../icons/weather';
 import { relativeDaysFromUnix } from '../../utils/date';
+import styles from './Weather.module.css';
 
 function Weather(): JSX.Element {
   const { data: weatherData, status: weatherStatus } = useWeather();
@@ -14,13 +13,13 @@ function Weather(): JSX.Element {
     return <CircularProgress color="inherit" />;
   }
   return (
-    <div className="__Weather" onClick={() => navigate('/weather')}>
+    <div className={styles.Weather} onClick={() => navigate('/weather')}>
       {weatherData!.daily!.map((item) => (
-        <div className="__Weather-Card" key={item.dt}>
+        <div className={styles.WeatherCard} key={item.dt}>
           <div className="__Weather-Card-Date">{relativeDaysFromUnix(item.dt)}</div>
           <WeatherIcon
             id={item.weather[0].icon}
-            className="__Weather-Card-Icon"
+            className={styles.WeatherCardIcon}
             title={item.weather[0].description}
           />
           <div className="__Weather-Card-Temp">{Math.round(item.temp.day)}°C</div>

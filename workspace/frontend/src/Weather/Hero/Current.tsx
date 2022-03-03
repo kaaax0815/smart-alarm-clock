@@ -1,9 +1,8 @@
-import './Current.css';
-
 import { Grid } from '@mui/material';
 
 import useWeather from '../../hooks/useWeather';
 import WeatherIcon from '../../icons/weather';
+import styles from './Current.module.css';
 
 export default function Current() {
   const { data: weatherData, status: weatherStatus } = useWeather();
@@ -14,7 +13,7 @@ export default function Current() {
     <Grid item xs={6}>
       <Grid container alignItems="center">
         <Grid item xs={6}>
-          <WeatherIcon id={weatherData!.current.weather[0].icon} className="WeatherIcon" />
+          <WeatherIcon id={weatherData!.current.weather[0].icon} className={styles.WeatherIcon} />
         </Grid>
         <Grid item xs={6}>
           <Grid direction="column" container justifyContent="space-evenly" alignItems="flex-start">

@@ -1,10 +1,10 @@
-.__Weather {
+.Weather {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
 }
 
-.__Weather-Card {
+.WeatherCard {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@
   padding: 0 1rem 0; 
 }
 
-.__Weather-Card-Icon {
+.WeatherCardIcon {
   width: 3rem;
   height: 3rem;
 }

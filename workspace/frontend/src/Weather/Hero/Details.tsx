@@ -1,11 +1,13 @@
 import { Grid } from '@mui/material';
 
+import useSettings from '../../hooks/useSettings';
 import useWeather from '../../hooks/useWeather';
 import { formatFromUnix } from '../../utils/date';
 
 export default function Details() {
   const { data: weatherData, status: weatherStatus } = useWeather();
-  if (weatherStatus !== 'success') {
+  const { data: settingsData, status: settingsStatus } = useSettings();
+  if (weatherStatus !== 'success' || settingsStatus !== 'success') {
     return <div>Loading...</div>;
   }
   return (
@@ -24,7 +26,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {weatherData!.current.wind_speed * 3.6}km/h
+              {(weatherData!.current.wind_speed * 3.6).toFixed(1)}km/h
             </Grid>
             <Grid item xs={6}>
               Wind
@@ -34,7 +36,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {formatFromUnix(weatherData!.daily[0].sunrise, 'HH:mm')}
+              {formatFromUnix(weatherData!.current.sunrise, settingsData!.timezone, 'HH:mm')}
             </Grid>
             <Grid item xs={6}>
               Sunrise
@@ -64,7 +66,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {formatFromUnix(weatherData!.daily[0].sunset, 'HH:mm')}
+              {formatFromUnix(weatherData!.current.sunset, settingsData!.timezone, 'HH:mm')}
             </Grid>
             <Grid item xs={6}>
               Sunset

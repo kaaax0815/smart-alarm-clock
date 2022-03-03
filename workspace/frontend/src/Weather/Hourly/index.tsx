@@ -1,19 +1,20 @@
-import './index.css';
-
+import useSettings from '../../hooks/useSettings';
 import useWeather from '../../hooks/useWeather';
 import WeatherIcon from '../../icons/weather';
-import { relativeHoursFromUnix } from '../../utils/date';
+import { formatFromUnix } from '../../utils/date';
+import styles from './index.module.css';
 
 export default function Hourly() {
   const { data: weatherData, status: weatherStatus } = useWeather();
-  if (weatherStatus !== 'success') {
+  const { data: settingsData, status: settingsStatus } = useSettings();
+  if (weatherStatus !== 'success' || settingsStatus !== 'success') {
     return <div>Loading...</div>;
   }
   return (
-    <div className="Hourly">
+    <div className={styles.Hourly}>
       {weatherData!.hourly.slice(1, 25).map((hour) => (
         <div key={hour.dt}>
-          {relativeHoursFromUnix(hour.dt)}
+          {formatFromUnix(hour.dt, settingsData!.timezone, 'HH:mm')}
           <br />
           {hour.temp}°C
           <br />

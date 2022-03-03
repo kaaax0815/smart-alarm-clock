@@ -1,14 +1,11 @@
-import { format, formatRelative, fromUnixTime } from 'date-fns';
+import { formatRelative, fromUnixTime } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { formatInTimeZone } from 'date-fns-tz';
 
 export function relativeDaysFromUnix(unix: number): string {
-  return formatRelative(fromUnixTime(unix), new Date(), { locale: de });
+  return formatRelative(fromUnixTime(unix), new Date(), { locale: de }).split(' ')[0];
 }
 
-export function relativeHoursFromUnix(unix: number): string {
-  return formatRelative(fromUnixTime(unix), new Date(), { locale: de }).split(' ')[2];
-}
-
-export function formatFromUnix(unix: number, _format: string): string {
-  return format(fromUnixTime(unix), _format, { locale: de });
+export function formatFromUnix(unix: number, timeZone: string, _format: string): string {
+  return formatInTimeZone(fromUnixTime(unix), timeZone, _format, { locale: de });
 }

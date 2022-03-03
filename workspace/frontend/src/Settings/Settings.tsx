@@ -1,5 +1,3 @@
-import './Settings.css';
-
 import { Box, Divider, List, ListSubheader } from '@mui/material';
 
 import Location from './components/Location';
@@ -14,7 +12,7 @@ export default function Settings(): JSX.Element {
   const reboot = Reboot();
   const location = Location();
   return (
-    <div className="Settings">
+    <div>
       <SettingsBar />
       <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
         <ListSubheader disableSticky>Geographic</ListSubheader>

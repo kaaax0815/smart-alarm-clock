@@ -1,9 +1,8 @@
-import './Header.css';
-
 import { getSettingsResponse } from 'backend';
 import { useEffect, useRef } from 'react';
 
 import useSettings from '../hooks/useSettings';
+import styles from './Header.module.css';
 
 function useDate(settingsData?: getSettingsResponse) {
   const dateRef = useRef<HTMLHeadingElement>(null);
@@ -30,7 +29,7 @@ export default function Header() {
     return <div>Loading...</div>;
   }
   return (
-    <div className="Header">
+    <div className={styles.Header}>
       <h1>{settingsData!.location.city}</h1>
       <h2 ref={dateRef}></h2>
     </div>
