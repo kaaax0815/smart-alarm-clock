@@ -1,7 +1,0 @@
-Special Thanks to worldturtlemedia
-Typings pulled from <https://github.com/worldturtlemedia/openweathermap-onecall/tree/master/src/types/response>
-
-CHANGE: Removed Minutely
-LICENSE: MIT
-USER: https://github.com/worldturtlemedia
-REPO: https://github.com/worldturtlemedia/openweathermap-onecall
