@@ -1,21 +1,18 @@
-import { Exclude, OpenWeatherMap, Units } from 'owm-onecall-api';
 import { useQuery } from 'react-query';
 
+import onecall from '../utils/onecall';
 import useSettings from './useSettings';
-
-const openWeather = new OpenWeatherMap(import.meta.env.VITE_OPEN_WEATHER_API_KEY, {
-  units: Units.Metric
-});
 
 function useWeather() {
   const { data: settingsData } = useSettings();
   return useQuery(
     'weather',
     () =>
-      openWeather
-        .builder(settingsData!.location.lat, settingsData!.location.lon)
-        .exclude(Exclude.Minutely)
-        .execute(),
+      onecall(
+        settingsData!.location.lat,
+        settingsData!.location.lon,
+        import.meta.env.VITE_OPEN_WEATHER_API_KEY
+      ),
     {
       enabled: !!settingsData,
       staleTime: Infinity,
