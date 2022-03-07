@@ -2668,10 +2668,10 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-owm-onecall-api@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/owm-onecall-api/-/owm-onecall-api-1.2.3.tgz#3fd88187279b02a2d3a387379089059f9ecd29c5"
-  integrity sha512-/VrlEAkVhPjnUdW8FR9/iio/awsXyOYjnFyNfMoDbdZBxw/3pSf7rwIY+YabZ2jziCxhaNzwWwzvulxzzburfA==
+owm-onecall-api@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/owm-onecall-api/-/owm-onecall-api-1.2.4.tgz#3b335c80a85304a4b1602cf961bd1d565c2b1997"
+  integrity sha512-8m1aijapEilz2B9G85SlU3UzGZ3tcdgf3nGryd3beuuH4bAmHT8j8ZRVXM+1zMkpHl940OfeeC3AVE/s+ZrHSw==
   dependencies:
     axios "^0.26.0"
     date-fns "^2.16.0"
