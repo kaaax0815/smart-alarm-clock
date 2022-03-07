@@ -13,15 +13,15 @@ export default function Current() {
     <Grid item xs={6}>
       <Grid container alignItems="center">
         <Grid item xs={6}>
-          <WeatherIcon id={weatherData!.current.weather[0].icon} className={styles.WeatherIcon} />
+          <WeatherIcon id={weatherData!.current!.weather[0].icon} className={styles.WeatherIcon} />
         </Grid>
         <Grid item xs={6}>
           <Grid direction="column" container justifyContent="space-evenly" alignItems="flex-start">
             <Grid item xs={6}>
-              {weatherData!.current.temp}°C
+              {weatherData!.current!.temp}°C
             </Grid>
             <Grid item xs={6}>
-              {weatherData!.current.weather[0].description}
+              {weatherData!.current!.weather[0].description}
             </Grid>
           </Grid>
         </Grid>

@@ -16,7 +16,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {weatherData!.daily[0].temp.max}°C
+              {weatherData!.daily![0].temp.max}°C
             </Grid>
             <Grid item xs={6}>
               High
@@ -26,7 +26,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {(weatherData!.current.wind_speed * 3.6).toFixed(1)}km/h
+              {(weatherData!.current!.wind_speed * 3.6).toFixed(1)}km/h
             </Grid>
             <Grid item xs={6}>
               Wind
@@ -36,7 +36,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {formatFromUnix(weatherData!.current.sunrise, settingsData!.timezone, 'HH:mm')}
+              {formatFromUnix(weatherData!.current!.sunrise, settingsData!.timezone, 'HH:mm')}
             </Grid>
             <Grid item xs={6}>
               Sunrise
@@ -46,7 +46,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {weatherData!.daily[0].temp.min}°C
+              {weatherData!.daily![0].temp.min}°C
             </Grid>
             <Grid item xs={6}>
               Low
@@ -56,7 +56,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {weatherData!.daily[0].pop}%
+              {weatherData!.daily![0].pop}%
             </Grid>
             <Grid item xs={6}>
               Rain
@@ -66,7 +66,7 @@ export default function Details() {
         <Grid item xs={4}>
           <Grid container direction="column">
             <Grid item xs={6}>
-              {formatFromUnix(weatherData!.current.sunset, settingsData!.timezone, 'HH:mm')}
+              {formatFromUnix(weatherData!.current!.sunset, settingsData!.timezone, 'HH:mm')}
             </Grid>
             <Grid item xs={6}>
               Sunset

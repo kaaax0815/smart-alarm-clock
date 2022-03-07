@@ -12,7 +12,7 @@ export default function Hourly() {
   }
   return (
     <div className={styles.Hourly}>
-      {weatherData!.hourly.slice(1, 25).map((hour) => (
+      {weatherData!.hourly!.slice(1, 25).map((hour) => (
         <div key={hour.dt}>
           {formatFromUnix(hour.dt, settingsData!.timezone, 'HH:mm')}
           <br />

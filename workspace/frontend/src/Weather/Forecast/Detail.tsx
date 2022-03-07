@@ -6,7 +6,7 @@ export default function Detail({ selected }: { selected: number }) {
   if (weatherStatus !== 'success') {
     return <div>Loading...</div>;
   }
-  const day = weatherData!.daily[selected];
+  const day = weatherData!.daily![selected];
   return (
     <div className={styles.Detail}>
       <div>Morning: {day.temp.morn}°C</div>

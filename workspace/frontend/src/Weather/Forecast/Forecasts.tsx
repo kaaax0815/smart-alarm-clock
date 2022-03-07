@@ -16,7 +16,7 @@ export default function Forecasts({
   }
   return (
     <div className={styles.Forecasts}>
-      {weatherData!.daily.map((day, index) => (
+      {weatherData!.daily!.map((day, index) => (
         <div
           key={day.dt}
           onClick={() => setSelected(index)}
