@@ -11,8 +11,10 @@ class SocketIO {
     this.server.use(socketAuth);
     this.server.on('connection', (socket: Socket) => {
       this.sockets.push(socket);
+      console.log(`CONNECT ${socket.id} ${socket.handshake.address}`);
       socket.on('disconnect', () => {
         this.sockets = this.sockets.filter((s) => s.id !== socket.id);
+        console.log(`DISCONNECT ${socket.id} ${socket.handshake.address}`);
       });
     });
   }
