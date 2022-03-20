@@ -12,10 +12,13 @@ export default async function postRingtones(req: Request, res: Response<postRing
   if (ringtone.name === 'Alarm') {
     return res.status(403).json({ status: 'Cannot overwrite default ringtone', location: '' });
   }
+  if (!ringtone.name.endsWith('.mp3')) {
+    return res.status(415).json({ status: 'Unsupported file type', location: '' });
+  }
   const move = promisify(ringtone.mv);
   const location = `/ringtones/${ringtone.name}`;
   const moveLocation = join(__dirname, '../../Ringtones', ringtone.name);
   await move(moveLocation);
-  db.push('/ringtones', [{ name: ringtone.name, location: location }], false);
+  db.push('/ringtones', [{ name: ringtone.name.slice(0, -4), location: location }], false);
   return res.json({ status: 'success', location: location });
 }
