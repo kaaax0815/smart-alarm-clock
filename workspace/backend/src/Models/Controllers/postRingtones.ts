@@ -1,4 +1,4 @@
 export interface postRingtonesResponse {
-  success: boolean;
+  status: string;
   location: string;
 }
