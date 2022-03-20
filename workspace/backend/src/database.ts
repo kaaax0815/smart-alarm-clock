@@ -20,12 +20,13 @@ class CustomDB extends JsonDB {
     this.push('/location/countryCode', 'DE');
     this.push('/location/lat', 52.5170365);
     this.push('/location/lon', 13.3888599);
+    this.push('/ringtones', [{ name: 'Alarm', location: '/ringtones/default.mp3' }]);
     this.push('/initialized', true);
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   push(dataPath: string, data: any, override?: boolean): void {
     super.push(dataPath, data, override);
-    socketIO.emitAll('databaseChange');
+    socketIO?.emitAll('databaseChange');
   }
 }
 

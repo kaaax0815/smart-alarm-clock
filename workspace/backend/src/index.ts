@@ -1,6 +1,7 @@
 import cors from 'cors';
 import { config } from 'dotenv';
 import Express from 'express';
+import fileUpload from 'express-fileupload';
 import helmet from 'helmet';
 import { join } from 'path';
 import { Server } from 'socket.io';
@@ -28,6 +29,17 @@ app.use(
 app.use(logger);
 
 app.use(Express.json());
+
+app.use(
+  fileUpload({
+    abortOnLimit: true,
+    limits: {
+      files: 1,
+      // Allow 10 MB
+      fileSize: 10 * 1024 * 1024
+    }
+  })
+);
 
 app.use('/api/', Routes);
 

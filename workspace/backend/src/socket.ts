@@ -30,7 +30,7 @@ class SocketIO {
   }
 
   emitFrontend(ev: string, ...args: ArgsType) {
-    this.frontend.emit(ev, ...args);
+    this.frontend?.emit(ev, ...args);
   }
 
   emitClient(ev: string, ...args: ArgsType) {
