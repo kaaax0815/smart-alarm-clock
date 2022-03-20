@@ -9,6 +9,9 @@ export default async function postRingtones(req: Request, res: Response<postRing
     return res.status(400).json({ status: 'Bad request', location: '' });
   }
   const ringtone = req.files.ringtone;
+  if (ringtone.name === 'Alarm') {
+    return res.status(403).json({ status: 'Cannot overwrite default ringtone', location: '' });
+  }
   const move = promisify(ringtone.mv);
   const location = `/ringtones/${ringtone.name}`;
   const moveLocation = join(__dirname, '../../Ringtones', ringtone.name);

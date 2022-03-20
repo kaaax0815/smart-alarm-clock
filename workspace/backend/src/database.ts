@@ -22,7 +22,7 @@ class CustomDB extends JsonDB {
       lat: 52.5170365,
       lon: 13.3888599
     });
-    this.push('/ringtones', [{ name: 'Alarm', location: '/ringtones/default.mp3' }]);
+    this.push('/ringtones', [{ name: 'Alarm', location: '/ringtones/Alarm.mp3' }]);
     this.push('/initialized', true);
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
