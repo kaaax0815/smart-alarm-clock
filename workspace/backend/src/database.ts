@@ -25,9 +25,7 @@ class CustomDB extends JsonDB {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   push(dataPath: string, data: any, override?: boolean): void {
     super.push(dataPath, data, override);
-    socketIO.sockets.forEach((socket) => {
-      socket.emit('databaseChange');
-    });
+    socketIO.emitAll('databaseChange');
   }
 }
 
