@@ -1,4 +1,4 @@
-import { database } from './index';
+import { database } from '../index';
 
 export interface postSettingsRequest {
   timezone?: string;
