@@ -15,11 +15,13 @@ class CustomDB extends JsonDB {
     } catch {
       console.log('Database not initialized');
     }
-    this.push('/timezone', 'Europe/Berlin');
-    this.push('/location/city', 'Berlin');
-    this.push('/location/countryCode', 'DE');
-    this.push('/location/lat', 52.5170365);
-    this.push('/location/lon', 13.3888599);
+    this.push('/settings/timezone', 'Europe/Berlin');
+    this.push('/settings/location', {
+      city: 'Berlin',
+      countryCode: 'DE',
+      lat: 52.5170365,
+      lon: 13.3888599
+    });
     this.push('/ringtones', [{ name: 'Alarm', location: '/ringtones/default.mp3' }]);
     this.push('/initialized', true);
   }
