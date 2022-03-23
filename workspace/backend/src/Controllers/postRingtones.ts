@@ -19,6 +19,6 @@ export default async function postRingtones(req: Request, res: Response<postRing
   const location = `/ringtones/${ringtone.name}`;
   const moveLocation = join(__dirname, '../../Ringtones', ringtone.name);
   await move(moveLocation);
-  db.push('/ringtones', [{ name: ringtone.name.slice(0, -4), location: location }], false);
+  db.addRingtone({ name: ringtone.name.slice(0, -4), location: location });
   return res.json({ status: 'success', location: location });
 }

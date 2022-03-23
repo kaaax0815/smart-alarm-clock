@@ -10,7 +10,7 @@ class CustomDB extends JsonDB {
   }
   private initializeDatabase() {
     try {
-      if (this.getData('/initialized') === true) {
+      if (super.getData('/initialized') === true) {
         return;
       }
     } catch {
@@ -33,6 +33,13 @@ class CustomDB extends JsonDB {
   push() {
     return;
   }
+  /**
+   * Does nothing
+   * Use typed methods to get database
+   */
+  getData() {
+    return;
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _push(dataPath: string, data: any, override?: boolean): void {
     super.push(dataPath, data, override);
@@ -48,11 +55,17 @@ class CustomDB extends JsonDB {
     this._push('/ringtones', [ringtone], true);
   }
   deleteRingtone(ringtone: database['ringtones'][0]) {
-    const oldRingtones = this.getData('/ringtones') as database['ringtones'];
+    const oldRingtones = super.getData('/ringtones') as database['ringtones'];
     const newRingtones = oldRingtones.filter(
       (item) => item.name !== ringtone.name && item.location !== ringtone.location
     );
     this._push('/ringtones', newRingtones, false);
+  }
+  getRingtones() {
+    return super.getData('/ringtones') as database['ringtones'];
+  }
+  getSettings() {
+    return super.getData('/settings') as database['settings'];
   }
 }
 

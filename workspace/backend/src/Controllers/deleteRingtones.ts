@@ -2,13 +2,7 @@ import { rm } from 'fs/promises';
 import { join } from 'path';
 
 import db from '../database';
-import {
-  database,
-  deleteRingtonesRequest,
-  deleteRingtonesResponse,
-  Request,
-  Response
-} from '../Models';
+import { deleteRingtonesRequest, deleteRingtonesResponse, Request, Response } from '../Models';
 
 export default async function deleteRingtones(
   req: Request<deleteRingtonesRequest>,
@@ -21,9 +15,7 @@ export default async function deleteRingtones(
   if (ringtone.name === 'Alarm') {
     return res.status(403).send({ status: 'Cannot delete default ringtone' });
   }
-  const oldRingtones = db.getData('/ringtones') as database['ringtones'];
-  const newRingtones = oldRingtones.filter((item) => item.name !== ringtone.name);
-  db.push('/ringtones', newRingtones);
+  db.deleteRingtone(ringtone);
   await rm(join(__dirname, '../../Ringtones', ringtone.name)).catch((e) => {
     console.error(e.message);
   });

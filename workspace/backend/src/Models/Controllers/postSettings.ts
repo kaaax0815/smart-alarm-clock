@@ -12,5 +12,5 @@ export interface postSettingsRequest {
 
 export interface postSettingsResponse {
   status: string;
-  db: database;
+  db: database['settings'];
 }

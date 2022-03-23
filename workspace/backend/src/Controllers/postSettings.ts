@@ -9,17 +9,22 @@ async function postSettings(
 ) {
   const timezone = req.body.timezone;
   const location = req.body.location;
-  timezone && db.push('/settings/timezone', timezone);
+  timezone && db.setTimezone(timezone);
   if (location) {
     const [lat, lon] = await getGeoLocation(location.city, location.countryCode);
     if (lat !== undefined && lon !== undefined) {
       location.lat = lat;
       location.lon = lon;
-      db.push('/settings/location', location);
+      db.setLocation(location as TypedLocation);
     }
   }
-  res.json({ status: 'success', db: db.getData('/') });
+  res.json({ status: 'success', db: db.getSettings() });
 }
+
+type TypedLocation = Omit<Exclude<postSettingsRequest['location'], undefined>, 'lat' | 'lon'> & {
+  lat: number;
+  lon: number;
+};
 
 async function getGeoLocation(
   city: string,
