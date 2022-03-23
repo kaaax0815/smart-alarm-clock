@@ -56,3 +56,14 @@ export const socketIO = new SocketIO(
     }
   })
 );
+
+export const stopServer = () => {
+  return new Promise<true>((res, rej) => {
+    server.close((err) => {
+      if (err) {
+        rej(err);
+      }
+      res(true);
+    });
+  });
+};
