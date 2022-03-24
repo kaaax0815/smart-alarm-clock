@@ -1,4 +1,4 @@
-import { Exclude, OpenWeatherMap, Units } from 'owm-onecall-api';
+import { Exclude, Language, OpenWeatherMap, Units } from 'owm-onecall-api';
 import { useQuery } from 'react-query';
 
 import useSettings from './useSettings';
@@ -15,6 +15,7 @@ function useWeather() {
       openWeather
         .builder(settingsData!.location.lat, settingsData!.location.lon)
         .exclude(Exclude.Minutely)
+        .language(Language.German)
         .execute(),
     {
       enabled: !!settingsData,
