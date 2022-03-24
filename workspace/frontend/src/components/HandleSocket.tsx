@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { SocketContext } from '../contexts/Socket';
@@ -6,15 +6,12 @@ import { SocketContext } from '../contexts/Socket';
 function HandleSocket(): null {
   const socketContext = useContext(SocketContext);
   const queryClient = useQueryClient();
-  const handleDatabaseChange = useCallback(() => {
-    queryClient.refetchQueries(['settings']);
-  }, [queryClient]);
   useEffect(() => {
-    socketContext.on('databaseChange', handleDatabaseChange);
+    socketContext.on('databaseChange', () => queryClient.refetchQueries(['settings']));
     return () => {
       socketContext.disconnect();
     };
-  }, [handleDatabaseChange, queryClient, socketContext]);
+  }, [queryClient, socketContext]);
   return null;
 }
 
