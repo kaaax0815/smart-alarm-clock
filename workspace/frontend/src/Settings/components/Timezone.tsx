@@ -31,6 +31,9 @@ function Timezone() {
       item: null
     };
   }
+  if (!timezone) {
+    setTimezone(settingsData.timezone);
+  }
   async function timezoneClose() {
     setOpenTimezone(false);
     updateSettings.mutate({ timezone });

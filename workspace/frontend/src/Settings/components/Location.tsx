@@ -33,6 +33,10 @@ function Location() {
       item: null
     };
   }
+  if (!city || !countryCode) {
+    setCity(settingsData.location.city);
+    setCountryCode(settingsData.location.countryCode);
+  }
   async function locationClose() {
     updateSettings.mutate({ location: { city: city || '', countryCode: countryCode || '' } });
   }
