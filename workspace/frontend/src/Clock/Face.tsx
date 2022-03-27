@@ -9,7 +9,11 @@ import styles from './Face.module.css';
 function Face(): JSX.Element {
   const { data: settingsData, status: settingsStatus } = useSettings();
   if (settingsStatus !== 'success') {
-    return <CircularProgress />;
+    return (
+      <div className={styles.Loading_Parent}>
+        <CircularProgress />
+      </div>
+    );
   }
   return (
     <div className={styles.Face}>
