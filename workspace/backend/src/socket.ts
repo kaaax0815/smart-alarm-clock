@@ -16,7 +16,9 @@ class SocketIO {
       } else if (socket.handshake.query.type === 'client') {
         this.clients.push(socket);
       }
-      console.log(`CONNECT ${socket.id} ${socket.handshake.address}`);
+      console.log(
+        `CONNECT ${socket.id} ${socket.handshake.address} ${socket.handshake.query.type}`
+      );
       socket.on('disconnect', () => {
         if (socket.handshake.query.type === 'frontend') {
           this._frontend = [];
@@ -24,7 +26,9 @@ class SocketIO {
           this.clients = this.clients.filter((s) => s.id !== socket.id);
         }
 
-        console.log(`DISCONNECT ${socket.id} ${socket.handshake.address}`);
+        console.log(
+          `DISCONNECT ${socket.id} ${socket.handshake.address} ${socket.handshake.query.type}`
+        );
       });
     });
   }
