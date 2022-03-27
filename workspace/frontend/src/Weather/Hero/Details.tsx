@@ -8,7 +8,7 @@ export default function Details() {
   const { data: weatherData, status: weatherStatus } = useWeather();
   const { data: settingsData, status: settingsStatus } = useSettings();
   if (weatherStatus !== 'success' || settingsStatus !== 'success') {
-    return <div>Loading...</div>;
+    return <div>Lädt...</div>;
   }
   return (
     <Grid item xs={6}>
@@ -19,7 +19,7 @@ export default function Details() {
               {weatherData!.daily![0].temp.max}°C
             </Grid>
             <Grid item xs={6}>
-              High
+              Höchst
             </Grid>
           </Grid>
         </Grid>
@@ -39,7 +39,7 @@ export default function Details() {
               {formatFromUnix(weatherData!.current!.sunrise, settingsData!.timezone, 'HH:mm')}
             </Grid>
             <Grid item xs={6}>
-              Sunrise
+              Sonnenaufgang
             </Grid>
           </Grid>
         </Grid>
@@ -49,7 +49,7 @@ export default function Details() {
               {weatherData!.daily![0].temp.min}°C
             </Grid>
             <Grid item xs={6}>
-              Low
+              Tiefst
             </Grid>
           </Grid>
         </Grid>
@@ -59,7 +59,7 @@ export default function Details() {
               {weatherData!.daily![0].pop}%
             </Grid>
             <Grid item xs={6}>
-              Rain
+              Regen
             </Grid>
           </Grid>
         </Grid>
@@ -69,7 +69,7 @@ export default function Details() {
               {formatFromUnix(weatherData!.current!.sunset, settingsData!.timezone, 'HH:mm')}
             </Grid>
             <Grid item xs={6}>
-              Sunset
+              Sonnenuntergang
             </Grid>
           </Grid>
         </Grid>

@@ -26,10 +26,10 @@ function Reboot() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Reboot</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Neu starten</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to reboot?
+            Möchten Sie wirklich neu starten?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -38,10 +38,10 @@ function Reboot() {
               setOpenReboot(false);
             }}
           >
-            Disagree
+            Ablehnen
           </Button>
           <Button onClick={rebootClose} autoFocus>
-            Agree
+            Zustimmen
           </Button>
         </DialogActions>
       </Dialog>
@@ -57,7 +57,7 @@ function Reboot() {
           <ListItemIcon>
             <RebootIcon />
           </ListItemIcon>
-          <ListItemText primary="Reboot" />
+          <ListItemText primary="Neu starten" />
         </ListItemButton>
       </ListItem>
     )

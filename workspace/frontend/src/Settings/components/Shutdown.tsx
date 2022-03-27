@@ -26,10 +26,10 @@ function Shutdown() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Shutdown</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Herunterfahren</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to shutdown?
+            Möchten Sie wirklich herunterfahren?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -38,10 +38,10 @@ function Shutdown() {
               setOpenShutdown(false);
             }}
           >
-            Disagree
+            Ablehnen
           </Button>
           <Button onClick={shutdownClose} autoFocus>
-            Agree
+            Zustimmen
           </Button>
         </DialogActions>
       </Dialog>
@@ -57,7 +57,7 @@ function Shutdown() {
           <ListItemIcon>
             <PowerOffIcon />
           </ListItemIcon>
-          <ListItemText primary="Shutdown" />
+          <ListItemText primary="Herunterfahren" />
         </ListItemButton>
       </ListItem>
     )

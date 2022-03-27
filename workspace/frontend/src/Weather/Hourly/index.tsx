@@ -8,7 +8,7 @@ export default function Hourly() {
   const { data: weatherData, status: weatherStatus } = useWeather();
   const { data: settingsData, status: settingsStatus } = useSettings();
   if (weatherStatus !== 'success' || settingsStatus !== 'success') {
-    return <div>Loading...</div>;
+    return <div>Lädt...</div>;
   }
   return (
     <div className={styles.Hourly}>

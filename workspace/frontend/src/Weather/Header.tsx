@@ -26,7 +26,7 @@ export default function Header() {
   const { data: settingsData, status: settingsStatus } = useSettings();
   const dateRef = useDate(settingsData);
   if (settingsStatus !== 'success') {
-    return <div>Loading...</div>;
+    return <div>Lädt...</div>;
   }
   return (
     <div className={styles.Header}>

@@ -7,7 +7,7 @@ import styles from './Current.module.css';
 export default function Current() {
   const { data: weatherData, status: weatherStatus } = useWeather();
   if (weatherStatus !== 'success') {
-    return <div>Loading...</div>;
+    return <div>Lädt...</div>;
   }
   return (
     <Grid item xs={6}>

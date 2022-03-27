@@ -42,18 +42,18 @@ function Timezone() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Timezone</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Zeitzone</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Current Timezone is: {settingsData!.timezone}
+            Aktuelle Zeitzone ist: {settingsData!.timezone}
           </DialogContentText>
           <FormControl fullWidth>
-            <InputLabel id="select-timezone-label">Timezone</InputLabel>
+            <InputLabel id="select-timezone-label">Zeitzone</InputLabel>
             <Select
               labelId="select-timezone-label"
               id="select-timezone"
               value={timezone}
-              label="Timezone"
+              label="Zeitzone"
               onChange={(ev) => setTimezone(ev.target.value as string)}
             >
               {timeZones.map((timezone, index) => (
@@ -70,10 +70,10 @@ function Timezone() {
               setOpenTimezone(false);
             }}
           >
-            Cancel
+            Abbrechen
           </Button>
           <Button onClick={timezoneClose} autoFocus>
-            Save
+            Speichern
           </Button>
         </DialogActions>
       </Dialog>
@@ -89,7 +89,7 @@ function Timezone() {
           <ListItemIcon>
             <TimezoneIcon />
           </ListItemIcon>
-          <ListItemText primary="Timezone" />
+          <ListItemText primary="Zeitzone" />
         </ListItemButton>
       </ListItem>
     )

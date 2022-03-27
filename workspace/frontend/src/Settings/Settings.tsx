@@ -15,7 +15,7 @@ export default function Settings(): JSX.Element {
     <div>
       <SettingsBar />
       <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        <ListSubheader disableSticky>Geographic</ListSubheader>
+        <ListSubheader disableSticky>Position</ListSubheader>
         <nav aria-label="geographic settings">
           <List>
             {timezone.item}
@@ -23,7 +23,7 @@ export default function Settings(): JSX.Element {
           </List>
         </nav>
         <Divider />
-        <ListSubheader disableSticky>Power</ListSubheader>
+        <ListSubheader disableSticky>Energie</ListSubheader>
         <nav aria-label="power options">
           <List>
             {shutdown.item}

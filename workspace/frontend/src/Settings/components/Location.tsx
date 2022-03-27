@@ -43,20 +43,20 @@ function Location() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Location</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Position</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Current Country Code is: {settingsData!.location.countryCode}
+            Aktueller Ländercode ist: {settingsData!.location.countryCode}
             <br />
-            Current City is: {settingsData!.location.city}
+            Aktuelle Stadt ist: {settingsData!.location.city}
           </DialogContentText>
           <FormControl fullWidth>
-            <InputLabel id="select-location-cc-label">Country Code</InputLabel>
+            <InputLabel id="select-location-cc-label">Ländercode</InputLabel>
             <Select
               labelId="select-location-cc-label"
               id="select-location-cc"
               value={countryCode}
-              label="Country Code"
+              label="Ländercode"
               onChange={(ev) => setCountryCode(ev.target.value as string)}
             >
               {countries.map((country, index) => (
@@ -67,7 +67,7 @@ function Location() {
             </Select>
             <TextField
               id="select-location-city"
-              label="City"
+              label="Stadt"
               value={city}
               onChange={(ev) => setCity(ev.target.value as string)}
             />
@@ -79,10 +79,10 @@ function Location() {
               setOpenLocation(false);
             }}
           >
-            Cancel
+            Abbrechen
           </Button>
           <Button onClick={locationClose} autoFocus>
-            Save
+            Speichern
           </Button>
         </DialogActions>
       </Dialog>
@@ -98,7 +98,7 @@ function Location() {
           <ListItemIcon>
             <LocationIcon />
           </ListItemIcon>
-          <ListItemText primary="Location" />
+          <ListItemText primary="Position" />
         </ListItemButton>
       </ListItem>
     )
