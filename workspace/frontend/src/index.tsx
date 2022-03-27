@@ -11,6 +11,7 @@ import HandleSocket from './components/HandleSocket';
 import { socket, SocketContext } from './contexts/Socket';
 import Settings from './Settings/Settings';
 import Start from './Start';
+import ErrorBoundary from './utils/ErrorBoundary';
 import Weather from './Weather';
 
 function App(): JSX.Element {
@@ -22,10 +23,38 @@ function App(): JSX.Element {
           <SocketContext.Provider value={socket}>
             <HandleSocket />
             <Routes>
-              <Route path="/" element={<Start />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/clock" element={<ClockFace />} />
-              <Route path="/weather" element={<Weather />} />
+              <Route
+                path="/"
+                element={
+                  <ErrorBoundary key={'/'}>
+                    <Start />
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <ErrorBoundary key={'/settings'}>
+                    <Settings />
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="/clock"
+                element={
+                  <ErrorBoundary key={'/clock'}>
+                    <ClockFace />
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="/weather"
+                element={
+                  <ErrorBoundary key={'/weather'}>
+                    <Weather />
+                  </ErrorBoundary>
+                }
+              />
             </Routes>
           </SocketContext.Provider>
           <ReactQueryDevtools initialIsOpen={true} />
