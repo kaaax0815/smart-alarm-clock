@@ -24,6 +24,7 @@ class CustomDB extends JsonDB {
       lon: 13.3888599
     });
     this.addRingtone({ name: 'Alarm', location: '/ringtones/Alarm.mp3' });
+    this.push('/alarms', []);
     this.push('/initialized', true);
   }
   push(dataPath: string, data: unknown, override?: boolean): void {
@@ -51,6 +52,12 @@ class CustomDB extends JsonDB {
   }
   getSettings() {
     return super.getData('/settings') as database['settings'];
+  }
+  getAlarms() {
+    return super.getData('/alarms') as database['alarms'];
+  }
+  addAlarm(alarm: database['alarms'][0]) {
+    this.push('/alarms', [alarm], false);
   }
 }
 

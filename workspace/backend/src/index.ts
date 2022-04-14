@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { join } from 'path';
 import { Server } from 'socket.io';
 
+import Alarm from './Alarm';
 import logger from './logger';
 import Routes from './routes';
 import SocketIO from './socket';
@@ -57,7 +58,10 @@ export const socketIO = new SocketIO(
   })
 );
 
+const alarm = new Alarm();
+
 export const stopServer = () => {
+  alarm.stop();
   return new Promise<true>((res, rej) => {
     server.close((err) => {
       if (err) {

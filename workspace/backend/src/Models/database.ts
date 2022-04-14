@@ -6,4 +6,20 @@ export const defaultDatabase = {
   ringtones: [{ name: 'Alarm', location: '/ringtones/Alarm.mp3' }],
   initialized: true
 };
-export type database = typeof defaultDatabase;
+
+export interface Alarm {
+  /** Name of a Ringtone in `ringtones` */
+  ringtone: string;
+  /** Time when the alarm should go off in timezone in `settings.timezone` */
+  time: string;
+  /** On which days it should go off
+   * 1 = Monday, 2 = Tuesday, ..., 7 = Sunday
+   */
+  days: number[];
+  /** Whether the alarm is enabled or not */
+  enabled: boolean;
+  /** Name of the Alarm for quick access */
+  name: string;
+}
+
+export type database = typeof defaultDatabase & { alarms: Alarm[] };
