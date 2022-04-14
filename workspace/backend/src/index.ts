@@ -10,8 +10,6 @@ import Alarm from './Alarm';
 import logger from './logger';
 import Routes from './routes';
 import SocketIO from './socket';
-import jwt from './token';
-export const JWT = new jwt();
 
 config();
 
