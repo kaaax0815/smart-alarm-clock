@@ -1,37 +1,16 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
-import Section from './components/Section';
-import Colors from './constants/Colors';
+import App from './App';
+import {socket, socketContext} from './contexts/Socket';
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+export default function Start() {
+  const queryClient = new QueryClient();
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Colors">Test</Section>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <QueryClientProvider client={queryClient}>
+      <socketContext.Provider value={socket}>
+        <App />
+      </socketContext.Provider>
+    </QueryClientProvider>
   );
-};
-
-export default App;
+}
