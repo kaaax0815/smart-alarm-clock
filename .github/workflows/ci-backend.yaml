@@ -41,5 +41,3 @@ jobs:
         run: yarn install
       - name: Run build command
         run: yarn build
-      - name: Run test:unit command
-        run: yarn test:unit
