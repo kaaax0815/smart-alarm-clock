@@ -32,7 +32,7 @@ function Timezone() {
     };
   }
   if (!timezone) {
-    setTimezone(settingsData.timezone);
+    setTimezone(settingsData!.timezone);
   }
   async function timezoneClose() {
     setOpenTimezone(false);
