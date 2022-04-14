@@ -9,7 +9,7 @@ function socketAuth(socket: MiddlewareSocket, next: MiddlewareNext) {
   ) {
     return next();
   }
-  const token = socket.handshake.query.token?.toString();
+  const token = socket.handshake.auth.token?.toString();
   if (!token) {
     socket.disconnect(true);
     return next(new Error('No token provided'));
