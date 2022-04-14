@@ -2,14 +2,12 @@ import { Server, Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 
-import socketAuth from './Middlewares/socketAuth';
 class SocketIO {
   server: Server;
   clients: Socket[] = [];
   private _frontend: Socket[] = [];
   constructor(server: Server) {
     this.server = server;
-    this.server.use(socketAuth);
     this.server.on('connection', (socket: Socket) => {
       if (socket.handshake.query.type === 'frontend') {
         this._frontend.push(socket);
