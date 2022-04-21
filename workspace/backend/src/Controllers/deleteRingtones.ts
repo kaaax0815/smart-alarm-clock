@@ -8,9 +8,9 @@ export default async function deleteRingtones(
   req: Request<deleteRingtonesRequest>,
   res: Response<deleteRingtonesResponse>
 ) {
-  const ringtone = req.body.ringtone;
+  const ringtone = req.body;
   if (!ringtone) {
-    return res.status(400).send({ status: 'Request body is missing ringtone' });
+    return res.status(400).send({ status: 'Missing request body' });
   }
   if (ringtone.name === 'Alarm') {
     return res.status(403).send({ status: 'Cannot delete default ringtone' });

@@ -1,5 +1,6 @@
 export interface deleteRingtonesRequest {
-  ringtone: { name: string; location: string };
+  name: string;
+  location: string;
 }
 
 export interface deleteRingtonesResponse {

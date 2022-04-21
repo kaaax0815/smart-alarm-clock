@@ -59,6 +59,21 @@ class CustomDB extends JsonDB {
   addAlarm(alarm: database['alarms'][0]) {
     this.push('/alarms', [alarm], false);
   }
+  updateAlarm(alarm: Partial<database['alarms'][0]> & { name: string }) {
+    const oldAlarms = this.getAlarms();
+    const newAlarms = oldAlarms.map((item) => {
+      if (item.name === alarm.name) {
+        return { ...item, ...alarm };
+      }
+      return item;
+    });
+    this.push('/alarms', newAlarms);
+  }
+  deleteAlarm(alarm: { name: string }) {
+    const oldAlarms = this.getAlarms();
+    const newAlarms = oldAlarms.filter((item) => item.name !== alarm.name);
+    this.push('/alarms', newAlarms);
+  }
 }
 
 const db = new CustomDB('database');
