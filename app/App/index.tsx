@@ -1,16 +1,18 @@
 import React from 'react';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import App from './App';
-import {socket, socketContext} from './contexts/Socket';
+import HandleSocket from './components/HandleSocket';
+import { socket, SocketContext } from './contexts/Socket';
 
 export default function Start() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <socketContext.Provider value={socket}>
+      <SocketContext.Provider value={socket}>
+        <HandleSocket />
         <App />
-      </socketContext.Provider>
+      </SocketContext.Provider>
     </QueryClientProvider>
   );
 }
