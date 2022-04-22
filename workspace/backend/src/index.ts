@@ -16,7 +16,7 @@ config();
 const app = Express();
 
 // const origin = /http:\/\/localhost/;
-const origin = "*";
+const origin = '*';
 
 app.use(helmet());
 
