@@ -3,7 +3,7 @@ import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Alarm as AlarmType } from '../hooks/useAlarms';
-import { AlarmsEnabled } from './index';
+import { AlarmsEnabled } from './Alarms';
 
 type AlarmProps = {
   alarm: AlarmType;
@@ -19,7 +19,12 @@ export default function Alarm({
   index,
 }: AlarmProps) {
   return (
-    <Stack direction="row" key={alarm.name} p={1} m={2} borderRadius={'md'}>
+    <Stack
+      direction="row"
+      key={index + alarm.name}
+      p={1}
+      m={2}
+      borderRadius={'md'}>
       <Stack direction="column" pr="10">
         <Text fontSize={14}>{alarm.name}</Text>
         <Text fontSize={32}>{alarm.time}</Text>

@@ -22,7 +22,7 @@ export default function App() {
       <Tab.Navigator
         tabBar={props => <Footer {...props} />}
         screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Alarms" component={Alarms} />
+        <Tab.Screen name="AlarmsStack" component={Alarms} />
         <Tab.Screen name="Ringtones" component={Ringtones} />
       </Tab.Navigator>
     </>

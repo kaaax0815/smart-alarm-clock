@@ -33,7 +33,7 @@ export default function Footer({ navigation, state }: BottomTabBarProps) {
     <Box>
       <Center flex={1} />
       <HStack
-        bg="indigo.600"
+        bg="primary.500"
         alignItems="center"
         safeAreaBottom
         shadow={6}
