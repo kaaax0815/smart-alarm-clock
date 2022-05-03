@@ -2,7 +2,7 @@ import { Button, Center, Icon, ScrollView, Spinner, Text } from 'native-base';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useAlarms } from '../hooks/useAlarms';
+import { useAlarms, useUpdateAlarm } from '../hooks/useAlarms';
 import Alarm from './Alarm';
 import { Props } from './index';
 
@@ -10,6 +10,7 @@ export type AlarmsEnabled = { [i: number]: { enabled: boolean } };
 
 export default function Alarms({ navigation }: Props<'Alarms'>) {
   const { data: alarms, status: alarmsStatus } = useAlarms();
+  const updateAlarm = useUpdateAlarm();
   const [alarmsEnabled, setAlarmsEnabled] = React.useState<AlarmsEnabled>({});
 
   // Compute how many alarms are disabled
@@ -58,6 +59,10 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
 
   function handleAlarmsEnabledChange(i: number) {
     return () => {
+      updateAlarm.mutate({
+        name: alarms![i].name,
+        enabled: !alarmsEnabled[i].enabled,
+      });
       setAlarmsEnabled({
         ...alarmsEnabled,
         [i]: { enabled: !alarmsEnabled[i].enabled },
@@ -101,7 +106,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
               bg="primary.600"
             />
           }
-          onPress={() => navigation.navigate('AlarmForm')}>
+          onPress={() => navigation.navigate('AlarmForm', { edit: false })}>
           Wecker hinzufügen
         </Button>
       </Center>

@@ -5,6 +5,7 @@ import {
 import { useTheme } from 'native-base';
 import React from 'react';
 
+import { Alarm } from '../utils/api';
 import AlarmForm from './AlarmForm';
 import Alarms from './Alarms';
 
@@ -12,8 +13,18 @@ const Stack = createStackNavigator();
 
 export type AlarmsParamList = {
   Alarms: undefined;
-  AlarmForm: undefined;
+  AlarmForm: AlarmFormPropsEdit | AlarmFormPropsAdd;
 };
+
+interface AlarmFormPropsEdit {
+  edit: true;
+  alarm: Alarm;
+}
+
+interface AlarmFormPropsAdd {
+  edit: false;
+  alarm?: undefined;
+}
 
 export type Props<T extends keyof AlarmsParamList> = StackScreenProps<
   AlarmsParamList,

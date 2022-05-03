@@ -1,8 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon, Menu, Pressable, Stack, Switch, Text } from 'native-base';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Alarm as AlarmType } from '../hooks/useAlarms';
+import { useDeleteAlarm } from '../hooks/useAlarms';
+import { Alarm as AlarmType } from '../utils/api';
 import { AlarmsEnabled } from './Alarms';
 
 type AlarmProps = {
@@ -18,6 +21,21 @@ export default function Alarm({
   alarmsEnabled,
   index,
 }: AlarmProps) {
+  const deleteAlarm = useDeleteAlarm();
+  const navigation = useNavigation<StackNavigationProp<any>>();
+  function handleDelete() {
+    return () => {
+      deleteAlarm.mutate({ name: alarm.name });
+    };
+  }
+  function handleEdit() {
+    return () => {
+      navigation.navigate('AlarmForm', {
+        edit: true,
+        alarm,
+      });
+    };
+  }
   return (
     <Stack
       direction="row"
@@ -43,13 +61,13 @@ export default function Alarm({
             </Pressable>
           )}
           mr={1}>
-          <Menu.Item>
+          <Menu.Item onPress={handleEdit()}>
             <Stack direction="row">
               <Icon as={MaterialCommunityIcons} name="pencil" size={5} mr={2} />
               <Text>Edit</Text>
             </Stack>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item onPress={handleDelete()}>
             <Stack direction="row">
               <Icon as={MaterialCommunityIcons} name="delete" size={5} mr={2} />
               <Text>Delete</Text>

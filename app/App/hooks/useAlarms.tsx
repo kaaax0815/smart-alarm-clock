@@ -1,22 +1,85 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { getAlarms } from '../utils/api';
+import {
+  Alarm,
+  deleteAlarms,
+  getAlarms,
+  patchAlarms,
+  postAlarms,
+} from '../utils/api';
 
 export function useAlarms() {
-  return useQuery<Alarm[]>('alarms', () => getAlarms());
+  return useQuery('alarms', () => getAlarms());
 }
 
-export interface Alarm {
-  /** Name of a Ringtone in `ringtones` */
-  ringtone: string;
-  /** Time when the alarm should go off in timezone in `settings.timezone` */
-  time: string;
-  /** On which days it should go off
-   * 1 = Monday, 2 = Tuesday, ..., 7 = Sunday
-   */
-  days: number[];
-  /** Whether the alarm is enabled or not */
-  enabled: boolean;
-  /** Name of the Alarm for quick access */
-  name: string;
+export function useAddAlarm() {
+  const queryClient = useQueryClient();
+  return useMutation<unknown, unknown, Alarm>(alarm => postAlarms(alarm), {
+    onMutate: async alarm => {
+      await queryClient.invalidateQueries('alarms');
+      const prev = queryClient.getQueryData<Alarm[]>('alarms');
+      if (prev) {
+        queryClient.setQueryData<Alarm[]>('alarms', [...prev, alarm]);
+      }
+      return prev;
+    },
+    onError: (_error, _vars, prev) => {
+      queryClient.setQueryData('alarms', prev);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('alarms');
+    },
+  });
+}
+
+export function useDeleteAlarm() {
+  const queryClient = useQueryClient();
+  return useMutation<unknown, unknown, Pick<Alarm, 'name'>>(
+    alarm => deleteAlarms(alarm),
+    {
+      onMutate: async alarm => {
+        await queryClient.invalidateQueries('alarms');
+        const prev = queryClient.getQueryData<Alarm[]>('alarms');
+        if (prev) {
+          queryClient.setQueryData<Alarm[]>(
+            'alarms',
+            prev.filter(oldAlarm => oldAlarm.name !== alarm.name),
+          );
+        }
+        return prev;
+      },
+      onError: (_error, _vars, prev) => {
+        queryClient.setQueryData('alarms', prev);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries('alarms');
+      },
+    },
+  );
+}
+
+export function useUpdateAlarm() {
+  const queryClient = useQueryClient();
+  return useMutation<unknown, unknown, Partial<Alarm> & { name: string }>(
+    alarm => patchAlarms(alarm),
+    {
+      onMutate: async alarm => {
+        await queryClient.invalidateQueries('alarms');
+        const prev = queryClient.getQueryData<Alarm[]>('alarms');
+        if (prev) {
+          queryClient.setQueryData<Alarm[]>(
+            'alarms',
+            prev.map(o => (o.name === alarm.name ? { ...o, ...alarm } : o)),
+          );
+        }
+        return prev;
+      },
+      onError: (_error, _vars, prev) => {
+        queryClient.setQueryData('alarms', prev);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries('alarms');
+      },
+    },
+  );
 }
