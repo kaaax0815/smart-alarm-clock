@@ -1,9 +1,9 @@
 import database from '../database';
-import { Request, Response, updateAlarmsRequest, updateAlarmsResponse } from '../Models';
+import { patchAlarmsRequest, patchAlarmsResponse, Request, Response } from '../Models';
 
-export default function updateAlarms(
-  req: Request<updateAlarmsRequest>,
-  res: Response<updateAlarmsResponse>
+export default function patchAlarms(
+  req: Request<patchAlarmsRequest>,
+  res: Response<patchAlarmsResponse>
 ) {
   const alarm = req.body;
   if (!alarm) {

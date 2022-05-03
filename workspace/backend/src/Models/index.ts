@@ -5,7 +5,7 @@ export * from './Controllers/getRingtones';
 export * from './Controllers/deleteRingtones';
 export * from './Controllers/getAlarms';
 export * from './Controllers/postAlarms';
-export * from './Controllers/updateAlarms';
+export * from './Controllers/patchAlarms';
 export * from './Controllers/deleteAlarms';
 export * from './database';
 export * from './Express';

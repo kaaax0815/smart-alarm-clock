@@ -5,10 +5,10 @@ import deleteRingtonesController from './Controllers/deleteRingtones';
 import getAlarmsController from './Controllers/getAlarms';
 import getRingtonesController from './Controllers/getRingtones';
 import getSettingsController from './Controllers/getSettings';
+import patchAlarmsController from './Controllers/patchAlarms';
 import postAlarmsController from './Controllers/postAlarms';
 import postRingtonesController from './Controllers/postRingtones';
 import postSettingsController from './Controllers/postSettings';
-import updateAlarmsController from './Controllers/updateAlarms';
 
 const router = Router();
 
@@ -25,6 +25,6 @@ router.delete('/ringtones', deleteRingtonesController);
 router.get('/alarms', getAlarmsController);
 router.post('/alarms', postAlarmsController);
 router.delete('/alarms', deleteAlarmsController);
-router.post('/alarms', updateAlarmsController);
+router.patch('/alarms', patchAlarmsController);
 
 export default router;
