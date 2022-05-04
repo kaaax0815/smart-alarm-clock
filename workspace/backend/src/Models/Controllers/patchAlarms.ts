@@ -1,8 +1,14 @@
+import { z } from 'express-zod-api';
+
 import { database } from '../database';
 
-export type patchAlarmsRequest = Partial<database['alarms'][0]> & { name: string };
+export const patchAlarmsRequest = database.shape.alarms.element.partial({
+  days: true,
+  time: true,
+  enabled: true,
+  ringtone: true
+});
 
-export interface patchAlarmsResponse {
-  status: string;
-  alarm?: database['alarms'][0];
-}
+export const patchAlarmsResponse = z.object({
+  alarm: database.shape.alarms.element
+});

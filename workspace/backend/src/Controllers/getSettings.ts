@@ -1,9 +1,14 @@
+import { defaultEndpointsFactory, z } from 'express-zod-api';
+
 import db from '../database';
-import { getSettingsResponse, Request, Response } from '../Models';
+import { getSettingsResponse } from '../Models';
 
-function getSettings(req: Request, res: Response<getSettingsResponse>) {
-  const settings = db.getSettings();
-  res.json(settings);
-}
-
-export default getSettings;
+export default defaultEndpointsFactory.build({
+  method: 'get',
+  input: z.object({}),
+  output: getSettingsResponse,
+  handler: async () => {
+    const settings = db.getSettings();
+    return { settings };
+  }
+});

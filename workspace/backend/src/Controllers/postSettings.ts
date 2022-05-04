@@ -1,30 +1,26 @@
 import axios from 'axios';
+import { createHttpError, defaultEndpointsFactory, z } from 'express-zod-api';
 
 import db from '../database';
-import { postSettingsRequest, postSettingsResponse, Request, Response } from '../Models';
+import { postSettingsRequest } from '../Models';
 
-async function postSettings(
-  req: Request<postSettingsRequest>,
-  res: Response<postSettingsResponse>
-) {
-  const timezone = req.body.timezone;
-  const location = req.body.location;
-  timezone && db.setTimezone(timezone);
-  if (location) {
-    const [lat, lon] = await getGeoLocation(location.city, location.countryCode);
-    if (lat !== undefined && lon !== undefined) {
-      location.lat = lat;
-      location.lon = lon;
-      db.setLocation(location as TypedLocation);
+export default defaultEndpointsFactory.build({
+  method: 'post',
+  input: postSettingsRequest,
+  output: z.object({}),
+  handler: async ({ input: { timezone, location } }) => {
+    timezone && db.setTimezone(timezone);
+    if (location) {
+      const [lat, lon] = await getGeoLocation(location.city, location.countryCode);
+      if (lat !== undefined && lon !== undefined) {
+        db.setLocation({ ...location, lat, lon });
+      } else {
+        throw createHttpError(400, 'Invalid location');
+      }
     }
+    return {};
   }
-  res.json({ status: 'success', db: db.getSettings() });
-}
-
-type TypedLocation = Omit<Exclude<postSettingsRequest['location'], undefined>, 'lat' | 'lon'> & {
-  lat: number;
-  lon: number;
-};
+});
 
 async function getGeoLocation(
   city: string,
@@ -38,7 +34,6 @@ async function getGeoLocation(
       { responseType: 'json' }
     );
     if (locationResponse.data.length === 0) {
-      console.error(`Could not find location: ${city}, ${countryCode}`);
       return [undefined, undefined];
     }
     return [locationResponse.data[0].lat, locationResponse.data[0].lon];
@@ -48,4 +43,3 @@ async function getGeoLocation(
     return [undefined, undefined];
   }
 }
-export default postSettings;

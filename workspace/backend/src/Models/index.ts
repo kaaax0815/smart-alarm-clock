@@ -8,4 +8,3 @@ export * from './Controllers/postAlarms';
 export * from './Controllers/patchAlarms';
 export * from './Controllers/deleteAlarms';
 export * from './database';
-export * from './Express';

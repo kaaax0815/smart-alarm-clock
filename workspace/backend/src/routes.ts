@@ -1,4 +1,5 @@
-import { Router } from 'express';
+import { DependsOnMethod, Routing, ServeStatic } from 'express-zod-api';
+import { join } from 'path';
 
 import deleteAlarmsController from './Controllers/deleteAlarms';
 import deleteRingtonesController from './Controllers/deleteRingtones';
@@ -10,21 +11,28 @@ import postAlarmsController from './Controllers/postAlarms';
 import postRingtonesController from './Controllers/postRingtones';
 import postSettingsController from './Controllers/postSettings';
 
-const router = Router();
+const routing: Routing = {
+  api: {
+    alarms: new DependsOnMethod({
+      get: getAlarmsController,
+      delete: deleteAlarmsController,
+      patch: patchAlarmsController,
+      post: postAlarmsController
+    }),
+    ringtones: new DependsOnMethod({
+      get: getRingtonesController,
+      delete: deleteRingtonesController,
+      post: postRingtonesController
+    }),
+    settings: new DependsOnMethod({
+      get: getSettingsController,
+      post: postSettingsController
+    })
+  },
+  ringtones: new ServeStatic(join(__dirname, '../Ringtones'), {
+    index: false,
+    redirect: false
+  })
+};
 
-// Settings
-router.get('/settings', getSettingsController);
-router.post('/settings', postSettingsController);
-
-// Ringtons
-router.get('/ringtones', getRingtonesController);
-router.post('/ringtones', postRingtonesController);
-router.delete('/ringtones', deleteRingtonesController);
-
-// Alarms
-router.get('/alarms', getAlarmsController);
-router.post('/alarms', postAlarmsController);
-router.delete('/alarms', deleteAlarmsController);
-router.patch('/alarms', patchAlarmsController);
-
-export default router;
+export default routing;

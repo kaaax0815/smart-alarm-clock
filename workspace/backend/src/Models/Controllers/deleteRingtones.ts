@@ -1,8 +1,6 @@
-export interface deleteRingtonesRequest {
-  name: string;
-  location: string;
-}
+import { z } from 'express-zod-api';
 
-export interface deleteRingtonesResponse {
-  status: string;
-}
+export const deleteRingtonesRequest = z.object({
+  name: z.string(),
+  location: z.string()
+});

@@ -1,19 +1,18 @@
-import database from '../database';
-import { deleteAlarmsRequest, deleteAlarmsResponse, Request, Response } from '../Models';
+import { createHttpError, defaultEndpointsFactory, z } from 'express-zod-api';
 
-export default function deleteAlarms(
-  req: Request<deleteAlarmsRequest>,
-  res: Response<deleteAlarmsResponse>
-) {
-  const alarm = req.body;
-  if (!alarm) {
-    return res.status(400).send({ status: 'Missing request body' });
+import database from '../database';
+import { deleteAlarmsRequest } from '../Models';
+
+export default defaultEndpointsFactory.build({
+  method: 'delete',
+  input: deleteAlarmsRequest,
+  output: z.object({}),
+  handler: async ({ input }) => {
+    const alarms = database.getAlarms();
+    if (alarms.findIndex((a) => a.name === input.name) === -1) {
+      throw createHttpError(404, 'Alarm not found');
+    }
+    database.deleteAlarm(input);
+    return {};
   }
-  const alarms = database.getAlarms();
-  if (alarms.findIndex((a) => a.name === alarm.name) === -1) {
-    return res.status(404).send({ status: 'Alarm not found' });
-  }
-  database.deleteAlarm(alarm);
-  const newAlarms = database.getAlarms();
-  res.json({ status: 'success', alarms: newAlarms });
-}
+});

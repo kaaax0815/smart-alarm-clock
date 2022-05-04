@@ -1,7 +1,14 @@
-import database from '../database';
-import { getAlarmsResponse, Request, Response } from '../Models';
+import { defaultEndpointsFactory, z } from 'express-zod-api';
 
-export default function getAlarms(req: Request, res: Response<getAlarmsResponse>) {
-  const alarms = database.getAlarms();
-  res.json(alarms);
-}
+import database from '../database';
+import { getAlarmsResponse } from '../Models';
+
+export default defaultEndpointsFactory.build({
+  method: 'get',
+  input: z.object({}),
+  output: getAlarmsResponse,
+  handler: async () => {
+    const alarms = database.getAlarms();
+    return { alarms };
+  }
+});

@@ -1,15 +1,14 @@
-import database from '../database';
-import { postAlarmsRequest, postAlarmsResponse, Request, Response } from '../Models';
+import { defaultEndpointsFactory, z } from 'express-zod-api';
 
-export default function postAlarms(
-  req: Request<postAlarmsRequest>,
-  res: Response<postAlarmsResponse>
-) {
-  const alarm = req.body;
-  if (!alarm) {
-    return res.status(400).json({ status: 'Missing request body' });
+import database from '../database';
+import { postAlarmsRequest } from '../Models';
+
+export default defaultEndpointsFactory.build({
+  method: 'post',
+  input: postAlarmsRequest,
+  output: z.object({}),
+  handler: async ({ input }) => {
+    database.addAlarm(input);
+    return {};
   }
-  database.addAlarm(alarm);
-  const newAlarms = database.getAlarms();
-  res.json({ status: 'success', db: newAlarms });
-}
+});

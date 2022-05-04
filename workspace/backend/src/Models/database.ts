@@ -1,25 +1,31 @@
-export const defaultDatabase = {
-  settings: {
-    timezone: 'Europe/Berlin',
-    location: { city: 'Berlin', countryCode: 'DE', lat: 52.5170365, lon: 13.3888599 }
-  },
-  ringtones: [{ name: 'Alarm', location: '/ringtones/Alarm.mp3' }],
-  initialized: true
-};
+import { z } from 'express-zod-api';
 
-export interface Alarm {
-  /** Name of a Ringtone in `ringtones` */
-  ringtone: string;
-  /** Time when the alarm should go off in timezone in `settings.timezone` */
-  time: string;
-  /** On which days it should go off
-   * 1 = Monday, 2 = Tuesday, ..., 7 = Sunday
-   */
-  days: number[];
-  /** Whether the alarm is enabled or not */
-  enabled: boolean;
-  /** Name of the Alarm for quick access */
-  name: string;
-}
+export const database = z.object({
+  settings: z.object({
+    timezone: z.string(),
+    location: z.object({
+      city: z.string(),
+      countryCode: z.string(),
+      lat: z.number(),
+      lon: z.number()
+    })
+  }),
+  ringtones: z.array(
+    z.object({
+      name: z.string(),
+      location: z.string()
+    })
+  ),
+  alarms: z.array(
+    z.object({
+      ringtone: z.string(),
+      time: z.string(),
+      days: z.array(z.number()),
+      enabled: z.boolean(),
+      name: z.string()
+    })
+  ),
+  initialized: z.boolean()
+});
 
-export type database = typeof defaultDatabase & { alarms: Alarm[] };
+export type database = z.infer<typeof database>;

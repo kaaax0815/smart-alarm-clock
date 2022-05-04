@@ -1,16 +1,11 @@
-import { database } from '../index';
+import { z } from 'express-zod-api';
 
-export interface postSettingsRequest {
-  timezone?: string;
-  location?: {
-    city: string;
-    countryCode: string;
-    lat?: number;
-    lon?: number;
-  };
-}
+import { database } from '../database';
 
-export interface postSettingsResponse {
-  status: string;
-  db: database['settings'];
-}
+const location = database.shape.settings.shape.location
+  .pick({ city: true, countryCode: true })
+  .optional();
+
+const timezone = database.shape.settings.shape.timezone.optional();
+
+export const postSettingsRequest = z.object({ timezone, location });

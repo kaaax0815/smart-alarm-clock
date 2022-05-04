@@ -1,8 +1,3 @@
-import { database } from '../database';
+import { z } from 'express-zod-api';
 
-export type deleteAlarmsRequest = { name: string };
-
-export interface deleteAlarmsResponse {
-  status: string;
-  alarms?: database['alarms'];
-}
+export const deleteAlarmsRequest = z.object({ name: z.string() });

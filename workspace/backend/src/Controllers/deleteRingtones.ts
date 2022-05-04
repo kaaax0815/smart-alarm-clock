@@ -1,23 +1,22 @@
+import { createHttpError, defaultEndpointsFactory, z } from 'express-zod-api';
 import { rm } from 'fs/promises';
 import { join } from 'path';
 
 import db from '../database';
-import { deleteRingtonesRequest, deleteRingtonesResponse, Request, Response } from '../Models';
+import { deleteRingtonesRequest } from '../Models';
 
-export default async function deleteRingtones(
-  req: Request<deleteRingtonesRequest>,
-  res: Response<deleteRingtonesResponse>
-) {
-  const ringtone = req.body;
-  if (!ringtone) {
-    return res.status(400).send({ status: 'Missing request body' });
+export default defaultEndpointsFactory.build({
+  method: 'delete',
+  input: deleteRingtonesRequest,
+  output: z.object({}),
+  handler: async ({ input, logger }) => {
+    if (input.name === 'Alarm') {
+      throw createHttpError(403, 'Cannot delete default ringtone');
+    }
+    db.deleteRingtone(input);
+    await rm(join(__dirname, '../../Ringtones', input.name)).catch((e) => {
+      logger.error(e.message);
+    });
+    return {};
   }
-  if (ringtone.name === 'Alarm') {
-    return res.status(403).send({ status: 'Cannot delete default ringtone' });
-  }
-  db.deleteRingtone(ringtone);
-  await rm(join(__dirname, '../../Ringtones', ringtone.name)).catch((e) => {
-    console.error(e.message);
-  });
-  res.json({ status: 'success' });
-}
+});

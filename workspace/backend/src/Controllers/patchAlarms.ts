@@ -1,19 +1,19 @@
-import database from '../database';
-import { patchAlarmsRequest, patchAlarmsResponse, Request, Response } from '../Models';
+import { createHttpError, defaultEndpointsFactory } from 'express-zod-api';
 
-export default function patchAlarms(
-  req: Request<patchAlarmsRequest>,
-  res: Response<patchAlarmsResponse>
-) {
-  const alarm = req.body;
-  if (!alarm) {
-    return res.status(400).send({ status: 'Missing request body' });
+import database from '../database';
+import { patchAlarmsRequest, patchAlarmsResponse } from '../Models';
+
+export default defaultEndpointsFactory.build({
+  method: 'patch',
+  input: patchAlarmsRequest,
+  output: patchAlarmsResponse,
+  handler: async ({ input }) => {
+    const alarms = database.getAlarms();
+    if (alarms.findIndex((a) => a.name === input.name) === -1) {
+      throw createHttpError(404, 'Alarm not found');
+    }
+    database.updateAlarm(input);
+    const updatedAlarm = database.getAlarms().find((a) => a.name === input.name)!;
+    return { alarm: updatedAlarm };
   }
-  const alarms = database.getAlarms();
-  if (alarms.findIndex((a) => a.name === alarm.name) === -1) {
-    return res.status(404).send({ status: 'Alarm not found' });
-  }
-  database.updateAlarm(alarm);
-  const updatedAlarm = database.getAlarms().find((a) => a.name === alarm.name);
-  res.json({ status: 'success', alarm: updatedAlarm });
-}
+});

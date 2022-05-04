@@ -1,3 +1,5 @@
+import { z } from 'express-zod-api';
+
 import { database } from '../database';
 
-export type getSettingsResponse = database['settings'];
+export const getSettingsResponse = z.object({ settings: database.shape.settings });

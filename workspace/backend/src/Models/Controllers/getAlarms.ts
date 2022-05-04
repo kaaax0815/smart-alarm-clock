@@ -1,3 +1,5 @@
+import { z } from 'express-zod-api';
+
 import { database } from '../database';
 
-export type getAlarmsResponse = database['alarms'];
+export const getAlarmsResponse = z.object({ alarms: database.shape.alarms });
