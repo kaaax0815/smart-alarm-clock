@@ -31,7 +31,10 @@ const routing: Routing = {
   },
   ringtones: new ServeStatic(join(__dirname, '../Ringtones'), {
     index: false,
-    redirect: false
+    redirect: false,
+    setHeaders: (res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
   })
 };
 
