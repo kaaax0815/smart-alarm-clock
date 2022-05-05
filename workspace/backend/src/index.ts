@@ -23,7 +23,7 @@ const zodConfig = createConfig({
 
 const { httpServer } = createServer(zodConfig, Routing);
 
-export const socketIO = new SocketIO(new Server(httpServer));
+export const socketIO = new SocketIO(new Server(httpServer, { cors: { origin: '*' } }));
 
 const alarm = new Alarm();
 
