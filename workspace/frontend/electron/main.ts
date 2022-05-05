@@ -12,7 +12,8 @@ function createWindow() {
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      autoplayPolicy: 'no-user-gesture-required'
     }
   });
 
