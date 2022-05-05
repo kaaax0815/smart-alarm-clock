@@ -1,10 +1,10 @@
-import { getSettingsResponse } from 'backend';
 import { useEffect, useRef } from 'react';
 
 import useSettings from '../hooks/useSettings';
+import { GetSettingsData } from '../utils/api';
 import styles from './Header.module.css';
 
-function useDate(settingsData?: getSettingsResponse) {
+function useDate(settingsData?: GetSettingsData) {
   const dateRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     if (dateRef.current !== null) {

@@ -2,10 +2,14 @@
 import * as Models from 'backend';
 export * as Models from 'backend';
 
-export async function getAPI<T extends GetEndpoints>(
-  endpoint: T,
-  params?: GetParams<T>
-): Promise<GetResponse<T>> {
+export async function getSettings() {
+  const result = await getAPI(GetEndpoints.Settings);
+  return result.settings;
+}
+
+export type GetSettingsData = AsyncReturnType<typeof getSettings>;
+
+export async function getAPI<T extends GetEndpoints>(endpoint: T, params?: GetParams<T>) {
   const url = buildURL(endpoint);
   const query = params ? `?${encodeQueryData(params)}` : '';
   const response = await fetch(url + query, {
@@ -14,13 +18,14 @@ export async function getAPI<T extends GetEndpoints>(
   if (!response.ok) {
     throw new Error(response.statusText);
   }
-  return response.json();
+  const json = (await response.json()) as GetResponse<T>;
+  if (json.status !== 'success') {
+    throw new Error(json.error.message);
+  }
+  return json.data;
 }
 
-export async function postAPI<T extends PostEndpoints>(
-  endpoint: T,
-  body: PostRequest<T>
-): Promise<PostResponse<T>> {
+export async function postAPI<T extends PostEndpoints>(endpoint: T, body: PostRequest<T>) {
   const url = buildURL(endpoint);
   const response = await fetch(url, {
     method: 'POST',
@@ -32,7 +37,11 @@ export async function postAPI<T extends PostEndpoints>(
   if (!response.ok) {
     throw new Error(response.statusText);
   }
-  return response.json();
+  const json = (await response.json()) as PostResponse<T>;
+  if (json.status !== 'success') {
+    throw new Error(json.error.message);
+  }
+  return json.data;
 }
 
 /**
@@ -70,11 +79,11 @@ function encodeQueryData<T extends GetEndpoints>(data: GetParams<T>): string {
 // Helper Types to correctly type the API
 
 export type PostRequest<Endpoint extends PostEndpoints> = Endpoint extends PostEndpoints.Settings
-  ? Models.postSettingsRequest
+  ? Models.PostSettingsInput
   : never;
 
 export type PostResponse<Endpoint extends PostEndpoints> = Endpoint extends PostEndpoints.Settings
-  ? Models.postSettingsResponse
+  ? Models.PostSettingsOutput
   : never;
 
 export type GetParams<Endpoint extends GetEndpoints> = Endpoint extends 's'
@@ -82,5 +91,11 @@ export type GetParams<Endpoint extends GetEndpoints> = Endpoint extends 's'
   : never;
 
 export type GetResponse<Endpoint extends GetEndpoints> = Endpoint extends GetEndpoints.Settings
-  ? Models.getSettingsResponse
+  ? Models.GetSettingsOutput
   : never;
+
+type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
+  ...args: any
+) => Promise<infer R>
+  ? R
+  : any;
