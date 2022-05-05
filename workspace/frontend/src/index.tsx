@@ -8,6 +8,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import ClockFace from './Clock/Face';
 import HandleSocket from './components/HandleSocket';
+import PopUpContext from './contexts/PopUp';
 import { socket, SocketContext } from './contexts/Socket';
 import Settings from './Settings/Settings';
 import Start from './Start';
@@ -20,43 +21,45 @@ function App(): JSX.Element {
     <StrictMode>
       <HashRouter basename="/">
         <QueryClientProvider client={queryClient}>
-          <SocketContext.Provider value={socket}>
-            <HandleSocket />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <ErrorBoundary key={'/'}>
-                    <Start />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <ErrorBoundary key={'/settings'}>
-                    <Settings />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="/clock"
-                element={
-                  <ErrorBoundary key={'/clock'}>
-                    <ClockFace />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="/weather"
-                element={
-                  <ErrorBoundary key={'/weather'}>
-                    <Weather />
-                  </ErrorBoundary>
-                }
-              />
-            </Routes>
-          </SocketContext.Provider>
+          <PopUpContext>
+            <SocketContext.Provider value={socket}>
+              <HandleSocket />
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <ErrorBoundary key={'/'}>
+                      <Start />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ErrorBoundary key={'/settings'}>
+                      <Settings />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/clock"
+                  element={
+                    <ErrorBoundary key={'/clock'}>
+                      <ClockFace />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/weather"
+                  element={
+                    <ErrorBoundary key={'/weather'}>
+                      <Weather />
+                    </ErrorBoundary>
+                  }
+                />
+              </Routes>
+            </SocketContext.Provider>
+          </PopUpContext>
           <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
       </HashRouter>

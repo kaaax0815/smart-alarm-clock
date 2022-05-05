@@ -1,3 +1,5 @@
+import { getRingtones } from './api';
+
 export default class Music {
   private audioContext = new AudioContext();
   private gainNode: GainNode;
@@ -22,6 +24,17 @@ export default class Music {
     const arrayBuffer = await response.arrayBuffer();
     const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
     this._play(audioBuffer);
+  }
+
+  /**
+   * Play a ringtone
+   * @param ringtone Ringtone to play
+   */
+  async playRingtone(ringtone: string) {
+    const ringtones = await getRingtones();
+    const { location } = ringtones.find((r) => r.name === ringtone)!;
+    const src = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}${location}`;
+    this.play(src);
   }
 
   private async _play(audioBuffer: AudioBuffer) {

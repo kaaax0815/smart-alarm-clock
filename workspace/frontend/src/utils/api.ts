@@ -7,9 +7,17 @@ export async function getSettings() {
   return result.settings;
 }
 
+export async function getRingtones() {
+  const result = await getAPI(GetEndpoints.Ringtones);
+  return result.ringtones;
+}
+
 export type GetSettingsData = AsyncReturnType<typeof getSettings>;
 
-export async function getAPI<T extends GetEndpoints>(endpoint: T, params?: GetParams<T>) {
+export async function getAPI<T extends GetEndpoints>(
+  endpoint: T,
+  params?: GetParams<T>
+): Promise<Extract<GetResponse<T>, { status: 'success' }>['data']> {
   const url = buildURL(endpoint);
   const query = params ? `?${encodeQueryData(params)}` : '';
   const response = await fetch(url + query, {
@@ -54,7 +62,8 @@ export function buildURL(endpoint: string): string {
 }
 
 export enum GetEndpoints {
-  Settings = '/settings'
+  Settings = '/settings',
+  Ringtones = '/ringtones'
 }
 
 export enum PostEndpoints {
@@ -92,6 +101,8 @@ export type GetParams<Endpoint extends GetEndpoints> = Endpoint extends 's'
 
 export type GetResponse<Endpoint extends GetEndpoints> = Endpoint extends GetEndpoints.Settings
   ? Models.GetSettingsOutput
+  : Endpoint extends GetEndpoints.Ringtones
+  ? Models.GetRingtonesOutput
   : never;
 
 type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
@@ -99,3 +110,5 @@ type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
 ) => Promise<infer R>
   ? R
   : any;
+
+export type Alarm = Extract<Models.GetAlarmsOutput, { status: 'success' }>['data']['alarms'][0];
