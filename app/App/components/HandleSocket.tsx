@@ -9,7 +9,7 @@ function HandleSocket(): null {
   useEffect(() => {
     if (!loading) {
       socket!.on('databaseChange', () =>
-        queryClient.refetchQueries(['alarms']),
+        queryClient.refetchQueries(['alarms', 'ringtones']),
       );
       return () => {
         socket!.removeAllListeners('databaseChange');

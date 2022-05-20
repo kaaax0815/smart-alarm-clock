@@ -9,7 +9,7 @@ import {
 } from '../utils/api';
 
 export function useAlarms() {
-  return useQuery('alarms', () => getAlarms());
+  return useQuery('alarms', () => getAlarms(), { staleTime: 5 * 60 * 1000 });
 }
 
 export function useAddAlarm() {
