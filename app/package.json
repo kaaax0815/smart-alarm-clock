@@ -30,7 +30,7 @@
     "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.12",
+    "@babel/core": "^7.18.0",
     "@babel/runtime": "^7.18.0",
     "@react-native-community/eslint-config": "^3.0.0",
     "@types/jest": "^27.5.1",
