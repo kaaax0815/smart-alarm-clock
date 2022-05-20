@@ -1,5 +1,9 @@
-export function getAlarms() {
-  return fetchData<Alarm[]>('/alarms');
+import NetInfo from '@react-native-community/netinfo';
+import { onlineManager } from 'react-query';
+
+export async function getAlarms() {
+  const result = await fetchData<{ alarms: Alarm[] }>('/alarms');
+  return result.alarms;
 }
 
 export function postAlarms(alarm: Alarm) {
@@ -11,11 +15,13 @@ export function deleteAlarms(alarm: Pick<Alarm, 'name'>) {
 }
 
 export function patchAlarms(alarm: Partial<Alarm> & { name: string }) {
+  console.log('Patch', alarm);
   return postData('/alarms', 'PATCH', alarm);
 }
 
-export function getRingtones() {
-  return fetchData<Ringtone[]>('/ringtones');
+export async function getRingtones() {
+  const result = await fetchData<{ ringtones: Ringtone[] }>('/ringtones');
+  return result.ringtones;
 }
 
 // Helper Function
@@ -25,11 +31,14 @@ async function fetchData<T>(endpoint: string) {
   if (!response.ok) {
     throw new Error(response.statusText);
   }
-  const json = (await response.json()) as T;
-  return json;
+  const json = (await response.json()) as Response<T>;
+  if (json.status === 'error') {
+    throw new Error(json.error.message);
+  }
+  return json.data;
 }
 
-async function postData<Res>(endpoint: string, method: string, data: unknown) {
+async function postData<T>(endpoint: string, method: string, data: unknown) {
   const response = await fetch(`http://192.168.178.55:3535/api${endpoint}`, {
     method: method,
     headers: {
@@ -40,9 +49,30 @@ async function postData<Res>(endpoint: string, method: string, data: unknown) {
   if (!response.ok) {
     throw new Error(response.statusText);
   }
-  const json = (await response.json()) as Res;
-  return json;
+  const json = (await response.json()) as Response<T>;
+  if (json.status === 'error') {
+    throw new Error(json.error.message);
+  }
+  return json.data;
 }
+
+onlineManager.setEventListener(setOnline => {
+  return NetInfo.addEventListener(state => {
+    setOnline(state.isConnected ?? undefined);
+  });
+});
+
+export interface ResponseError {
+  status: 'error';
+  error: { message: string };
+}
+
+export interface ResponseSuccess<T> {
+  status: 'success';
+  data: T;
+}
+
+export type Response<T> = ResponseError | ResponseSuccess<T>;
 
 // Typings
 export interface Alarm {
