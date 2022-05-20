@@ -15,7 +15,6 @@ export function deleteAlarms(alarm: Pick<Alarm, 'name'>) {
 }
 
 export function patchAlarms(alarm: Partial<Alarm> & { name: string }) {
-  console.log('Patch', alarm);
   return postData('/alarms', 'PATCH', alarm);
 }
 

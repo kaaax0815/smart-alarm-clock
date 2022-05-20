@@ -78,6 +78,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
           alarmsEnabled[index].enabled && (
             <Alarm
               {...{ handleAlarmsEnabledChange, alarm, index, alarmsEnabled }}
+              key={index + alarm.name}
             />
           ),
       )}
@@ -88,6 +89,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
           alarmsEnabled[index].enabled || (
             <Alarm
               {...{ handleAlarmsEnabledChange, alarm, index, alarmsEnabled }}
+              key={index + alarm.name}
             />
           ),
       )}

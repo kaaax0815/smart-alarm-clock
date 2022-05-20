@@ -37,12 +37,7 @@ export default function Alarm({
     };
   }
   return (
-    <Stack
-      direction="row"
-      key={index + alarm.name}
-      p={1}
-      m={2}
-      borderRadius={'md'}>
+    <Stack direction="row" p={1} m={2} borderRadius={'md'}>
       <Stack direction="column" pr="10">
         <Text fontSize={14}>{alarm.name}</Text>
         <Text fontSize={32}>{alarm.time}</Text>
