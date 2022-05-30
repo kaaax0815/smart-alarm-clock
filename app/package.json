@@ -27,7 +27,7 @@
     "react-native-sensitive-info": "^5.5.8",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
-    "react-query": "^3.39.0",
+    "react-query": "^3.39.1",
     "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
