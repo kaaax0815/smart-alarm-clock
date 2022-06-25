@@ -1,4 +1,4 @@
-import { defaultEndpointsFactory, z } from 'express-zod-api';
+import { createHttpError, defaultEndpointsFactory, z } from 'express-zod-api';
 
 import database from '../database';
 import { postAlarmsRequest } from '../Models';
@@ -8,6 +8,9 @@ export default defaultEndpointsFactory.build({
   input: postAlarmsRequest,
   output: z.object({}),
   handler: async ({ input }) => {
+    if (database.getAlarms().findIndex((alarm) => alarm.name === input.name) !== -1) {
+      throw createHttpError(409, 'Alarm already exists');
+    }
     database.addAlarm(input);
     return {};
   }

@@ -16,6 +16,9 @@ export default defaultEndpointsFactory.build({
     if (!ringtone.name.endsWith('.mp3')) {
       throw createHttpError(415, 'Unsupported file type');
     }
+    if (db.getRingtones().findIndex((r) => r.name === ringtone.name) !== -1) {
+      throw createHttpError(409, 'Ringtone already exists');
+    }
     const move = promisify(ringtone.mv);
     const location = `/ringtones/${ringtone.name}`;
     const moveLocation = join(__dirname, '../../Ringtones', ringtone.name);
