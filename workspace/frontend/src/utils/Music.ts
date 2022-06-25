@@ -5,6 +5,8 @@ export default class Music {
   private gainNode: GainNode;
   static instance: Music;
   private currentSource?: AudioBufferSourceNode;
+  loop = false;
+  private currentBuffer: AudioBuffer | null = null;
 
   /**
    * Current Volume in Percent
@@ -34,25 +36,39 @@ export default class Music {
     const ringtones = await getRingtones();
     const { location } = ringtones.find((r) => r.name === ringtone)!;
     const src = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}${location}`;
+    this.loop = true;
     this.play(src);
   }
 
-  private async _play(audioBuffer: AudioBuffer) {
+  private _play(audioBuffer: AudioBuffer) {
+    console.log('Check', { loop: this.loop, buffer: this.currentBuffer });
     if (this.currentSource) {
       this.currentSource.stop();
     }
     const source = this.audioContext.createBufferSource();
     source.buffer = audioBuffer;
+    this.currentBuffer = audioBuffer;
     source.connect(this.gainNode);
     this.gainNode.connect(this.audioContext.destination);
     this.gainNode.gain.value = this.currentVolume / 100;
+    source.onended = () => {
+      this.onEnd();
+    };
     source.start();
     this.currentSource = source;
   }
 
   stop() {
+    this.loop = false;
     if (this.currentSource) {
       this.currentSource.stop();
+    }
+  }
+
+  private onEnd() {
+    console.log('Source ended', { loop: this.loop, buffer: this.currentBuffer });
+    if (this.loop && this.currentBuffer) {
+      this._play(this.currentBuffer);
     }
   }
 
@@ -76,6 +92,7 @@ export default class Music {
    * @returns {Music} Singleton instance of Music
    */
   static getInstance(): Music {
+    console.log('New Instance?', { instance: Music.instance });
     if (!Music.instance) {
       Music.instance = new Music();
     }

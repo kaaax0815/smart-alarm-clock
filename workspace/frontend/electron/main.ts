@@ -3,12 +3,14 @@ import * as path from 'path';
 
 import { init as initOnboard } from './onboard';
 
+const PRODUCTION = process.env.ELECTRON === 'production';
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 480,
-    frame: false,
-    kiosk: true,
+    frame: PRODUCTION ? false : true,
+    kiosk: PRODUCTION ? true : false,
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
@@ -17,7 +19,7 @@ function createWindow() {
     }
   });
 
-  if (process.env.ELECTRON === 'production') {
+  if (PRODUCTION) {
     // 'build/index.html'
     win.loadURL(`file://${__dirname}/../index.html`);
   } else {

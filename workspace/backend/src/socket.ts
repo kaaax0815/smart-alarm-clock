@@ -28,6 +28,13 @@ class SocketIO {
           `DISCONNECT ${socket.id} ${socket.handshake.address} ${socket.handshake.query.type}`
         );
       });
+
+      socket.on('passthrough', ({ to, event, data }) => {
+        console.log(`PASSTHROUGH ${socket.id} ${to} ${event} ${data}`);
+        if (to === 'frontend') {
+          this.emitFrontend(event, data);
+        }
+      });
     });
   }
 
