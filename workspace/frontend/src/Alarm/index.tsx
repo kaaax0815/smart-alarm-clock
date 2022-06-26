@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { useContext, useEffect } from 'react';
 
 import { popUpContext as PopUpContext } from '../contexts/PopUp';
@@ -21,13 +22,12 @@ export default function Alarm() {
     return null;
   }
   return (
-    <div className={styles.div}>
-      {alarm.name}
-      <input
-        type="button"
-        onClick={() => setPopUp({ alarm: undefined, open: false })}
-        value="Close"
-      />
+    <div className={styles.alarm}>
+      <div className={styles.container}>
+        <h2>🔔 Wecker</h2>
+        <h3>{alarm.name}</h3>
+        <Button onClick={() => setPopUp({ alarm: undefined, open: false })}>Beenden</Button>
+      </div>
     </div>
   );
 }
