@@ -15,9 +15,9 @@
   "dependencies": {
     "@react-native-community/netinfo": "^9.3.0",
     "@react-navigation/bottom-tabs": "^6.3.1",
-    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/native": "^6.0.11",
     "@react-navigation/stack": "^6.2.1",
-    "native-base": "^3.4.7",
+    "native-base": "^3.4.8",
     "react": "17.0.2",
     "react-native": "0.68.2",
     "react-native-date-picker": "^4.2.2",
@@ -44,7 +44,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest": "^28.1.1",
-    "metro-react-native-babel-preset": "^0.71.2",
+    "metro-react-native-babel-preset": "^0.71.3",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.7.4"
   },
