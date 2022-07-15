@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --ignore-path ./.gitignore --fix",
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts --ignore database.json"
   },
   "dependencies": {
     "axios": "^0.27.1",
