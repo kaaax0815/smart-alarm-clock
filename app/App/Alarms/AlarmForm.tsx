@@ -172,7 +172,7 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
           />
           <FormControl.ErrorMessage>Bitte auswählen</FormControl.ErrorMessage>
         </FormControl>
-        <Button onPress={handleSubmit()}>
+        <Button onPress={handleSubmit()} _stack={{ bg: 'primary.600' }}>
           {edit ? 'Speichern' : 'Hinzufügen'}
         </Button>
       </ScrollView>

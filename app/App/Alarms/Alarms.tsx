@@ -97,8 +97,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
 
       <Center my="2">
         <Button
-          _text={{ bg: 'primary.600' }}
-          _icon={{ bg: 'primary.600' }}
+          _stack={{ bg: 'primary.600' }}
           leftIcon={
             <Icon
               as={MaterialCommunityIcons}
