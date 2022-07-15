@@ -15,6 +15,18 @@ type AlarmProps = {
   index: number;
 };
 
+const Days = {
+  1: 'Montag',
+  2: 'Dienstag',
+  3: 'Mittwoch',
+  4: 'Donnerstag',
+  5: 'Freitag',
+  6: 'Samstag',
+  7: 'Sonntag',
+};
+
+type ValidDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
 export default function Alarm({
   alarm,
   handleAlarmsEnabledChange,
@@ -36,12 +48,21 @@ export default function Alarm({
       });
     };
   }
+  function showDays(days: ValidDays[]) {
+    if (days.length === 1) {
+      return Days[days[0]];
+    }
+    return days
+      .sort()
+      .map(day => Days[day].slice(0, 2))
+      .join(' ');
+  }
   return (
     <Stack direction="row" p={1} m={2} borderRadius={'md'}>
       <Stack direction="column" pr="10">
         <Text fontSize={14}>{alarm.name}</Text>
         <Text fontSize={32}>{alarm.time}</Text>
-        <Text fontSize={20}>{alarm.days.join(' ')}</Text>
+        <Text fontSize={20}>{showDays(alarm.days as ValidDays[])}</Text>
       </Stack>
       <Stack direction="row" alignItems="center" ml="auto" mr={2}>
         <Switch
