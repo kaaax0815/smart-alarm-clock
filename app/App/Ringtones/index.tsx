@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
+
+import ScrollView from '../components/ScrollView';
 
 export default function Ringtones() {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 
+import ScrollView from '../components/ScrollView';
 import { useAlarms, useUpdateAlarm } from '../hooks/useAlarms';
 import Alarm from './Alarm';
 import { Props } from './index';

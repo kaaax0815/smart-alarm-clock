@@ -14,8 +14,16 @@ export default function App() {
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Tab.Navigator>
-        <Tab.Screen name="AlarmsStack" component={Alarms} />
-        <Tab.Screen name="Ringtones" component={Ringtones} />
+        <Tab.Screen
+          name="Wecker"
+          component={Alarms}
+          options={{ tabBarIcon: 'alarm' }}
+        />
+        <Tab.Screen
+          name="Klingeltöne"
+          component={Ringtones}
+          options={{ tabBarIcon: 'bell' }}
+        />
       </Tab.Navigator>
     </>
   );

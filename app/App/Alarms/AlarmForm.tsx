@@ -1,9 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { ScrollView } from 'react-native';
 import { ActivityIndicator, Button } from 'react-native-paper';
 import { FormBuilder } from 'react-native-paper-form-builder';
 
+import ScrollView from '../components/ScrollView';
 // import { TimePickerModal } from 'react-native-paper-dates';
 //import { useAddAlarm, useUpdateAlarm } from '../hooks/useAlarms';
 import { useRingtones } from '../hooks/useRingtones';

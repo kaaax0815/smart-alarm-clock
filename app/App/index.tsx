@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { DarkTheme, Provider as PaperProvider } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import socketio from 'socket.io-client';
@@ -15,6 +15,7 @@ export default function Start() {
   const [socket, setSocket] = React.useState<
     ReturnType<typeof socketio> | undefined
   >();
+
   async function getIP() {
     const ip = await RNSInfo.getItem('backendIP', {
       sharedPreferencesName: 'appPrefs',
@@ -33,11 +34,12 @@ export default function Start() {
     setSocket(sock);
     setLoading(false);
   }
+
   useEffect(() => {
     getIP();
   }, []);
   return (
-    <PaperProvider>
+    <PaperProvider theme={DarkTheme}>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={{ loading, socket }}>
