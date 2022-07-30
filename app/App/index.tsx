@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { DarkTheme, Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import socketio from 'socket.io-client';
@@ -39,7 +39,7 @@ export default function Start() {
     getIP();
   }, []);
   return (
-    <PaperProvider theme={DarkTheme}>
+    <PaperProvider>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={{ loading, socket }}>
