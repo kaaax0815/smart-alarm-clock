@@ -1,13 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { NativeBaseProvider } from 'native-base';
 import React, { useEffect } from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import socketio from 'socket.io-client';
 
 import App from './App';
 import HandleSocket from './components/HandleSocket';
-import theme from './constants/theme';
 import { SocketContext } from './contexts/Socket';
 
 export default function Start() {
@@ -38,15 +37,15 @@ export default function Start() {
     getIP();
   }, []);
   return (
-    <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <SocketContext.Provider value={{ loading, socket }}>
-          <NativeBaseProvider theme={theme}>
+    <PaperProvider>
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <SocketContext.Provider value={{ loading, socket }}>
             <HandleSocket />
             <App />
-          </NativeBaseProvider>
-        </SocketContext.Provider>
-      </QueryClientProvider>
-    </NavigationContainer>
+          </SocketContext.Provider>
+        </QueryClientProvider>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }

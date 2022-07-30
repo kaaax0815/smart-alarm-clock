@@ -2,8 +2,8 @@ import {
   createStackNavigator,
   StackScreenProps,
 } from '@react-navigation/stack';
-import { useTheme } from 'native-base';
 import React from 'react';
+import { useTheme } from 'react-native-paper';
 
 import { Alarm } from '../utils/api';
 import AlarmForm from './AlarmForm';
@@ -44,7 +44,7 @@ export default function AlarmsStack() {
         name="AlarmForm"
         component={AlarmForm}
         options={{
-          headerStyle: { backgroundColor: colors.primary['500'] },
+          headerStyle: { backgroundColor: colors.surface },
           title: 'Neuer Wecker',
         }}
       />

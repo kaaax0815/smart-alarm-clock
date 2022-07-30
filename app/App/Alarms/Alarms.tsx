@@ -1,6 +1,6 @@
-import { Button, Center, Icon, ScrollView, Spinner, Text } from 'native-base';
 import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ScrollView } from 'react-native';
+import { ActivityIndicator, Button, Text } from 'react-native-paper';
 
 import { useAlarms, useUpdateAlarm } from '../hooks/useAlarms';
 import Alarm from './Alarm';
@@ -46,13 +46,11 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
   ) {
     return (
       <ScrollView>
-        <Center>
-          {alarms?.length === 0 ? (
-            <Text>Keine Alarme</Text>
-          ) : (
-            <Spinner size={25} mt={2} />
-          )}
-        </Center>
+        {alarms?.length === 0 ? (
+          <Text>Keine Alarme</Text>
+        ) : (
+          <ActivityIndicator size="large" animating />
+        )}
       </ScrollView>
     );
   }
@@ -95,22 +93,11 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
       )}
       {disabled === 0 && <Text>Keine Alarme deaktiviert</Text>}
 
-      <Center my="2">
-        <Button
-          _stack={{ bg: 'primary.600' }}
-          leftIcon={
-            <Icon
-              as={MaterialCommunityIcons}
-              name="plus"
-              size="xs"
-              backgroundColor="primary.600"
-              bg="primary.600"
-            />
-          }
-          onPress={() => navigation.navigate('AlarmForm', { edit: false })}>
-          Wecker hinzufügen
-        </Button>
-      </Center>
+      <Button
+        icon="plus"
+        onPress={() => navigation.navigate('AlarmForm', { edit: false })}>
+        Wecker hinzufügen
+      </Button>
     </ScrollView>
   );
 }

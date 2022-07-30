@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Icon, Menu, Pressable, Stack, Switch, Text } from 'native-base';
 import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, View, ViewStyle } from 'react-native';
+import { IconButton, Menu, Switch, Text } from 'react-native-paper';
 
 import { useDeleteAlarm } from '../hooks/useAlarms';
 import { Alarm as AlarmType } from '../utils/api';
@@ -33,8 +33,15 @@ export default function Alarm({
   alarmsEnabled,
   index,
 }: AlarmProps) {
+  const [visible, setVisible] = React.useState(false);
   const deleteAlarm = useDeleteAlarm();
   const navigation = useNavigation<StackNavigationProp<any>>();
+  function openMenu() {
+    setVisible(true);
+  }
+  function closeMenu() {
+    setVisible(false);
+  }
   function handleDelete() {
     return () => {
       deleteAlarm.mutate({ name: alarm.name });
@@ -58,39 +65,49 @@ export default function Alarm({
       .join(' ');
   }
   return (
-    <Stack direction="row" p={1} m={2} borderRadius={'md'}>
-      <Stack direction="column" pr="10">
-        <Text fontSize={14}>{alarm.name}</Text>
-        <Text fontSize={32}>{alarm.time}</Text>
-        <Text fontSize={20}>{showDays(alarm.days as ValidDays[])}</Text>
-      </Stack>
-      <Stack direction="row" alignItems="center" ml="auto" mr={2}>
+    <View style={styles.view}>
+      <View style={styles.text}>
+        <Text>{alarm.name}</Text>
+        <Text>{alarm.time}</Text>
+        <Text>{showDays(alarm.days as ValidDays[])}</Text>
+      </View>
+      <View style={styles.control}>
         <Switch
-          isChecked={alarmsEnabled[index].enabled}
-          onChange={handleAlarmsEnabledChange(index)}
-          mr={2}
+          value={alarmsEnabled[index].enabled}
+          onValueChange={handleAlarmsEnabledChange(index)}
         />
         <Menu
-          trigger={triggerProps => (
-            <Pressable {...triggerProps}>
-              <Icon as={MaterialCommunityIcons} name="dots-vertical" size={7} />
-            </Pressable>
-          )}
-          mr={1}>
-          <Menu.Item onPress={handleEdit()}>
-            <Stack direction="row">
-              <Icon as={MaterialCommunityIcons} name="pencil" size={5} mr={2} />
-              <Text>Edit</Text>
-            </Stack>
-          </Menu.Item>
-          <Menu.Item onPress={handleDelete()}>
-            <Stack direction="row">
-              <Icon as={MaterialCommunityIcons} name="delete" size={5} mr={2} />
-              <Text>Delete</Text>
-            </Stack>
-          </Menu.Item>
+          anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+          visible={visible}
+          onDismiss={closeMenu}>
+          <Menu.Item onPress={handleEdit()} title="Bearbeiten" />
+          <Menu.Item onPress={handleDelete()} title="Löschen" />
         </Menu>
-      </Stack>
-    </Stack>
+      </View>
+    </View>
   );
 }
+
+interface Styles {
+  view: ViewStyle;
+  text: ViewStyle;
+  control: ViewStyle;
+}
+
+const styles = StyleSheet.create<Styles>({
+  view: {
+    flexDirection: 'row',
+    padding: 1,
+    margin: 2,
+  },
+  text: {
+    flexDirection: 'column',
+    paddingRight: 10,
+  },
+  control: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 'auto',
+    marginRight: 2,
+  },
+});

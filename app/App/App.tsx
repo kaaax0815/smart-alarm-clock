@@ -1,27 +1,19 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar, useColorMode } from 'native-base';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import React from 'react';
-import { useColorScheme } from 'react-native';
+import { StatusBar, useColorScheme } from 'react-native';
 
 import Alarms from './Alarms';
-import Footer from './components/Footer';
 import Ringtones from './Ringtones';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
   const isDarkMode = useColorScheme() === 'dark';
-  const colorMode = useColorMode();
-  React.useEffect(() => {
-    colorMode.setColorMode(isDarkMode ? 'dark' : 'light');
-  }, [colorMode, isDarkMode]);
 
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Tab.Navigator
-        tabBar={props => <Footer {...props} />}
-        screenOptions={{ headerShown: false }}>
+      <Tab.Navigator>
         <Tab.Screen name="AlarmsStack" component={Alarms} />
         <Tab.Screen name="Ringtones" component={Ringtones} />
       </Tab.Navigator>
