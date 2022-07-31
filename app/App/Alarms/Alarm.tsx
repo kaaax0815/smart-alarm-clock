@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { IconButton, Menu, Switch, Text } from 'react-native-paper';
 
 import { useDeleteAlarm } from '../hooks/useAlarms';
@@ -67,9 +67,9 @@ export default function Alarm({
   return (
     <View style={styles.view}>
       <View style={styles.text}>
-        <Text>{alarm.name}</Text>
-        <Text>{alarm.time}</Text>
-        <Text>{showDays(alarm.days as ValidDays[])}</Text>
+        <Text style={styles.name}>{alarm.name}</Text>
+        <Text style={styles.time}>{alarm.time}</Text>
+        <Text style={styles.days}>{showDays(alarm.days as ValidDays[])}</Text>
       </View>
       <View style={styles.control}>
         <Switch
@@ -92,13 +92,18 @@ interface Styles {
   view: ViewStyle;
   text: ViewStyle;
   control: ViewStyle;
+  name: TextStyle;
+  time: TextStyle;
+  days: TextStyle;
 }
 
 const styles = StyleSheet.create<Styles>({
   view: {
     flexDirection: 'row',
-    padding: 1,
+    padding: 4,
     margin: 2,
+    borderRadius: 8,
+    backgroundColor: '#18181b',
   },
   text: {
     flexDirection: 'column',
@@ -109,5 +114,14 @@ const styles = StyleSheet.create<Styles>({
     alignItems: 'center',
     marginLeft: 'auto',
     marginRight: 2,
+  },
+  name: {
+    fontSize: 14,
+  },
+  time: {
+    fontSize: 32,
+  },
+  days: {
+    fontSize: 18,
   },
 });

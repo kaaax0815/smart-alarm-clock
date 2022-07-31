@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 
 import ScrollView from '../components/ScrollView';
@@ -70,7 +71,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
 
   return (
     <ScrollView>
-      <Text>Aktiviert</Text>
+      <Text style={styles.text}>Aktiviert</Text>
       {alarms.map(
         (alarm, index) =>
           alarmsEnabled[index].enabled && (
@@ -81,7 +82,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
           ),
       )}
       {disabled === alarms.length && <Text>Keine Alarme aktiviert</Text>}
-      <Text>Deaktiviert</Text>
+      <Text style={[styles.text, styles.deactivated]}>Deaktiviert</Text>
       {alarms.map(
         (alarm, index) =>
           alarmsEnabled[index].enabled || (
@@ -94,6 +95,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
       {disabled === 0 && <Text>Keine Alarme deaktiviert</Text>}
 
       <Button
+        style={styles.add}
         icon="plus"
         onPress={() => navigation.navigate('AlarmForm', { edit: false })}>
         Wecker hinzufügen
@@ -101,3 +103,23 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
     </ScrollView>
   );
 }
+
+interface Styles {
+  text: TextStyle;
+  deactivated: TextStyle;
+  add: ViewStyle;
+}
+
+const styles = StyleSheet.create<Styles>({
+  text: {
+    fontSize: 12,
+    fontWeight: '300',
+    color: '#ccc',
+  },
+  deactivated: {
+    marginTop: 10,
+  },
+  add: {
+    marginBottom: 10,
+  },
+});

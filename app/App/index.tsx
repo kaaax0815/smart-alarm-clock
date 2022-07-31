@@ -7,6 +7,7 @@ import socketio from 'socket.io-client';
 
 import App from './App';
 import HandleSocket from './components/HandleSocket';
+import theme from './constants/theme';
 import { SocketContext } from './contexts/Socket';
 
 export default function Start() {
@@ -39,7 +40,7 @@ export default function Start() {
     getIP();
   }, []);
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={{ loading, socket }}>

@@ -45,6 +45,8 @@ export default function AlarmsStack() {
         component={AlarmForm}
         options={{
           headerStyle: { backgroundColor: colors.surface },
+          headerTitleStyle: { color: colors.text },
+          headerTintColor: colors.text,
           title: 'Neuer Wecker',
         }}
       />
