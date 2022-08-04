@@ -61,7 +61,7 @@ export default function Alarm({
     }
     return days
       .sort()
-      .map(day => Days[day].slice(0, 2))
+      .map((day) => Days[day].slice(0, 2))
       .join(' ');
   }
   return (

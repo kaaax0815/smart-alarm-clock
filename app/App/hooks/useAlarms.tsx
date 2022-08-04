@@ -14,8 +14,8 @@ export function useAlarms() {
 
 export function useAddAlarm() {
   const queryClient = useQueryClient();
-  return useMutation<unknown, unknown, Alarm>(alarm => postAlarms(alarm), {
-    onMutate: async alarm => {
+  return useMutation<unknown, unknown, Alarm>((alarm) => postAlarms(alarm), {
+    onMutate: async (alarm) => {
       await queryClient.invalidateQueries('alarms');
       const prev = queryClient.getQueryData<Alarm[]>('alarms');
       if (prev) {
@@ -35,15 +35,15 @@ export function useAddAlarm() {
 export function useDeleteAlarm() {
   const queryClient = useQueryClient();
   return useMutation<unknown, unknown, Pick<Alarm, 'name'>>(
-    alarm => deleteAlarms(alarm),
+    (alarm) => deleteAlarms(alarm),
     {
-      onMutate: async alarm => {
+      onMutate: async (alarm) => {
         await queryClient.invalidateQueries('alarms');
         const prev = queryClient.getQueryData<Alarm[]>('alarms');
         if (prev) {
           queryClient.setQueryData<Alarm[]>(
             'alarms',
-            prev.filter(oldAlarm => oldAlarm.name !== alarm.name),
+            prev.filter((oldAlarm) => oldAlarm.name !== alarm.name),
           );
         }
         return prev;
@@ -61,15 +61,15 @@ export function useDeleteAlarm() {
 export function useUpdateAlarm() {
   const queryClient = useQueryClient();
   return useMutation<unknown, unknown, Partial<Alarm> & { name: string }>(
-    alarm => patchAlarms(alarm),
+    (alarm) => patchAlarms(alarm),
     {
-      onMutate: async alarm => {
+      onMutate: async (alarm) => {
         await queryClient.invalidateQueries('alarms');
         const prev = queryClient.getQueryData<Alarm[]>('alarms');
         if (prev) {
           queryClient.setQueryData<Alarm[]>(
             'alarms',
-            prev.map(o => (o.name === alarm.name ? { ...o, ...alarm } : o)),
+            prev.map((o) => (o.name === alarm.name ? { ...o, ...alarm } : o)),
           );
         }
         return prev;

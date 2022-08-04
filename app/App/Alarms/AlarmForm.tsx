@@ -38,7 +38,7 @@ export default function AlarmForm({
   });
   const ringtoneChoices = React.useMemo(
     () =>
-      ringtones?.map(ringtone => ({
+      ringtones?.map((ringtone) => ({
         label: ringtone.name,
         value: ringtone.name,
       })),
@@ -90,7 +90,7 @@ export default function AlarmForm({
       />
       <Button
         mode={'contained'}
-        onPress={formHandleSubmit(onValid => handleSubmit(onValid))}>
+        onPress={formHandleSubmit((onValid) => handleSubmit(onValid))}>
         {edit ? 'Speichern' : 'Hinzufügen'}
       </Button>
     </ScrollView>

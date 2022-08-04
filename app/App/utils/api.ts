@@ -55,8 +55,8 @@ async function postData<T>(endpoint: string, method: string, data: unknown) {
   return json.data;
 }
 
-onlineManager.setEventListener(setOnline => {
-  return NetInfo.addEventListener(state => {
+onlineManager.setEventListener((setOnline) => {
+  return NetInfo.addEventListener((state) => {
     setOnline(state.isConnected ?? undefined);
   });
 });
