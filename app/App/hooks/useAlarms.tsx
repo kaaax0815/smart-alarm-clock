@@ -9,25 +9,25 @@ import {
 } from '../utils/api';
 
 export function useAlarms() {
-  return useQuery('alarms', () => getAlarms(), { staleTime: 5 * 60 * 1000 });
+  return useQuery(['alarms'], () => getAlarms(), { staleTime: 5 * 60 * 1000 });
 }
 
 export function useAddAlarm() {
   const queryClient = useQueryClient();
   return useMutation<unknown, unknown, Alarm>((alarm) => postAlarms(alarm), {
     onMutate: async (alarm) => {
-      await queryClient.invalidateQueries('alarms');
-      const prev = queryClient.getQueryData<Alarm[]>('alarms');
+      await queryClient.invalidateQueries(['alarms']);
+      const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
       if (prev) {
-        queryClient.setQueryData<Alarm[]>('alarms', [...prev, alarm]);
+        queryClient.setQueryData<Alarm[]>(['alarms'], [...prev, alarm]);
       }
       return prev;
     },
     onError: (_error, _vars, prev) => {
-      queryClient.setQueryData('alarms', prev);
+      queryClient.setQueryData(['alarms'], prev);
     },
     onSettled: () => {
-      queryClient.invalidateQueries('alarms');
+      queryClient.invalidateQueries(['alarms']);
     },
   });
 }
@@ -38,21 +38,21 @@ export function useDeleteAlarm() {
     (alarm) => deleteAlarms(alarm),
     {
       onMutate: async (alarm) => {
-        await queryClient.invalidateQueries('alarms');
-        const prev = queryClient.getQueryData<Alarm[]>('alarms');
+        await queryClient.invalidateQueries(['alarms']);
+        const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
         if (prev) {
           queryClient.setQueryData<Alarm[]>(
-            'alarms',
+            ['alarms'],
             prev.filter((oldAlarm) => oldAlarm.name !== alarm.name),
           );
         }
         return prev;
       },
       onError: (_error, _vars, prev) => {
-        queryClient.setQueryData('alarms', prev);
+        queryClient.setQueryData(['alarms'], prev);
       },
       onSettled: () => {
-        queryClient.invalidateQueries('alarms');
+        queryClient.invalidateQueries(['alarms']);
       },
     },
   );
@@ -64,21 +64,21 @@ export function useUpdateAlarm() {
     (alarm) => patchAlarms(alarm),
     {
       onMutate: async (alarm) => {
-        await queryClient.invalidateQueries('alarms');
-        const prev = queryClient.getQueryData<Alarm[]>('alarms');
+        await queryClient.invalidateQueries(['alarms']);
+        const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
         if (prev) {
           queryClient.setQueryData<Alarm[]>(
-            'alarms',
+            ['alarms'],
             prev.map((o) => (o.name === alarm.name ? { ...o, ...alarm } : o)),
           );
         }
         return prev;
       },
       onError: (_error, _vars, prev) => {
-        queryClient.setQueryData('alarms', prev);
+        queryClient.setQueryData(['alarms'], prev);
       },
       onSettled: () => {
-        queryClient.invalidateQueries('alarms');
+        queryClient.invalidateQueries(['alarms']);
       },
     },
   );
