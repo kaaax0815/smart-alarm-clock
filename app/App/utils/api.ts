@@ -1,5 +1,5 @@
 import NetInfo from '@react-native-community/netinfo';
-import { onlineManager } from 'react-query';
+import { onlineManager } from '@tanstack/react-query';
 
 export async function getAlarms() {
   const result = await fetchData<{ alarms: Alarm[] }>('/alarms');

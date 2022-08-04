@@ -1,7 +1,18 @@
 module.exports = {
   root: true,
   extends: '@react-native-community',
-  plugins: ['simple-import-sort', 'prettier'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'simple-import-sort', 'prettier'],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/no-shadow': ['error'],
+        'no-shadow': 'off',
+        'no-undef': 'off',
+      },
+    },
+  ],
   rules: {
     curly: 'warn',
     'simple-import-sort/imports': 'error',
@@ -12,5 +23,5 @@ module.exports = {
         usePrettierrc: true,
       },
     ],
-  },
+  }
 };

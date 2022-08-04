@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import socketio from 'socket.io-client';
 
 import App from './App';

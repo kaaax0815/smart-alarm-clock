@@ -1,10 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import { ActivityIndicator, Button } from 'react-native-paper';
+import { TimePickerModal } from 'react-native-paper-dates';
 import { FormBuilder } from 'react-native-paper-form-builder';
+import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
 
 import ScrollView from '../components/ScrollView';
-// import { TimePickerModal } from 'react-native-paper-dates';
 //import { useAddAlarm, useUpdateAlarm } from '../hooks/useAlarms';
 import { useRingtones } from '../hooks/useRingtones';
 import { Props } from './index';
@@ -12,6 +13,7 @@ import { Props } from './index';
 interface FormSubmitValues {
   name: string;
   ringtone: string;
+  time: string;
 }
 
 export default function AlarmForm({
@@ -28,6 +30,9 @@ export default function AlarmForm({
     defaultValues: {
       name: edit ? alarm.name : '',
       ringtone: edit ? alarm.ringtone : '',
+      time: edit
+        ? alarm.time
+        : `${new Date().getHours()}:${new Date().getMinutes()}`,
     },
     mode: 'onChange',
   });
@@ -76,6 +81,11 @@ export default function AlarmForm({
             },
             options: ringtoneChoices,
           },
+          {
+            type: 'custom',
+            name: 'time',
+            JSX: CustomTimePicker,
+          },
         ]}
       />
       <Button
@@ -84,5 +94,42 @@ export default function AlarmForm({
         {edit ? 'Speichern' : 'Hinzufügen'}
       </Button>
     </ScrollView>
+  );
+}
+
+function CustomTimePicker(props: LogicProps) {
+  const { field } = useController(props);
+  const [visible, setVisible] = React.useState(false);
+  const onDismiss = React.useCallback(() => {
+    setVisible(false);
+  }, [setVisible]);
+  const onConfirm = React.useCallback(
+    ({ hours, minutes }) => {
+      setVisible(false);
+      field.value = `${hours}:${minutes}`;
+    },
+    [setVisible, field],
+  );
+  const time = React.useMemo(() => {
+    const [hours, minutes] = field.value.split(':');
+    return { hours, minutes };
+  }, [field.value]);
+  return (
+    <>
+      <TimePickerModal
+        visible={visible}
+        onDismiss={onDismiss}
+        onConfirm={onConfirm}
+        hours={time.hours}
+        minutes={time.minutes}
+        label="Zeit auswählen"
+        uppercase={false}
+        cancelLabel="Abbrechen"
+        confirmLabel="Ok"
+        animationType="fade"
+        locale="de"
+      />
+      <Button onPress={() => setVisible(true)}>{field.value}</Button>
+    </>
   );
 }
