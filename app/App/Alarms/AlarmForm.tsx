@@ -13,7 +13,7 @@ import { Props } from './index';
 interface FormSubmitValues {
   name: string;
   ringtone: string;
-  time: string;
+  time: { hours: number; minutes: number };
 }
 
 export default function AlarmForm({
@@ -31,8 +31,11 @@ export default function AlarmForm({
       name: edit ? alarm.name : '',
       ringtone: edit ? alarm.ringtone : '',
       time: edit
-        ? alarm.time
-        : `${new Date().getHours()}:${new Date().getMinutes()}`,
+        ? {
+            hours: Number.parseInt(alarm.time.split(':')[0], 10)!,
+            minutes: Number.parseInt(alarm.time.split(':')[1], 10)!,
+          }
+        : { hours: new Date().getHours(), minutes: new Date().getMinutes() },
     },
     mode: 'onChange',
   });
@@ -104,24 +107,21 @@ function CustomTimePicker(props: LogicProps) {
     setVisible(false);
   }, [setVisible]);
   const onConfirm = React.useCallback(
-    ({ hours, minutes }) => {
+    ({ hours, minutes }: { hours: number; minutes: number }) => {
       setVisible(false);
-      field.value = `${hours}:${minutes}`;
+      field.value.hours = hours;
+      field.value.minutes = minutes;
     },
     [setVisible, field],
   );
-  const time = React.useMemo(() => {
-    const [hours, minutes] = field.value.split(':');
-    return { hours, minutes };
-  }, [field.value]);
   return (
     <>
       <TimePickerModal
         visible={visible}
         onDismiss={onDismiss}
         onConfirm={onConfirm}
-        hours={time.hours}
-        minutes={time.minutes}
+        hours={field.value.hours}
+        minutes={field.value.minutes}
         label="Zeit auswählen"
         uppercase={false}
         cancelLabel="Abbrechen"
@@ -129,7 +129,10 @@ function CustomTimePicker(props: LogicProps) {
         animationType="fade"
         locale="de"
       />
-      <Button onPress={() => setVisible(true)}>{field.value}</Button>
+      <Button onPress={() => setVisible(true)}>
+        {field.value.hours.toString().padStart(2, '0')}:
+        {field.value.minutes.toString().padStart(2, '0')}
+      </Button>
     </>
   );
 }
