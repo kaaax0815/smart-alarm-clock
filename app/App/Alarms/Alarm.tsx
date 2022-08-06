@@ -57,16 +57,16 @@ export default function Alarm({
   }
   function showDays(days: boolean[]) {
     const isMultipleTrue = days.filter((day) => day === true).length > 1;
+    if (!isMultipleTrue) {
+      return Days[(days.indexOf(true) + 1) as ValidDays];
+    }
     return days
       .map((day, i) => {
         if (!day) {
           return '';
         }
         const asWeekday = Days[(i + 1) as ValidDays];
-        if (isMultipleTrue) {
-          return asWeekday.slice(0, 2);
-        }
-        return asWeekday;
+        return asWeekday.slice(0, 2);
       })
       .join(' ');
   }
