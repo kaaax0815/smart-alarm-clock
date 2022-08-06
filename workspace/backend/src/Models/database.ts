@@ -20,7 +20,7 @@ export const database = z.object({
     z.object({
       ringtone: z.string(),
       time: z.string(),
-      days: z.array(z.number()),
+      days: z.array(z.boolean()).length(7),
       enabled: z.boolean(),
       name: z.string()
     })

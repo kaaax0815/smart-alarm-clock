@@ -29,9 +29,9 @@ export default class Alarm {
     /** In `HH:MM` format */
     const currentTime = currentDate.slice(0, -3).slice(-5);
     const currentDay = currentDate.split(',')[0];
-    const currentDayIndex = this.days.indexOf(currentDay) + 1;
+    const currentDayIndex = this.days.indexOf(currentDay);
     for (const alarm of alarms) {
-      if (alarm.enabled && alarm.time === currentTime && alarm.days.includes(currentDayIndex)) {
+      if (alarm.enabled && alarm.time === currentTime && alarm.days[currentDayIndex]) {
         this.ring(alarm);
       }
     }
