@@ -1,6 +1,13 @@
 import React from 'react';
 import { useController, useForm } from 'react-hook-form';
-import { ActivityIndicator, Button } from 'react-native-paper';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  Checkbox,
+  List,
+  useTheme,
+} from 'react-native-paper';
 import { TimePickerModal } from 'react-native-paper-dates';
 import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
@@ -14,6 +21,8 @@ interface FormSubmitValues {
   name: string;
   ringtone: string;
   time: { hours: number; minutes: number };
+  days: boolean[];
+  enabled: true;
 }
 
 export default function AlarmForm({
@@ -22,6 +31,15 @@ export default function AlarmForm({
 }: Props<'AlarmForm'>) {
   const { alarm, edit } = route.params;
   const { data: ringtones, status: ringtonesStatus } = useRingtones();
+  const editAlarmDays = React.useMemo(() => {
+    if (alarm) {
+      const convAlarms = [false, false, false, false, false, false, false];
+      alarm.days.forEach((day) => {
+        convAlarms[day - 1] = true;
+      });
+      return convAlarms;
+    }
+  }, [alarm]);
   const {
     control,
     setFocus,
@@ -36,6 +54,10 @@ export default function AlarmForm({
             minutes: Number.parseInt(alarm.time.split(':')[1], 10)!,
           }
         : { hours: new Date().getHours(), minutes: new Date().getMinutes() },
+      days: edit
+        ? editAlarmDays
+        : [false, false, false, false, false, false, false],
+      enabled: true,
     },
     mode: 'onChange',
   });
@@ -89,10 +111,16 @@ export default function AlarmForm({
             name: 'time',
             JSX: CustomTimePicker,
           },
+          {
+            type: 'custom',
+            name: 'days',
+            JSX: CustomDaysPicker,
+          },
+          { type: 'custom', name: 'enabled', JSX: CustomEnabledCheckBox },
         ]}
       />
       <Button
-        mode={'contained'}
+        mode="contained"
         onPress={formHandleSubmit((onValid) => handleSubmit(onValid))}>
         {edit ? 'Speichern' : 'Hinzufügen'}
       </Button>
@@ -109,8 +137,7 @@ function CustomTimePicker(props: LogicProps) {
   const onConfirm = React.useCallback(
     ({ hours, minutes }: { hours: number; minutes: number }) => {
       setVisible(false);
-      field.value.hours = hours;
-      field.value.minutes = minutes;
+      field.onChange({ hours, minutes });
     },
     [setVisible, field],
   );
@@ -134,5 +161,121 @@ function CustomTimePicker(props: LogicProps) {
         {field.value.minutes.toString().padStart(2, '0')}
       </Button>
     </>
+  );
+}
+
+const styles = StyleSheet.create({
+  CustomDaysPicker: {
+    flexDirection: 'row',
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-evenly',
+  },
+});
+
+function CustomDaysPicker(props: LogicProps) {
+  const { field } = useController(props);
+  const [enabled, setEnabled] = React.useState<boolean[]>(field.value);
+  function handleClick(i: number) {
+    return () => {
+      setEnabled((prev) => {
+        const newEnabled = [...prev];
+        newEnabled[i] = !newEnabled[i];
+        field.onChange(newEnabled);
+        return newEnabled;
+      });
+    };
+  }
+  return (
+    <View style={styles.CustomDaysPicker}>
+      <DaysPickerButton
+        title="Mo"
+        onPress={handleClick(0)}
+        active={enabled[0]}
+      />
+      <DaysPickerButton
+        title="Di"
+        onPress={handleClick(1)}
+        active={enabled[1]}
+      />
+      <DaysPickerButton
+        title="Mi"
+        onPress={handleClick(2)}
+        active={enabled[2]}
+      />
+      <DaysPickerButton
+        title="Do"
+        onPress={handleClick(3)}
+        active={enabled[3]}
+      />
+      <DaysPickerButton
+        title="Fr"
+        onPress={handleClick(4)}
+        active={enabled[4]}
+      />
+      <DaysPickerButton
+        title="Sa"
+        onPress={handleClick(5)}
+        active={enabled[5]}
+      />
+      <DaysPickerButton
+        title="So"
+        onPress={handleClick(6)}
+        active={enabled[6]}
+      />
+    </View>
+  );
+}
+
+function DaysPickerButton({
+  onPress,
+  title,
+  active,
+}: {
+  onPress: () => void;
+  title: string;
+  active?: boolean;
+}) {
+  const { colors } = useTheme();
+  const buttonStyles = StyleSheet.create({
+    // ...
+    appButtonContainer: {
+      elevation: 8,
+      backgroundColor: active ? colors.primary : 'transparent',
+      borderRadius: 100,
+      padding: 0,
+      width: '13%',
+      aspectRatio: 1,
+      borderColor: colors.primary,
+      borderWidth: 1.5,
+      justifyContent: 'center',
+    },
+    appButtonText: {
+      color: '#fff',
+      fontWeight: 'bold',
+      alignSelf: 'center',
+    },
+  });
+  return (
+    <TouchableOpacity onPress={onPress} style={buttonStyles.appButtonContainer}>
+      <Text style={buttonStyles.appButtonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function CustomEnabledCheckBox(props: LogicProps) {
+  const { field } = useController(props);
+  return (
+    <List.Item
+      title={'Aktiviert'}
+      right={() => (
+        <Checkbox
+          status={field.value ? 'checked' : 'unchecked'}
+          onPress={() => {
+            field.onChange(!field.value);
+          }}
+        />
+      )}
+    />
   );
 }
