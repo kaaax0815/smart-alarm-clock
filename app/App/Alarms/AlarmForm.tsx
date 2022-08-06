@@ -13,7 +13,7 @@ import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
 
 import ScrollView from '../components/ScrollView';
-//import { useAddAlarm, useUpdateAlarm } from '../hooks/useAlarms';
+import { useAddAlarm, useUpdateAlarm } from '../hooks/useAlarms';
 import { useRingtones } from '../hooks/useRingtones';
 import { Props } from './index';
 
@@ -22,15 +22,14 @@ interface FormSubmitValues {
   ringtone: string;
   time: { hours: number; minutes: number };
   days: boolean[];
-  enabled: true;
+  enabled: boolean;
 }
 
-export default function AlarmForm({
-  navigation: _,
-  route,
-}: Props<'AlarmForm'>) {
+export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
   const { alarm, edit } = route.params;
   const { data: ringtones, status: ringtonesStatus } = useRingtones();
+  const addAlarm = useAddAlarm();
+  const updateAlarm = useUpdateAlarm();
   const {
     control,
     setFocus,
@@ -48,7 +47,7 @@ export default function AlarmForm({
       days: edit
         ? alarm.days
         : [false, false, false, false, false, false, false],
-      enabled: true,
+      enabled: edit ? alarm.enabled : true,
     },
     mode: 'onChange',
   });
@@ -61,7 +60,16 @@ export default function AlarmForm({
     [ringtones],
   );
   function handleSubmit(values: FormSubmitValues) {
-    console.log(values);
+    const mod = {
+      ...values,
+      time: `${values.time.hours}:${values.time.minutes}`,
+    };
+    if (edit) {
+      updateAlarm.mutate(mod);
+    } else {
+      addAlarm.mutate(mod);
+    }
+    navigation.navigate('Alarms');
   }
   if (ringtonesStatus !== 'success') {
     return (
@@ -106,6 +114,15 @@ export default function AlarmForm({
             type: 'custom',
             name: 'days',
             JSX: CustomDaysPicker,
+            rules: {
+              validate: (value: boolean[]) => {
+                console.log(value);
+                if (value.findIndex((v) => v === true) === -1) {
+                  return 'Bitte mindestens einen Tag auswählen';
+                }
+                return undefined;
+              },
+            },
           },
           { type: 'custom', name: 'enabled', JSX: CustomEnabledCheckBox },
         ]}
@@ -147,10 +164,15 @@ function CustomTimePicker(props: LogicProps) {
         animationType="fade"
         locale="de"
       />
-      <Button onPress={() => setVisible(true)}>
-        {field.value.hours.toString().padStart(2, '0')}:
-        {field.value.minutes.toString().padStart(2, '0')}
-      </Button>
+      <List.Item
+        title="Uhrzeit"
+        right={() => (
+          <Button onPress={() => setVisible(true)}>
+            {field.value.hours.toString().padStart(2, '0')}:
+            {field.value.minutes.toString().padStart(2, '0')}
+          </Button>
+        )}
+      />
     </>
   );
 }
@@ -161,6 +183,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     width: '100%',
     justifyContent: 'space-evenly',
+  },
+  CustomDaysHeader: {
+    paddingTop: 0,
   },
 });
 
@@ -178,43 +203,48 @@ function CustomDaysPicker(props: LogicProps) {
     };
   }
   return (
-    <View style={styles.CustomDaysPicker}>
-      <DaysPickerButton
-        title="Mo"
-        onPress={handleClick(0)}
-        active={enabled[0]}
-      />
-      <DaysPickerButton
-        title="Di"
-        onPress={handleClick(1)}
-        active={enabled[1]}
-      />
-      <DaysPickerButton
-        title="Mi"
-        onPress={handleClick(2)}
-        active={enabled[2]}
-      />
-      <DaysPickerButton
-        title="Do"
-        onPress={handleClick(3)}
-        active={enabled[3]}
-      />
-      <DaysPickerButton
-        title="Fr"
-        onPress={handleClick(4)}
-        active={enabled[4]}
-      />
-      <DaysPickerButton
-        title="Sa"
-        onPress={handleClick(5)}
-        active={enabled[5]}
-      />
-      <DaysPickerButton
-        title="So"
-        onPress={handleClick(6)}
-        active={enabled[6]}
-      />
-    </View>
+    <>
+      <List.Subheader style={styles.CustomDaysHeader}>
+        Wochentage
+      </List.Subheader>
+      <View style={styles.CustomDaysPicker}>
+        <DaysPickerButton
+          title="Mo"
+          onPress={handleClick(0)}
+          active={enabled[0]}
+        />
+        <DaysPickerButton
+          title="Di"
+          onPress={handleClick(1)}
+          active={enabled[1]}
+        />
+        <DaysPickerButton
+          title="Mi"
+          onPress={handleClick(2)}
+          active={enabled[2]}
+        />
+        <DaysPickerButton
+          title="Do"
+          onPress={handleClick(3)}
+          active={enabled[3]}
+        />
+        <DaysPickerButton
+          title="Fr"
+          onPress={handleClick(4)}
+          active={enabled[4]}
+        />
+        <DaysPickerButton
+          title="Sa"
+          onPress={handleClick(5)}
+          active={enabled[5]}
+        />
+        <DaysPickerButton
+          title="So"
+          onPress={handleClick(6)}
+          active={enabled[6]}
+        />
+      </View>
+    </>
   );
 }
 
@@ -256,15 +286,17 @@ function DaysPickerButton({
 
 function CustomEnabledCheckBox(props: LogicProps) {
   const { field } = useController(props);
+  const { colors } = useTheme();
   return (
     <List.Item
-      title={'Aktiviert'}
+      title="Aktiviert"
       right={() => (
         <Checkbox
           status={field.value ? 'checked' : 'unchecked'}
           onPress={() => {
             field.onChange(!field.value);
           }}
+          color={colors.primary}
         />
       )}
     />

@@ -45,6 +45,7 @@ export default function Alarm({
   function handleDelete() {
     return () => {
       deleteAlarm.mutate({ name: alarm.name });
+      setVisible(false);
     };
   }
   function handleEdit() {
@@ -53,6 +54,7 @@ export default function Alarm({
         edit: true,
         alarm,
       });
+      setVisible(false);
     };
   }
   function showDays(days: boolean[]) {
@@ -63,7 +65,7 @@ export default function Alarm({
     return days
       .map((day, i) => {
         if (!day) {
-          return '';
+          return undefined;
         }
         const asWeekday = Days[(i + 1) as ValidDays];
         return asWeekday.slice(0, 2);
@@ -86,8 +88,8 @@ export default function Alarm({
           anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
           visible={visible}
           onDismiss={closeMenu}>
-          <Menu.Item onPress={handleEdit()} title="Bearbeiten" />
-          <Menu.Item onPress={handleDelete()} title="Löschen" />
+          <Menu.Item onPress={handleEdit()} title="Bearbeiten" icon="pencil" />
+          <Menu.Item onPress={handleDelete()} title="Löschen" icon="delete" />
         </Menu>
       </View>
     </View>
