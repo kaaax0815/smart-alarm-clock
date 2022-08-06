@@ -80,9 +80,10 @@ export interface Alarm {
   /** Time when the alarm should go off in timezone in `settings.timezone` */
   time: string;
   /** On which days it should go off
-   * 1 = Monday, 2 = Tuesday, ..., 7 = Sunday
+   * 0 = Monday
+   * If true then the alarm should go off on that day
    */
-  days: number[];
+  days: boolean[];
   /** Whether the alarm is enabled or not */
   enabled: boolean;
   /** Name of the Alarm for quick access */

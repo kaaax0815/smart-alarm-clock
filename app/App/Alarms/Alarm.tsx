@@ -55,13 +55,19 @@ export default function Alarm({
       });
     };
   }
-  function showDays(days: ValidDays[]) {
-    if (days.length === 1) {
-      return Days[days[0]];
-    }
+  function showDays(days: boolean[]) {
+    const isMultipleTrue = days.filter((day) => day === true).length > 1;
     return days
-      .sort()
-      .map((day) => Days[day].slice(0, 2))
+      .map((day, i) => {
+        if (!day) {
+          return '';
+        }
+        const asWeekday = Days[(i + 1) as ValidDays];
+        if (isMultipleTrue) {
+          return asWeekday.slice(0, 2);
+        }
+        return asWeekday;
+      })
       .join(' ');
   }
   return (
@@ -69,7 +75,7 @@ export default function Alarm({
       <View style={styles.text}>
         <Text style={styles.name}>{alarm.name}</Text>
         <Text style={styles.time}>{alarm.time}</Text>
-        <Text style={styles.days}>{showDays(alarm.days as ValidDays[])}</Text>
+        <Text style={styles.days}>{showDays(alarm.days)}</Text>
       </View>
       <View style={styles.control}>
         <Switch

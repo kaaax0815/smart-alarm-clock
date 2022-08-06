@@ -31,15 +31,6 @@ export default function AlarmForm({
 }: Props<'AlarmForm'>) {
   const { alarm, edit } = route.params;
   const { data: ringtones, status: ringtonesStatus } = useRingtones();
-  const editAlarmDays = React.useMemo(() => {
-    if (alarm) {
-      const convAlarms = [false, false, false, false, false, false, false];
-      alarm.days.forEach((day) => {
-        convAlarms[day - 1] = true;
-      });
-      return convAlarms;
-    }
-  }, [alarm]);
   const {
     control,
     setFocus,
@@ -55,7 +46,7 @@ export default function AlarmForm({
           }
         : { hours: new Date().getHours(), minutes: new Date().getMinutes() },
       days: edit
-        ? editAlarmDays
+        ? alarm.days
         : [false, false, false, false, false, false, false],
       enabled: true,
     },
