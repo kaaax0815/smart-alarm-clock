@@ -10,8 +10,15 @@ import HandleSocket from './components/HandleSocket';
 import theme from './constants/theme';
 import { SocketContext } from './contexts/Socket';
 
+const queryClient = new QueryClient();
+
+if (__DEV__) {
+  import('react-query-native-devtools').then(({ addPlugin }) => {
+    addPlugin({ queryClient });
+  });
+}
+
 export default function Start() {
-  const queryClient = new QueryClient();
   const [socket, setSocket] = React.useState<
     ReturnType<typeof socketio> | undefined
   >();

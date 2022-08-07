@@ -10,7 +10,17 @@ function HandleSocket(): null {
     if (socket !== undefined) {
       socket.on('databaseChange', () => {
         console.log('databaseChange');
-        queryClient.refetchQueries(['alarms', 'ringtones']);
+        /*const alarmsCache = queryClient
+          .getQueryCache()
+          .getAll()
+          .find((v) => v.queryKey[0] === 'alarms');
+        const ringtonesCache = queryClient
+          .getQueryCache()
+          .getAll()
+          .find((v) => v.queryKey[0] === 'ringtones');
+        alarmsCache?.fetch();
+        ringtonesCache?.fetch();*/
+        queryClient.invalidateQueries(['alarms']);
       });
       return () => {
         socket!.removeAllListeners('databaseChange');
