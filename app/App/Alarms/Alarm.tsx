@@ -63,13 +63,14 @@ export default function Alarm({
       return Days[(days.indexOf(true) + 1) as ValidDays];
     }
     return days
-      .map((day, i) => {
+      .reduce((prev, day, i) => {
         if (!day) {
-          return undefined;
+          return prev;
         }
         const asWeekday = Days[(i + 1) as ValidDays];
-        return asWeekday.slice(0, 2);
-      })
+        prev.push(asWeekday.slice(0, 2));
+        return prev;
+      }, [] as string[])
       .join(' ');
   }
   return (
