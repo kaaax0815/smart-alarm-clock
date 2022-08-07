@@ -12,7 +12,6 @@ import { SocketContext } from './contexts/Socket';
 
 export default function Start() {
   const queryClient = new QueryClient();
-  const [loading, setLoading] = React.useState(true);
   const [socket, setSocket] = React.useState<
     ReturnType<typeof socketio> | undefined
   >();
@@ -33,7 +32,6 @@ export default function Start() {
       query: { type: 'client' },
     });
     setSocket(sock);
-    setLoading(false);
   }
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function Start() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
-          <SocketContext.Provider value={{ loading, socket }}>
+          <SocketContext.Provider value={socket}>
             <HandleSocket />
             <App />
           </SocketContext.Provider>

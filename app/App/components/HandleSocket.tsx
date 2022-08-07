@@ -4,11 +4,11 @@ import { useContext, useEffect } from 'react';
 import { SocketContext } from '../contexts/Socket';
 
 function HandleSocket(): null {
-  const { loading, socket } = useContext(SocketContext);
+  const socket = useContext(SocketContext);
   const queryClient = useQueryClient();
   useEffect(() => {
-    if (!loading) {
-      socket!.on('databaseChange', () => {
+    if (socket !== undefined) {
+      socket.on('databaseChange', () => {
         console.log('databaseChange');
         queryClient.refetchQueries(['alarms', 'ringtones']);
       });
@@ -16,7 +16,7 @@ function HandleSocket(): null {
         socket!.removeAllListeners('databaseChange');
       };
     }
-  }, [queryClient, loading, socket]);
+  }, [queryClient, socket]);
   return null;
 }
 
