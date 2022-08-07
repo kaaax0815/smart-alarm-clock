@@ -22,36 +22,36 @@ export default function Start() {
   const [socket, setSocket] = React.useState<
     ReturnType<typeof socketio> | undefined
   >();
+  const [ip, setIP] = React.useState<string | undefined>();
 
-  async function getIP() {
-    const ip = await RNSInfo.getItem('backendIP', {
+  useEffect(() => {
+    RNSInfo.getItem('backendIP', {
       sharedPreferencesName: 'appPrefs',
       keychainService: 'appChain',
-    });
+    }).then(setIP);
     console.debug({ ip, __DEV__ });
     if (__DEV__ && !ip) {
       console.warn('IP not set');
-      await RNSInfo.setItem('backendIP', '10.0.2.2', {
+      /* await RNSInfo.setItem('backendIP', '10.0.2.2', {
         sharedPreferencesName: 'appPrefs',
         keychainService: 'appChain',
-      });
+      }); */
     }
-    const sock = socketio(`http://${ip}:3535`, {
-      query: { type: 'client' },
-    });
-    setSocket(sock);
-  }
+    if (ip) {
+      const sock = socketio(`http://${ip}:3535`, {
+        query: { type: 'client' },
+      });
+      setSocket(sock);
+    }
+  }, [ip]);
 
-  useEffect(() => {
-    getIP();
-  }, []);
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={socket}>
             <HandleSocket />
-            <App />
+            <App ip={ip} setIP={setIP} />
           </SocketContext.Provider>
         </QueryClientProvider>
       </NavigationContainer>
