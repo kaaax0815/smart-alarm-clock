@@ -1,12 +1,16 @@
 import * as React from 'react';
-import { ScrollView as OldScrollView, StyleSheet } from 'react-native';
+import {
+  ScrollView as OldScrollView,
+  ScrollViewProps,
+  StyleSheet,
+} from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 export default function ScrollView({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  style,
+  ...rest
+}: ScrollViewProps) {
   const { colors } = useTheme();
   const styles = React.useMemo(
     () =>
@@ -19,5 +23,9 @@ export default function ScrollView({
       }),
     [colors],
   );
-  return <OldScrollView style={styles.scrollview}>{children}</OldScrollView>;
+  return (
+    <OldScrollView style={[styles.scrollview, style]} {...rest}>
+      {children}
+    </OldScrollView>
+  );
 }
