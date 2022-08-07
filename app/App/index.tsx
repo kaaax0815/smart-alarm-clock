@@ -36,7 +36,7 @@ export default function Start() {
     if (ip) {
       return;
     }
-    console.info('Try to get IP from Shared Preferences');
+    console.debug('Try to get IP from Shared Preferences');
     RNSInfo.getItem('backendIP', {
       sharedPreferencesName: 'appPrefs',
       keychainService: 'appChain',
@@ -52,7 +52,7 @@ export default function Start() {
     if (!ip || loading) {
       return;
     }
-    console.info('Initializing socket');
+    console.debug('Initializing socket');
     const sock = socketio(`http://${ip}:3535`, {
       query: { type: 'client' },
     });
