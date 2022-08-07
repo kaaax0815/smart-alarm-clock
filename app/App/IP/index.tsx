@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 import { Button, Text } from 'react-native-paper';
 import { FormBuilder } from 'react-native-paper-form-builder';
 
@@ -25,6 +26,10 @@ export default function IP({ setIP }: IPProps) {
     },
     mode: 'onChange',
   });
+
+  React.useEffect(() => {
+    RNBootSplash.hide();
+  }, []);
 
   function handleSubmit(values: FormSubmitValues) {
     setIP(values.ip);

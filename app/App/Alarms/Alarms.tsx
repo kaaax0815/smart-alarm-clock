@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 
 import ScrollView from '../components/ScrollView';
@@ -39,6 +40,13 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
     });
     setAlarmsEnabled(obj);
   }, [alarms, alarmsStatus]);
+
+  React.useEffect(() => {
+    if (alarmsStatus !== 'success') {
+      return;
+    }
+    RNBootSplash.hide();
+  }, [alarmsStatus]);
 
   // Check if everything is loaded
   if (
