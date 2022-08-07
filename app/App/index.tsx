@@ -28,8 +28,9 @@ export default function Start() {
       sharedPreferencesName: 'appPrefs',
       keychainService: 'appChain',
     });
-    console.log({ ip, __DEV__ });
+    console.debug({ ip, __DEV__ });
     if (__DEV__ && !ip) {
+      console.warn('IP not set');
       await RNSInfo.setItem('backendIP', '10.0.2.2', {
         sharedPreferencesName: 'appPrefs',
         keychainService: 'appChain',

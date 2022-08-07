@@ -28,10 +28,23 @@ export async function getRingtones() {
 async function fetchData<T>(endpoint: string) {
   const response = await fetch(`http://192.168.178.55:3535/api${endpoint}`);
   if (!response.ok) {
+    console.warn(
+      'API:',
+      'Failed to fetch data from API',
+      endpoint,
+      response.status,
+      response.statusText,
+    );
     throw new Error(response.statusText);
   }
   const json = (await response.json()) as Response<T>;
   if (json.status === 'error') {
+    console.warn(
+      'API:',
+      'Error while fetching data from API',
+      endpoint,
+      json.error.message,
+    );
     throw new Error(json.error.message);
   }
   return json.data;
@@ -46,10 +59,25 @@ async function postData<T>(endpoint: string, method: string, data: unknown) {
     body: JSON.stringify(data),
   });
   if (!response.ok) {
+    console.warn(
+      'API:',
+      'Failed to post data to API',
+      endpoint,
+      method,
+      response.status,
+      response.statusText,
+    );
     throw new Error(response.statusText);
   }
   const json = (await response.json()) as Response<T>;
   if (json.status === 'error') {
+    console.warn(
+      'API:',
+      'Error while posting data to API',
+      endpoint,
+      method,
+      json.error.message,
+    );
     throw new Error(json.error.message);
   }
   return json.data;

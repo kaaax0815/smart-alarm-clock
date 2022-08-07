@@ -116,7 +116,6 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
             JSX: CustomDaysPicker,
             rules: {
               validate: (value: boolean[]) => {
-                console.log(value);
                 if (value.findIndex((v) => v === true) === -1) {
                   return 'Bitte mindestens einen Tag auswählen';
                 }
