@@ -22,13 +22,20 @@ export default function Start() {
   const [socket, setSocket] = React.useState<
     ReturnType<typeof socketio> | undefined
   >();
-  const [ip, setIP] = React.useState<string | undefined>();
+  const [ip, _setIP] = React.useState<string | undefined>();
+
+  const setIP = React.useCallback((value: string) => {
+    RNSInfo.setItem('backendIP', value, {
+      sharedPreferencesName: 'appPrefs',
+      keychainService: 'appChain',
+    }).then(() => _setIP(value));
+  }, []);
 
   useEffect(() => {
     RNSInfo.getItem('backendIP', {
       sharedPreferencesName: 'appPrefs',
       keychainService: 'appChain',
-    }).then(setIP);
+    }).then(_setIP);
     console.debug({ ip, __DEV__ });
     if (__DEV__ && !ip) {
       console.warn('IP not set');

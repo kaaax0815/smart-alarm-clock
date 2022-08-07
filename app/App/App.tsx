@@ -10,7 +10,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 interface AppProps {
   ip: string | undefined;
-  setIP: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setIP: (value: string) => void;
 }
 
 export default function App({ ip, setIP }: AppProps) {
