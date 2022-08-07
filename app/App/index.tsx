@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, Text } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import socketio from 'socket.io-client';
 
@@ -23,6 +23,7 @@ export default function Start() {
     ReturnType<typeof socketio> | undefined
   >();
   const [ip, _setIP] = React.useState<string | undefined>();
+  const [loading, setLoading] = React.useState(true);
 
   const setIP = React.useCallback((value: string) => {
     RNSInfo.setItem('backendIP', value, {
@@ -32,25 +33,29 @@ export default function Start() {
   }, []);
 
   useEffect(() => {
+    if (ip) {
+      return;
+    }
     RNSInfo.getItem('backendIP', {
       sharedPreferencesName: 'appPrefs',
       keychainService: 'appChain',
-    }).then(_setIP);
-    console.debug({ ip, __DEV__ });
-    if (__DEV__ && !ip) {
-      console.warn('IP not set');
-      /* await RNSInfo.setItem('backendIP', '10.0.2.2', {
-        sharedPreferencesName: 'appPrefs',
-        keychainService: 'appChain',
-      }); */
-    }
-    if (ip) {
-      const sock = socketio(`http://${ip}:3535`, {
-        query: { type: 'client' },
-      });
-      setSocket(sock);
-    }
+    }).then((v) => {
+      if (v !== null) {
+        _setIP(v);
+      }
+      setLoading(false);
+    });
   }, [ip]);
+
+  useEffect(() => {
+    if (!ip || loading) {
+      return;
+    }
+    const sock = socketio(`http://${ip}:3535`, {
+      query: { type: 'client' },
+    });
+    setSocket(sock);
+  }, [ip, loading]);
 
   return (
     <PaperProvider theme={theme}>
@@ -58,7 +63,7 @@ export default function Start() {
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={socket}>
             <HandleSocket />
-            <App ip={ip} setIP={setIP} />
+            {loading ? <Text>Loading</Text> : <App ip={ip} setIP={setIP} />}
           </SocketContext.Provider>
         </QueryClientProvider>
       </NavigationContainer>
