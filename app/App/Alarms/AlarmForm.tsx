@@ -51,6 +51,7 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
     },
     mode: 'onChange',
   });
+
   const ringtoneChoices = React.useMemo(
     () =>
       ringtones?.map((ringtone) => ({
@@ -59,10 +60,13 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
       })),
     [ringtones],
   );
+
   function handleSubmit(values: FormSubmitValues) {
     const mod = {
       ...values,
-      time: `${values.time.hours}:${values.time.minutes}`,
+      time: `${values.time.hours
+        .toString()
+        .padStart(2, '0')}:${values.time.minutes.toString().padStart(2, '0')}`,
     };
     if (edit) {
       updateAlarm.mutate(mod);
@@ -71,6 +75,7 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
     }
     navigation.navigate('Alarms');
   }
+
   if (ringtonesStatus !== 'success') {
     return (
       <ScrollView>
@@ -78,6 +83,7 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
       </ScrollView>
     );
   }
+
   return (
     <ScrollView>
       <FormBuilder
