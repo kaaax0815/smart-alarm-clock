@@ -6505,10 +6505,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-bootsplash@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-4.2.4.tgz#d11332851f624f13b52e2cfc771d3baf1477223e"
-  integrity sha512-7qYM9gEu8RudFGutlw3m/Ryg66Ed84nMOuowyUD1F5e1aFsb/L5ZoAyM62aI7B4DFlzNOgGbC5fnVasVcd4zBA==
+react-native-bootsplash@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-4.3.0.tgz#c020b41991a497e5846fce6892d8b5dbe36f587d"
+  integrity sha512-RertPUk+D6R96e+dbGNbH+sXk93T+ixHPj65KqRluQO2v6DGElK0r9AMbf0d47ItK5GzXiESoLO1HLEH/cB7lA==
   dependencies:
     fs-extra "^10.1.0"
     jimp "^0.16.1"
