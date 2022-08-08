@@ -42,11 +42,11 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
   }, [alarms, alarmsStatus]);
 
   React.useEffect(() => {
-    if (alarmsStatus !== 'success') {
-      return;
+    console.log(alarmsStatus);
+    if (alarmsStatus === 'success' || alarmsStatus === 'error') {
+      RNBootSplash.hide();
     }
-    RNBootSplash.hide();
-  }, [alarmsStatus]);
+  }, [alarmsStatus, alarmsEnabled, alarms]);
 
   // Check if everything is loaded
   if (
@@ -116,6 +116,7 @@ interface Styles {
   text: TextStyle;
   deactivated: TextStyle;
   add: ViewStyle;
+  errorText: TextStyle;
 }
 
 const styles = StyleSheet.create<Styles>({
@@ -129,5 +130,8 @@ const styles = StyleSheet.create<Styles>({
   },
   add: {
     marginBottom: 10,
+  },
+  errorText: {
+    textAlign: 'center',
   },
 });

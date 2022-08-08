@@ -25,6 +25,9 @@ function HandleSocket(): null {
       socket.on('connect_error', (err) => {
         console.warn('SOCKET:', `connect_error due to ${err.message}`);
       });
+      socket.on('connect', () => {
+        console.debug('SOCKET:', 'Connected to Server');
+      });
       return () => {
         socket.removeAllListeners();
       };
