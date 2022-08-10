@@ -28,7 +28,7 @@
     "owm-onecall-api": "^1.2.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-query": "^3.34.16",
+    "react-query": "^4.0.0",
     "react-router-dom": "^6.2.1",
     "socket.io-client": "^4.4.1",
     "timezones-list": "^3.0.1"
