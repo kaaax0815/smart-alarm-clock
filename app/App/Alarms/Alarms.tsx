@@ -42,7 +42,6 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
   }, [alarms, alarmsStatus]);
 
   React.useEffect(() => {
-    console.log(alarmsStatus);
     if (alarmsStatus === 'success' || alarmsStatus === 'error') {
       RNBootSplash.hide();
     }
