@@ -64,9 +64,7 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
   function handleSubmit(values: FormSubmitValues) {
     const mod = {
       ...values,
-      time: `${values.time.hours
-        .toString()
-        .padStart(2, '0')}:${values.time.minutes.toString().padStart(2, '0')}`,
+      time: formatTime(values.time),
     };
     if (edit) {
       updateAlarm.mutate(mod);
@@ -173,13 +171,18 @@ function CustomTimePicker(props: LogicProps) {
         title="Uhrzeit"
         right={() => (
           <Button onPress={() => setVisible(true)}>
-            {field.value.hours.toString().padStart(2, '0')}:
-            {field.value.minutes.toString().padStart(2, '0')}
+            {formatTime(field.value)}
           </Button>
         )}
       />
     </>
   );
+}
+
+function formatTime(time: FormSubmitValues['time']) {
+  return `${time.hours.toString().padStart(2, '0')}:${time.minutes
+    .toString()
+    .padStart(2, '0')}`;
 }
 
 const styles = StyleSheet.create({
