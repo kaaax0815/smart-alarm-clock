@@ -57,6 +57,22 @@ export default function IP({ setIP }: IPProps) {
                 value: /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$/,
                 message: 'IP-Adresse ist ungültig',
               },
+              validate: async (value: string) => {
+                try {
+                  const controller = new AbortController();
+                  const timeoutId = setTimeout(() => controller.abort(), 5000);
+                  const res = await fetch(`http://${value}:3535/api/settings`, {
+                    signal: controller.signal,
+                  });
+                  clearTimeout(timeoutId);
+                  const json = await res.json();
+                  if (json.status !== 'success') {
+                    return 'Smarter Wecker ist nicht erreichbar';
+                  }
+                } catch {
+                  return 'Smarter Wecker ist nicht erreichbar';
+                }
+              },
             },
             textInputProps: {
               label: 'IP-Adresse',
