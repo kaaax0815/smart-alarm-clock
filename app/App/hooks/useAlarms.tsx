@@ -9,27 +9,30 @@ import {
 } from '../utils/api';
 
 export function useAlarms() {
-  return useQuery(['alarms'], () => getAlarms(), { staleTime: 5 * 60 * 1000 });
+  return useQuery(['alarms'], () => getAlarms());
 }
 
 export function useAddAlarm() {
   const queryClient = useQueryClient();
-  return useMutation<unknown, unknown, Alarm>((alarm) => postAlarms(alarm), {
-    onMutate: async (alarm) => {
-      await queryClient.invalidateQueries(['alarms']);
-      const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
-      if (prev) {
-        queryClient.setQueryData<Alarm[]>(['alarms'], [...prev, alarm]);
-      }
-      return prev;
+  return useMutation<unknown, unknown, Alarm, Alarm[]>(
+    (alarm) => postAlarms(alarm),
+    {
+      onMutate: async (alarm) => {
+        await queryClient.cancelQueries(['alarms']);
+        const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
+        if (prev) {
+          queryClient.setQueryData<Alarm[]>(['alarms'], [...prev, alarm]);
+        }
+        return prev;
+      },
+      onError: (_error, _vars, prev) => {
+        queryClient.setQueryData(['alarms'], prev);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(['alarms']);
+      },
     },
-    onError: (_error, _vars, prev) => {
-      queryClient.setQueryData(['alarms'], prev);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(['alarms']);
-    },
-  });
+  );
 }
 
 export function useDeleteAlarm() {
@@ -38,7 +41,7 @@ export function useDeleteAlarm() {
     (alarm) => deleteAlarms(alarm),
     {
       onMutate: async (alarm) => {
-        await queryClient.invalidateQueries(['alarms']);
+        await queryClient.cancelQueries(['alarms']);
         const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
         if (prev) {
           queryClient.setQueryData<Alarm[]>(
@@ -64,7 +67,7 @@ export function useUpdateAlarm() {
     (alarm) => patchAlarms(alarm),
     {
       onMutate: async (alarm) => {
-        await queryClient.invalidateQueries(['alarms']);
+        await queryClient.cancelQueries(['alarms']);
         const prev = queryClient.getQueryData<Alarm[]>(['alarms']);
         if (prev) {
           queryClient.setQueryData<Alarm[]>(
