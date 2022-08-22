@@ -23,6 +23,10 @@ export async function getRingtones() {
   return result.ringtones;
 }
 
+export async function deleteRingtones(ringtone: Pick<Ringtone, 'name'>) {
+  return postData('/ringtones', 'DELETE', ringtone);
+}
+
 // Helper Function
 
 async function fetchData<T>(endpoint: string) {
