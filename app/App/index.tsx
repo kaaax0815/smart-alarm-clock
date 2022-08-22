@@ -8,6 +8,7 @@ import socketio from 'socket.io-client';
 import App from './App';
 import HandleSocket from './components/HandleSocket';
 import theme from './constants/theme';
+import { SettingsContext } from './contexts/Settings';
 import { SocketContext } from './contexts/Socket';
 
 const queryClient = new QueryClient();
@@ -64,8 +65,10 @@ export default function Start() {
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={socket}>
-            <HandleSocket />
-            {loading ? <Text>Loading</Text> : <App ip={ip} setIP={setIP} />}
+            <SettingsContext.Provider value={{ ip, setIP }}>
+              <HandleSocket />
+              {loading ? <Text>Loading</Text> : <App />}
+            </SettingsContext.Provider>
           </SocketContext.Provider>
         </QueryClientProvider>
       </NavigationContainer>

@@ -3,23 +3,19 @@ import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 
 import Alarms from './Alarms';
+import { SettingsContext } from './contexts/Settings';
 import IP from './IP';
 import Ringtones from './Ringtones';
 
 const Tab = createMaterialBottomTabNavigator();
 
-interface AppProps {
-  ip: string | undefined;
-  setIP: (value: string) => void;
-}
-
-export default function App({ ip, setIP }: AppProps) {
+export default function App() {
   const isDarkMode = useColorScheme() === 'dark';
-
+  const settingsContext = React.useContext(SettingsContext);
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      {ip ? (
+      {settingsContext.ip ? (
         <Tab.Navigator>
           <Tab.Screen
             name="Wecker"
@@ -33,7 +29,7 @@ export default function App({ ip, setIP }: AppProps) {
           />
         </Tab.Navigator>
       ) : (
-        <IP setIP={setIP} />
+        <IP />
       )}
     </>
   );

@@ -6,16 +6,13 @@ import { Button, Text } from 'react-native-paper';
 import { FormBuilder } from 'react-native-paper-form-builder';
 
 import ScrollView from '../components/ScrollView';
-
-interface IPProps {
-  setIP: (value: string) => void;
-}
+import { SettingsContext } from '../contexts/Settings';
 
 interface FormSubmitValues {
   ip: string;
 }
 
-export default function IP({ setIP }: IPProps) {
+export default function IP() {
   const {
     control,
     setFocus,
@@ -26,13 +23,14 @@ export default function IP({ setIP }: IPProps) {
     },
     mode: 'onChange',
   });
+  const settingsContext = React.useContext(SettingsContext);
 
   React.useEffect(() => {
     RNBootSplash.hide();
   }, []);
 
   function handleSubmit(values: FormSubmitValues) {
-    setIP(values.ip);
+    settingsContext.setIP(values.ip);
   }
   return (
     <ScrollView contentContainerStyle={styles.container}>
