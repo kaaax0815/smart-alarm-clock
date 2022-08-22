@@ -28,9 +28,6 @@ export function useAddAlarm() {
       onError: (_error, _vars, prev) => {
         queryClient.setQueryData(['alarms'], prev);
       },
-      onSettled: () => {
-        queryClient.invalidateQueries(['alarms']);
-      },
     },
   );
 }
@@ -54,9 +51,6 @@ export function useDeleteAlarm() {
       onError: (_error, _vars, prev) => {
         queryClient.setQueryData(['alarms'], prev);
       },
-      onSettled: () => {
-        queryClient.invalidateQueries(['alarms']);
-      },
     },
   );
 }
@@ -79,9 +73,6 @@ export function useUpdateAlarm() {
       },
       onError: (_error, _vars, prev) => {
         queryClient.setQueryData(['alarms'], prev);
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(['alarms']);
       },
     },
   );
