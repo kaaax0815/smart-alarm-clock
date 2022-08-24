@@ -50,22 +50,24 @@ export default function Ringtone({ ringtone }: RingtoneProps) {
     return () => {
       if (playing) {
         sound?.stop();
+        sound?.release();
         setPlaying(false);
+        return;
       }
       const playback = new Sound(
-        `${settingsContext.ip}:3535${ringtone.location}`,
-        Sound.MAIN_BUNDLE,
+        `http://${settingsContext.ip}:3535${ringtone.location}`,
+        null as unknown as string,
         (error) => {
           if (error) {
             console.warn('SOUND:', 'failed to load the sound', error);
             return;
           }
           playback.play();
+          playback.setNumberOfLoops(-1);
+          setSound(playback);
+          setPlaying(true);
         },
       );
-      playback.setNumberOfLoops(-1);
-      setSound(playback);
-      setPlaying(true);
     };
   }
 
