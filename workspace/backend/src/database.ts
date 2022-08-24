@@ -40,11 +40,9 @@ class CustomDB extends JsonDB {
   addRingtone(ringtone: database['ringtones'][0]) {
     this.push('/ringtones', [ringtone], false);
   }
-  deleteRingtone(ringtone: database['ringtones'][0]) {
+  deleteRingtone(ringtone: { name: string }) {
     const oldRingtones = super.getData('/ringtones') as database['ringtones'];
-    const newRingtones = oldRingtones.filter(
-      (item) => item.name !== ringtone.name && item.location !== ringtone.location
-    );
+    const newRingtones = oldRingtones.filter((item) => item.name !== ringtone.name);
     this.push('/ringtones', newRingtones);
   }
   getRingtones() {
