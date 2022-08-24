@@ -14,7 +14,7 @@ export default defaultEndpointsFactory.build({
       throw createHttpError(403, 'Cannot delete default ringtone');
     }
     db.deleteRingtone(input);
-    await rm(join(__dirname, '../../Ringtones', input.name)).catch((e) => {
+    await rm(join(__dirname, '../../Ringtones', input.name + '.mp3')).catch((e) => {
       logger.error(e.message);
     });
     return {};
