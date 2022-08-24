@@ -1,5 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import { onlineManager } from '@tanstack/react-query';
+import { DocumentPickerResponse } from 'react-native-document-picker';
 
 export async function getAlarms() {
   const result = await fetchData<{ alarms: Alarm[] }>('/alarms');
@@ -28,6 +29,8 @@ export async function deleteRingtones(ringtone: Pick<Ringtone, 'name'>) {
 }
 
 // Helper Function
+
+// TODO: Dynamic IP
 
 async function fetchData<T>(endpoint: string) {
   const response = await fetch(`http://192.168.178.55:3535/api${endpoint}`);
@@ -125,6 +128,37 @@ export interface Alarm {
 export interface Ringtone {
   /** Name of Ringtone */
   name: string;
-  /** Location on the Sevrver */
+  /** Location on the Server */
   location: string;
+}
+
+export async function postRingtone(values: {
+  name: string;
+  ringtone: DocumentPickerResponse;
+}) {
+  values.name = values.name + '.mp3';
+  const formData = new FormData();
+  formData.append('ringtone', {
+    name: values.ringtone.name,
+    type: values.ringtone.type,
+    uri: values.ringtone.uri,
+  });
+  const res = await fetch('http:///10.0.2.2:3535/api/ringtones', {
+    method: 'post',
+    body: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  if (!res.ok) {
+    console.warn(
+      'API:',
+      'Failed to post ringtone to API',
+      res.status,
+      res.statusText,
+    );
+    throw new Error(res.statusText);
+  }
+  const responseJson = await res.json();
+  console.log(responseJson);
 }

@@ -21,6 +21,7 @@ function HandleSocket(): null {
         alarmsCache?.fetch();
         ringtonesCache?.fetch();*/
         queryClient.invalidateQueries(['alarms']);
+        queryClient.invalidateQueries(['ringtones']);
       });
       socket.on('connect_error', (err) => {
         console.warn('SOCKET:', `connect_error due to ${err.message}`);
