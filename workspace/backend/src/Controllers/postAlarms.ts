@@ -11,7 +11,9 @@ export default defaultEndpointsFactory.build({
     if (database.getAlarms().findIndex((alarm) => alarm.name === input.name) !== -1) {
       throw createHttpError(409, 'Alarm already exists');
     }
-    // TODO: check if ringtone exists
+    if (database.getRingtones().findIndex((ringtone) => ringtone.name === input.ringtone) === -1) {
+      throw createHttpError(409, "Ringtone doesn't exists");
+    }
     database.addAlarm(input);
     return {};
   }
