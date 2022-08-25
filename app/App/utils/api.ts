@@ -159,6 +159,4 @@ export async function postRingtone(values: {
     );
     throw new Error(res.statusText);
   }
-  const responseJson = await res.json();
-  console.log(responseJson);
 }

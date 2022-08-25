@@ -23,6 +23,7 @@ export default function ScrollView({
       }),
     [colors],
   );
+
   return (
     <OldScrollView style={[styles.scrollview, style]} {...rest}>
       {children}

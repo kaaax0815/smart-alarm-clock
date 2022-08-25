@@ -36,27 +36,28 @@ export default function Alarm({
   const [visible, setVisible] = React.useState(false);
   const deleteAlarm = useDeleteAlarm();
   const navigation = useNavigation<StackNavigationProp<any>>();
+
   function openMenu() {
     setVisible(true);
   }
+
   function closeMenu() {
     setVisible(false);
   }
-  function handleDelete() {
-    return () => {
-      deleteAlarm.mutate({ name: alarm.name });
-      setVisible(false);
-    };
-  }
-  function handleEdit() {
-    return () => {
-      navigation.navigate('AlarmForm', {
-        edit: true,
-        alarm,
-      });
-      setVisible(false);
-    };
-  }
+
+  const handleDelete = () => {
+    deleteAlarm.mutate({ name: alarm.name });
+    setVisible(false);
+  };
+
+  const handleEdit = () => {
+    navigation.navigate('AlarmForm', {
+      edit: true,
+      alarm,
+    });
+    setVisible(false);
+  };
+
   function showDays(days: boolean[]) {
     const isMultipleTrue = days.filter((day) => day === true).length > 1;
     if (!isMultipleTrue) {
@@ -73,6 +74,7 @@ export default function Alarm({
       }, [] as string[])
       .join(' ');
   }
+
   return (
     <View style={styles.view}>
       <View style={styles.text}>
@@ -89,8 +91,8 @@ export default function Alarm({
           anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
           visible={visible}
           onDismiss={closeMenu}>
-          <Menu.Item onPress={handleEdit()} title="Bearbeiten" icon="pencil" />
-          <Menu.Item onPress={handleDelete()} title="Löschen" icon="delete" />
+          <Menu.Item onPress={handleEdit} title="Bearbeiten" icon="pencil" />
+          <Menu.Item onPress={handleDelete} title="Löschen" icon="delete" />
         </Menu>
       </View>
     </View>

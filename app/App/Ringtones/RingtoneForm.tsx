@@ -62,9 +62,7 @@ export default function RingtoneForm({ navigation }: Props<'RingtoneForm'>) {
           },
         ]}
       />
-      <Button
-        mode="contained"
-        onPress={formHandleSubmit((onValid) => handleSubmit(onValid))}>
+      <Button mode="contained" onPress={formHandleSubmit(handleSubmit)}>
         Hinzufügen
       </Button>
     </ScrollView>
@@ -73,11 +71,13 @@ export default function RingtoneForm({ navigation }: Props<'RingtoneForm'>) {
 
 function CustomFilePicker(props: LogicProps) {
   const { field } = useController(props);
+
   const handleClick = () => {
     DocumentPicker.pickSingle({ type: 'audio/mpeg' }).then((v) =>
       field.onChange(v),
     );
   };
+
   return (
     <List.Item
       title="Klingelton"

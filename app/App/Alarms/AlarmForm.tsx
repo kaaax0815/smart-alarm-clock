@@ -130,9 +130,7 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
           { type: 'custom', name: 'enabled', JSX: CustomEnabledCheckBox },
         ]}
       />
-      <Button
-        mode="contained"
-        onPress={formHandleSubmit((onValid) => handleSubmit(onValid))}>
+      <Button mode="contained" onPress={formHandleSubmit(handleSubmit)}>
         {edit ? 'Speichern' : 'Hinzufügen'}
       </Button>
     </ScrollView>
@@ -152,6 +150,7 @@ function CustomTimePicker(props: LogicProps) {
     },
     [setVisible, field],
   );
+
   return (
     <>
       <TimePickerModal
@@ -200,6 +199,7 @@ const styles = StyleSheet.create({
 function CustomDaysPicker(props: LogicProps) {
   const { field } = useController(props);
   const [enabled, setEnabled] = React.useState<boolean[]>(field.value);
+
   function handleClick(i: number) {
     return () => {
       setEnabled((prev) => {
@@ -210,6 +210,7 @@ function CustomDaysPicker(props: LogicProps) {
       });
     };
   }
+
   return (
     <>
       <List.Subheader style={styles.CustomDaysHeader}>
@@ -285,6 +286,7 @@ function DaysPickerButton({
       alignSelf: 'center',
     },
   });
+
   return (
     <TouchableOpacity onPress={onPress} style={buttonStyles.appButtonContainer}>
       <Text style={buttonStyles.appButtonText}>{title}</Text>
@@ -295,6 +297,7 @@ function DaysPickerButton({
 function CustomEnabledCheckBox(props: LogicProps) {
   const { field } = useController(props);
   const { colors } = useTheme();
+
   return (
     <List.Item
       title="Aktiviert"

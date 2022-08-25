@@ -22,6 +22,7 @@ export type Props<T extends keyof RingtonesParamList> = StackScreenProps<
 
 export default function RingtonesStack() {
   const { colors } = useTheme();
+
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -12,6 +12,7 @@ const Tab = createMaterialBottomTabNavigator();
 export default function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const settingsContext = React.useContext(SettingsContext);
+
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />

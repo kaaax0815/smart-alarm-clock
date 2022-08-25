@@ -41,6 +41,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
     setAlarmsEnabled(obj);
   }, [alarms, alarmsStatus]);
 
+  // Hide Splash Screen when done
   React.useEffect(() => {
     if (alarmsStatus === 'success' || alarmsStatus === 'error') {
       RNBootSplash.hide();

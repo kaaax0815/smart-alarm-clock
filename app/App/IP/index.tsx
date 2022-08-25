@@ -32,6 +32,7 @@ export default function IP() {
   function handleSubmit(values: FormSubmitValues) {
     settingsContext.setIP(values.ip);
   }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Smarter Wecker</Text>
@@ -78,9 +79,7 @@ export default function IP() {
           },
         ]}
       />
-      <Button
-        mode="contained"
-        onPress={formHandleSubmit((onValid) => handleSubmit(onValid))}>
+      <Button mode="contained" onPress={formHandleSubmit(handleSubmit)}>
         Speichern
       </Button>
     </ScrollView>

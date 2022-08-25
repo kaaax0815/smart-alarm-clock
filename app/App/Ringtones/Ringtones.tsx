@@ -28,7 +28,7 @@ export default function Ringtones({ navigation }: Props<'RingtoneForm'>) {
       <Button
         style={styles.add}
         icon="plus"
-        onPress={() => navigation.navigate('RingtoneForm', { edit: false })}>
+        onPress={() => navigation.navigate('RingtoneForm')}>
         Klingelton hinzufügen
       </Button>
     </ScrollView>

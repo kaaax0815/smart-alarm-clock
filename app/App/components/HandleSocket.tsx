@@ -10,16 +10,6 @@ function HandleSocket(): null {
     if (socket !== undefined) {
       socket.on('databaseChange', () => {
         console.debug('SOCKET:', 'databaseChange');
-        /*const alarmsCache = queryClient
-          .getQueryCache()
-          .getAll()
-          .find((v) => v.queryKey[0] === 'alarms');
-        const ringtonesCache = queryClient
-          .getQueryCache()
-          .getAll()
-          .find((v) => v.queryKey[0] === 'ringtones');
-        alarmsCache?.fetch();
-        ringtonesCache?.fetch();*/
         queryClient.invalidateQueries(['alarms']);
         queryClient.invalidateQueries(['ringtones']);
       });

@@ -67,7 +67,7 @@ export default function Start() {
           <SocketContext.Provider value={socket}>
             <SettingsContext.Provider value={{ ip, setIP }}>
               <HandleSocket />
-              {loading ? <Text>Loading</Text> : <App />}
+              {loading ? <Text>Starten...</Text> : <App />}
             </SettingsContext.Provider>
           </SocketContext.Provider>
         </QueryClientProvider>

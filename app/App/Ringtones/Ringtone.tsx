@@ -29,47 +29,41 @@ export default function Ringtone({ ringtone }: RingtoneProps) {
     setVisible(false);
   }
 
-  function handleDelete() {
-    return () => {
-      deleteRingtone.mutate({ name: ringtone.name });
-      setVisible(false);
-    };
-  }
+  const handleDelete = () => {
+    deleteRingtone.mutate({ name: ringtone.name });
+    setVisible(false);
+  };
 
-  function handleEdit() {
-    return () => {
-      navigation.navigate('RingtoneForm', {
-        edit: true,
-        ringtone,
-      });
-      setVisible(false);
-    };
-  }
+  const handleEdit = () => {
+    navigation.navigate('RingtoneForm', {
+      edit: true,
+      ringtone,
+    });
+    setVisible(false);
+  };
 
-  function handlePlayback() {
-    return () => {
-      if (playing) {
-        sound?.stop();
-        sound?.release();
-        setPlaying(false);
-        return;
-      }
-      const playback = new Sound(
-        `http://${settingsContext.ip}:3535${ringtone.location}`,
-        null as unknown as string,
-        (error) => {
-          if (error) {
-            console.warn('SOUND:', 'failed to load the sound', error);
-            return;
-          }
-          playback.play();
-          playback.setNumberOfLoops(-1);
-          setSound(playback);
-          setPlaying(true);
-        },
-      );
-    };
-  }
+  const handlePlayback = () => {
+    if (playing) {
+      sound?.stop();
+      sound?.release();
+      setPlaying(false);
+      return;
+    }
+    const playback = new Sound(
+      `http://${settingsContext.ip}:3535${ringtone.location}`,
+      null as unknown as string,
+      (error) => {
+        if (error) {
+          console.warn('SOUND:', 'failed to load the sound', error);
+          return;
+        }
+        playback.play();
+        playback.setNumberOfLoops(-1);
+        setSound(playback);
+        setPlaying(true);
+      },
+    );
+  };
 
   return (
     <View style={styles.view}>
@@ -77,16 +71,13 @@ export default function Ringtone({ ringtone }: RingtoneProps) {
         <Text style={styles.name}>{ringtone.name}</Text>
       </View>
       <View style={styles.control}>
-        <IconButton
-          icon={playing ? 'stop' : 'play'}
-          onPress={handlePlayback()}
-        />
+        <IconButton icon={playing ? 'stop' : 'play'} onPress={handlePlayback} />
         <Menu
           anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
           visible={visible}
           onDismiss={closeMenu}>
-          <Menu.Item onPress={handleEdit()} title="Bearbeiten" icon="pencil" />
-          <Menu.Item onPress={handleDelete()} title="Löschen" icon="delete" />
+          <Menu.Item onPress={handleEdit} title="Bearbeiten" icon="pencil" />
+          <Menu.Item onPress={handleDelete} title="Löschen" icon="delete" />
         </Menu>
       </View>
     </View>

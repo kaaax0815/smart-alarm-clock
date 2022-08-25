@@ -33,6 +33,7 @@ export type Props<T extends keyof AlarmsParamList> = StackScreenProps<
 
 export default function AlarmsStack() {
   const { colors } = useTheme();
+
   return (
     <Stack.Navigator>
       <Stack.Screen
