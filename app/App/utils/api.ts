@@ -153,8 +153,7 @@ export async function postRingtone(
   values.name = values.name + '.mp3';
   const formData = new FormData();
   formData.append('ringtone', {
-    // TODO: use user provided name
-    name: values.ringtone.name,
+    name: values.name,
     type: values.ringtone.type,
     uri: values.ringtone.uri,
   });
