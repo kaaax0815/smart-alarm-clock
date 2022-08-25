@@ -7,7 +7,7 @@ import socketio from 'socket.io-client';
 
 import App from './App';
 import HandleSocket from './components/HandleSocket';
-import theme from './constants/theme';
+import { NavigationTheme, PaperTheme } from './constants/theme';
 import { SettingsContext } from './contexts/Settings';
 import { SocketContext } from './contexts/Socket';
 
@@ -61,8 +61,8 @@ export default function Start() {
   }, [ip, loading]);
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
+    <PaperProvider theme={PaperTheme}>
+      <NavigationContainer theme={NavigationTheme}>
         <QueryClientProvider client={queryClient}>
           <SocketContext.Provider value={socket}>
             <SettingsContext.Provider value={{ ip, setIP }}>

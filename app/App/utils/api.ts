@@ -37,7 +37,6 @@ export async function deleteRingtones(
 // Helper Function
 
 async function fetchData<T>(ip: string, endpoint: string) {
-  console.log(ip);
   const response = await fetch(`http://${ip}:3535/api${endpoint}`);
   if (!response.ok) {
     console.warn(
@@ -59,7 +58,6 @@ async function fetchData<T>(ip: string, endpoint: string) {
     );
     throw new Error(json.error.message);
   }
-  console.log(json.data);
   return json.data;
 }
 
