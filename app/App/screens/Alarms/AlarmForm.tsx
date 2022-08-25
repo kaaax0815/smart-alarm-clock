@@ -12,9 +12,9 @@ import { TimePickerModal } from 'react-native-paper-dates';
 import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
 
-import ScrollView from '../components/ScrollView';
-import { useAddAlarm, useUpdateAlarm } from '../hooks/useAlarms';
-import { useRingtones } from '../hooks/useRingtones';
+import ScrollView from '../../components/ScrollView';
+import { useAddAlarm, useUpdateAlarm } from '../../hooks/useAlarms';
+import { useRingtones } from '../../hooks/useRingtones';
 import { Props } from './index';
 
 interface FormSubmitValues {

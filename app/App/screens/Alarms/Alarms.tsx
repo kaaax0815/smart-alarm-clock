@@ -3,8 +3,8 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 
-import ScrollView from '../components/ScrollView';
-import { useAlarms, useUpdateAlarm } from '../hooks/useAlarms';
+import ScrollView from '../../components/ScrollView';
+import { useAlarms, useUpdateAlarm } from '../../hooks/useAlarms';
 import Alarm from './Alarm';
 import { Props } from './index';
 

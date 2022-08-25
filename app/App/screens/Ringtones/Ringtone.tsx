@@ -5,9 +5,9 @@ import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { IconButton, Menu, Text } from 'react-native-paper';
 import Sound from 'react-native-sound';
 
-import { SettingsContext } from '../contexts/Settings';
-import { useDeleteRingtone } from '../hooks/useRingtones';
-import { Ringtone as RingtoneType } from '../utils/api';
+import { SettingsContext } from '../../contexts/Settings';
+import { useDeleteRingtone } from '../../hooks/useRingtones';
+import { Ringtone as RingtoneType } from '../../utils/api';
 
 type RingtoneProps = {
   ringtone: RingtoneType;

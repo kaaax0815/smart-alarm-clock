@@ -2,10 +2,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 
-import Alarms from './Alarms';
 import { SettingsContext } from './contexts/Settings';
-import IP from './IP';
-import Ringtones from './Ringtones';
+import { AlarmsScreen, IPScreen, RingtonesScreen } from './screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -20,17 +18,17 @@ export default function App() {
         <Tab.Navigator>
           <Tab.Screen
             name="Wecker"
-            component={Alarms}
+            component={AlarmsScreen}
             options={{ tabBarIcon: 'alarm' }}
           />
           <Tab.Screen
             name="Klingeltöne"
-            component={Ringtones}
+            component={RingtonesScreen}
             options={{ tabBarIcon: 'bell' }}
           />
         </Tab.Navigator>
       ) : (
-        <IP />
+        <IPScreen />
       )}
     </>
   );
