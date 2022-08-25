@@ -5,7 +5,6 @@ import {
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 
-import { Ringtone } from '../utils/api';
 import RingtoneForm from './RingtoneForm';
 import Ringtones from './Ringtones';
 
@@ -13,18 +12,8 @@ const Stack = createStackNavigator();
 
 export type RingtonesParamList = {
   Ringtones: undefined;
-  RingtoneForm: RingtoneFormPropsEdit | RingtoneFormPropsAdd;
+  RingtoneForm: undefined;
 };
-
-interface RingtoneFormPropsEdit {
-  edit: true;
-  ringtone: Ringtone;
-}
-
-interface RingtoneFormPropsAdd {
-  edit: false;
-  ringtone?: undefined;
-}
 
 export type Props<T extends keyof RingtonesParamList> = StackScreenProps<
   RingtonesParamList,

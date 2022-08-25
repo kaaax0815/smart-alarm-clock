@@ -16,7 +16,7 @@ interface FormSubmitValues {
   ringtone: DocumentPickerResponse;
 }
 
-export default function RingtoneForm(_: Props<'RingtoneForm'>) {
+export default function RingtoneForm({ navigation }: Props<'RingtoneForm'>) {
   const {
     control,
     setFocus,
@@ -24,14 +24,15 @@ export default function RingtoneForm(_: Props<'RingtoneForm'>) {
   } = useForm<FormSubmitValues>({
     defaultValues: {
       name: '',
-      ringtone: { name: '', uri: '' },
+      ringtone: { name: '' },
     },
     mode: 'onChange',
   });
 
   function handleSubmit({ name, ringtone }: FormSubmitValues) {
-    postRingtone({ name, ringtone });
-    console.log('Uploading', { name });
+    postRingtone({ name, ringtone }).then(() => {
+      navigation.navigate('Ringtones');
+    });
   }
 
   return (
