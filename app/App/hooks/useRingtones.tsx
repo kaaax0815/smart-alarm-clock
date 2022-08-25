@@ -1,15 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 
+import { SettingsContext } from '../contexts/Settings';
 import { deleteRingtones, getRingtones, Ringtone } from '../utils/api';
 
 export function useRingtones() {
-  return useQuery(['ringtones'], () => getRingtones());
+  const settingsContext = useContext(SettingsContext);
+  return useQuery(['ringtones'], () => getRingtones(settingsContext.ip!));
 }
 
 export function useDeleteRingtone() {
   const queryClient = useQueryClient();
+  const settingsContext = useContext(SettingsContext);
   return useMutation<unknown, unknown, Pick<Ringtone, 'name'>>(
-    (ringtone) => deleteRingtones(ringtone),
+    (ringtone) => deleteRingtones(settingsContext.ip!, ringtone),
     {
       onMutate: async (ringtone) => {
         await queryClient.cancelQueries(['ringtones']);

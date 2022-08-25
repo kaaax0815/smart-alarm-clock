@@ -8,6 +8,7 @@ import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
 
 import ScrollView from '../components/ScrollView';
+import { SettingsContext } from '../contexts/Settings';
 import { postRingtone } from '../utils/api';
 import { Props } from './index';
 
@@ -28,9 +29,10 @@ export default function RingtoneForm({ navigation }: Props<'RingtoneForm'>) {
     },
     mode: 'onChange',
   });
+  const settingsContext = React.useContext(SettingsContext);
 
   function handleSubmit({ name, ringtone }: FormSubmitValues) {
-    postRingtone({ name, ringtone }).then(() => {
+    postRingtone(settingsContext.ip!, { name, ringtone }).then(() => {
       navigation.navigate('Ringtones');
     });
   }

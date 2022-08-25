@@ -53,6 +53,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
     alarmsStatus !== 'success' ||
     alarmsEnabled[alarms.length - 1] === undefined
   ) {
+    // TODO: don't show when no alarms only when not initialized
     return (
       <ScrollView>
         {alarms?.length === 0 ? (

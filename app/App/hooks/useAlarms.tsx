@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 
+import { SettingsContext } from '../contexts/Settings';
 import {
   Alarm,
   deleteAlarms,
@@ -9,13 +11,15 @@ import {
 } from '../utils/api';
 
 export function useAlarms() {
-  return useQuery(['alarms'], () => getAlarms());
+  const settingsContext = useContext(SettingsContext);
+  return useQuery(['alarms'], () => getAlarms(settingsContext.ip!));
 }
 
 export function useAddAlarm() {
   const queryClient = useQueryClient();
+  const settingsContext = useContext(SettingsContext);
   return useMutation<unknown, unknown, Alarm, Alarm[]>(
-    (alarm) => postAlarms(alarm),
+    (alarm) => postAlarms(settingsContext.ip!, alarm),
     {
       onMutate: async (alarm) => {
         await queryClient.cancelQueries(['alarms']);
@@ -34,8 +38,9 @@ export function useAddAlarm() {
 
 export function useDeleteAlarm() {
   const queryClient = useQueryClient();
+  const settingsContext = useContext(SettingsContext);
   return useMutation<unknown, unknown, Pick<Alarm, 'name'>>(
-    (alarm) => deleteAlarms(alarm),
+    (alarm) => deleteAlarms(settingsContext.ip!, alarm),
     {
       onMutate: async (alarm) => {
         await queryClient.cancelQueries(['alarms']);
@@ -57,8 +62,9 @@ export function useDeleteAlarm() {
 
 export function useUpdateAlarm() {
   const queryClient = useQueryClient();
+  const settingsContext = useContext(SettingsContext);
   return useMutation<unknown, unknown, Partial<Alarm> & { name: string }>(
-    (alarm) => patchAlarms(alarm),
+    (alarm) => patchAlarms(settingsContext.ip!, alarm),
     {
       onMutate: async (alarm) => {
         await queryClient.cancelQueries(['alarms']);

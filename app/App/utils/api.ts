@@ -2,38 +2,43 @@ import NetInfo from '@react-native-community/netinfo';
 import { onlineManager } from '@tanstack/react-query';
 import { DocumentPickerResponse } from 'react-native-document-picker';
 
-export async function getAlarms() {
-  const result = await fetchData<{ alarms: Alarm[] }>('/alarms');
+export async function getAlarms(ip: string) {
+  const result = await fetchData<{ alarms: Alarm[] }>(ip, '/alarms');
   return result.alarms;
 }
 
-export function postAlarms(alarm: Alarm) {
-  return postData('/alarms', 'POST', alarm);
+export function postAlarms(ip: string, alarm: Alarm) {
+  return postData(ip, '/alarms', 'POST', alarm);
 }
 
-export function deleteAlarms(alarm: Pick<Alarm, 'name'>) {
-  return postData('/alarms', 'DELETE', alarm);
+export function deleteAlarms(ip: string, alarm: Pick<Alarm, 'name'>) {
+  return postData(ip, '/alarms', 'DELETE', alarm);
 }
 
-export function patchAlarms(alarm: Partial<Alarm> & { name: string }) {
-  return postData('/alarms', 'PATCH', alarm);
+export function patchAlarms(
+  ip: string,
+  alarm: Partial<Alarm> & { name: string },
+) {
+  return postData(ip, '/alarms', 'PATCH', alarm);
 }
 
-export async function getRingtones() {
-  const result = await fetchData<{ ringtones: Ringtone[] }>('/ringtones');
+export async function getRingtones(ip: string) {
+  const result = await fetchData<{ ringtones: Ringtone[] }>(ip, '/ringtones');
   return result.ringtones;
 }
 
-export async function deleteRingtones(ringtone: Pick<Ringtone, 'name'>) {
-  return postData('/ringtones', 'DELETE', ringtone);
+export async function deleteRingtones(
+  ip: string,
+  ringtone: Pick<Ringtone, 'name'>,
+) {
+  return postData(ip, '/ringtones', 'DELETE', ringtone);
 }
 
 // Helper Function
 
-// TODO: Dynamic IP
-
-async function fetchData<T>(endpoint: string) {
-  const response = await fetch(`http://192.168.178.55:3535/api${endpoint}`);
+async function fetchData<T>(ip: string, endpoint: string) {
+  console.log(ip);
+  const response = await fetch(`http://${ip}:3535/api${endpoint}`);
   if (!response.ok) {
     console.warn(
       'API:',
@@ -54,11 +59,17 @@ async function fetchData<T>(endpoint: string) {
     );
     throw new Error(json.error.message);
   }
+  console.log(json.data);
   return json.data;
 }
 
-async function postData<T>(endpoint: string, method: string, data: unknown) {
-  const response = await fetch(`http://192.168.178.55:3535/api${endpoint}`, {
+async function postData<T>(
+  ip: string,
+  endpoint: string,
+  method: string,
+  data: unknown,
+) {
+  const response = await fetch(`http://${ip}:3535/api${endpoint}`, {
     method: method,
     headers: {
       'Content-Type': 'application/json',
@@ -132,18 +143,22 @@ export interface Ringtone {
   location: string;
 }
 
-export async function postRingtone(values: {
-  name: string;
-  ringtone: DocumentPickerResponse;
-}) {
+export async function postRingtone(
+  ip: string,
+  values: {
+    name: string;
+    ringtone: DocumentPickerResponse;
+  },
+) {
   values.name = values.name + '.mp3';
   const formData = new FormData();
   formData.append('ringtone', {
+    // TODO: use user provided name
     name: values.ringtone.name,
     type: values.ringtone.type,
     uri: values.ringtone.uri,
   });
-  const res = await fetch('http:///10.0.2.2:3535/api/ringtones', {
+  const res = await fetch(`http:///${ip}:3535/api/ringtones`, {
     method: 'post',
     body: formData,
     headers: {
