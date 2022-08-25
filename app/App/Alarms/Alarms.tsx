@@ -46,7 +46,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
     if (alarmsStatus === 'success' || alarmsStatus === 'error') {
       RNBootSplash.hide();
     }
-  }, [alarmsStatus, alarmsEnabled, alarms]);
+  }, [alarmsStatus]);
 
   // Check if everything is loaded
   if (
