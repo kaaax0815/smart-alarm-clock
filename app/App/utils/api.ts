@@ -160,7 +160,7 @@ export interface Settings {
 }
 
 export type PostSettings = Partial<Pick<Settings, 'timezone'>> &
-  Pick2<Settings, 'location', 'city' | 'countryCode'>;
+  Partial<Pick2<Settings, 'location', 'city' | 'countryCode'>>;
 
 export async function postRingtone(
   ip: string,

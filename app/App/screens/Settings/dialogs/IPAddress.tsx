@@ -1,25 +1,21 @@
 import React from 'react';
+import { HelperText, TextInput } from 'react-native-paper';
 
-import TextInputDialog from '~/components/TextInputDialog';
+import Dialog from '~/components/Dialog';
 import { IP_PATTERN } from '~/constants/patterns';
 import { SettingsContext } from '~/contexts/Settings';
 
-interface IPAddressProps {
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
-}
+import { DialogProps } from './index';
 
-export default function IPAddress({ visible, setVisible }: IPAddressProps) {
+export default function IPAddress({ visible, setVisible }: DialogProps) {
   const settingsContext = React.useContext(SettingsContext);
   const [ipAddress, setIpAddress] = React.useState(settingsContext.ip!);
   const [errorText, setErrorText] = React.useState('');
   const [isError, setIsError] = React.useState(false);
 
   return (
-    <TextInputDialog
-      value={ipAddress}
+    <Dialog
       hideDialog={() => setVisible(false)}
-      onChangeText={(v) => setIpAddress(v)}
       visible={visible}
       title="IP-Adresse"
       buttonText="Speichern"
@@ -34,8 +30,20 @@ export default function IPAddress({ visible, setVisible }: IPAddressProps) {
         setIsError(false);
         setVisible(false);
       }}
-      errorText={errorText}
-      errorVisible={isError}
+      content={
+        <>
+          <TextInput
+            value={ipAddress}
+            mode="outlined"
+            label="IP-Adresse"
+            onChangeText={(v) => setIpAddress(v)}
+            error={isError}
+          />
+          <HelperText type="error" visible={isError}>
+            {errorText}
+          </HelperText>
+        </>
+      }
     />
   );
 }
