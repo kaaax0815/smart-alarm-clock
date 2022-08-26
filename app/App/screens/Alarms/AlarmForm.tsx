@@ -1,13 +1,7 @@
 import React from 'react';
 import { useController, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import {
-  ActivityIndicator,
-  Button,
-  Checkbox,
-  List,
-  useTheme,
-} from 'react-native-paper';
+import { Button, Checkbox, List, useTheme } from 'react-native-paper';
 import { TimePickerModal } from 'react-native-paper-dates';
 import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
@@ -75,16 +69,8 @@ export default function AlarmForm({ navigation, route }: Props<'AlarmForm'>) {
     navigation.navigate('Alarms');
   }
 
-  if (ringtonesStatus !== 'success') {
-    return (
-      <ScrollView>
-        <ActivityIndicator size="large" animating />
-      </ScrollView>
-    );
-  }
-
   return (
-    <ScrollView>
+    <ScrollView isLoading={ringtonesStatus !== 'success'}>
       <FormBuilder
         control={control}
         setFocus={setFocus}

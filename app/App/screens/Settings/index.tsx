@@ -1,11 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  ActivityIndicator,
-  List,
-  Text,
-  TouchableRipple,
-} from 'react-native-paper';
+import { List, Text, TouchableRipple } from 'react-native-paper';
 
 import ScrollView from '~/components/ScrollView';
 import { SettingsContext } from '~/contexts/Settings';
@@ -20,16 +15,8 @@ export default function Settings() {
   const [tzVisible, setTZVisible] = React.useState(false);
   const [locVisible, setLocVisible] = React.useState(false);
 
-  if (settingsStatus !== 'success') {
-    return (
-      <ScrollView>
-        <ActivityIndicator size="large" animating />
-      </ScrollView>
-    );
-  }
-
   return (
-    <ScrollView>
+    <ScrollView isLoading={settingsStatus !== 'success'}>
       <IPAddressDialog visible={ipVisible} setVisible={setIPVisible} />
       <List.Item
         title="IP-Adresse"
@@ -39,7 +26,7 @@ export default function Settings() {
       <TimezoneDialog visible={tzVisible} setVisible={setTZVisible} />
       <List.Item
         title="Zeitzone"
-        right={() => <Text style={styles.text}>{settingsData.timezone}</Text>}
+        right={() => <Text style={styles.text}>{settingsData!.timezone}</Text>}
         onPress={() => setTZVisible(true)}
       />
       <LocationDialog visible={locVisible} setVisible={setLocVisible} />
@@ -49,14 +36,14 @@ export default function Settings() {
             <List.Item
               title="Stadt"
               right={() => (
-                <Text style={styles.text}>{settingsData.location.city}</Text>
+                <Text style={styles.text}>{settingsData!.location.city}</Text>
               )}
             />
             <List.Item
               title="Ländercode"
               right={() => (
                 <Text style={styles.text}>
-                  {settingsData.location.countryCode}
+                  {settingsData!.location.countryCode}
                 </Text>
               )}
             />
