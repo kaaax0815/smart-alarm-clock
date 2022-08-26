@@ -7,6 +7,7 @@ import { FormBuilder } from 'react-native-paper-form-builder';
 
 import ScrollView from '../../components/ScrollView';
 import { SettingsContext } from '../../contexts/Settings';
+import fetch from '../../utils/fetch';
 
 interface FormSubmitValues {
   ip: string;
@@ -58,12 +59,7 @@ export default function IP() {
               },
               validate: async (value: string) => {
                 try {
-                  const controller = new AbortController();
-                  const timeoutId = setTimeout(() => controller.abort(), 5000);
-                  const res = await fetch(`http://${value}:3535/api/settings`, {
-                    signal: controller.signal,
-                  });
-                  clearTimeout(timeoutId);
+                  const res = await fetch(`http://${value}:3535/api/settings`);
                   const json = await res.json();
                   if (json.status !== 'success') {
                     return 'Smarter Wecker ist nicht erreichbar';

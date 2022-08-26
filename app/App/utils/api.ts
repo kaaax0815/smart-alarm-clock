@@ -2,6 +2,8 @@ import NetInfo from '@react-native-community/netinfo';
 import { onlineManager } from '@tanstack/react-query';
 import { DocumentPickerResponse } from 'react-native-document-picker';
 
+import fetch from './fetch';
+
 export async function getAlarms(ip: string) {
   const result = await fetchData<{ alarms: Alarm[] }>(ip, '/alarms');
   return result.alarms;
