@@ -5,11 +5,12 @@ import { Provider as PaperProvider, Text } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import socketio from 'socket.io-client';
 
+import HandleSocket from '~/components/HandleSocket';
+import { NavigationTheme, PaperTheme } from '~/constants/theme';
+import { SettingsContext } from '~/contexts/Settings';
+import { SocketContext } from '~/contexts/Socket';
+
 import App from './App';
-import HandleSocket from './components/HandleSocket';
-import { NavigationTheme, PaperTheme } from './constants/theme';
-import { SettingsContext } from './contexts/Settings';
-import { SocketContext } from './contexts/Socket';
 
 const queryClient = new QueryClient();
 

@@ -2,13 +2,13 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 
-import { SettingsContext } from './contexts/Settings';
+import { SettingsContext } from '~/contexts/Settings';
 import {
   AlarmsScreen,
   IPScreen,
   RingtonesScreen,
   SettingsScreen,
-} from './screens';
+} from '~/screens';
 
 const Tab = createMaterialBottomTabNavigator();
 

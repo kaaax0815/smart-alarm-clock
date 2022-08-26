@@ -5,9 +5,9 @@ import RNBootSplash from 'react-native-bootsplash';
 import { Button, Text } from 'react-native-paper';
 import { FormBuilder } from 'react-native-paper-form-builder';
 
-import ScrollView from '../../components/ScrollView';
-import { SettingsContext } from '../../contexts/Settings';
-import fetch from '../../utils/fetch';
+import ScrollView from '~/components/ScrollView';
+import { SettingsContext } from '~/contexts/Settings';
+import fetch from '~/utils/fetch';
 
 interface FormSubmitValues {
   ip: string;

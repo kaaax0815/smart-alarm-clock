@@ -4,8 +4,9 @@ import React from 'react';
 import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { IconButton, Menu, Switch, Text } from 'react-native-paper';
 
-import { useDeleteAlarm } from '../../hooks/useAlarms';
-import { Alarm as AlarmType } from '../../utils/api';
+import { useDeleteAlarm } from '~/hooks/useAlarms';
+import { Alarm as AlarmType } from '~/utils/api';
+
 import { AlarmsEnabled } from './Alarms';
 
 type AlarmProps = {

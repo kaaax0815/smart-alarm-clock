@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 
-import { SettingsContext } from '../contexts/Settings';
+import { SettingsContext } from '~/contexts/Settings';
 import {
   Alarm,
   deleteAlarms,
   getAlarms,
   patchAlarms,
   postAlarms,
-} from '../utils/api';
+} from '~/utils/api';
 
 export function useAlarms() {
   const settingsContext = useContext(SettingsContext);

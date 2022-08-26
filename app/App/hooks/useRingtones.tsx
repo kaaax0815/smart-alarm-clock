@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 
-import { SettingsContext } from '../contexts/Settings';
-import { deleteRingtones, getRingtones, Ringtone } from '../utils/api';
+import { SettingsContext } from '~/contexts/Settings';
+import { deleteRingtones, getRingtones, Ringtone } from '~/utils/api';
 
 export function useRingtones() {
   const settingsContext = useContext(SettingsContext);

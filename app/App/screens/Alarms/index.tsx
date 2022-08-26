@@ -5,7 +5,8 @@ import {
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 
-import { Alarm } from '../../utils/api';
+import { Alarm } from '~/utils/api';
+
 import AlarmForm from './AlarmForm';
 import Alarms from './Alarms';
 

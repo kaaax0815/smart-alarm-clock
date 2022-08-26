@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect } from 'react';
 
-import { SocketContext } from '../contexts/Socket';
+import { SocketContext } from '~/contexts/Socket';
 
 function HandleSocket(): null {
   const socket = useContext(SocketContext);

@@ -7,9 +7,10 @@ import { Button, List } from 'react-native-paper';
 import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
 
-import ScrollView from '../../components/ScrollView';
-import { SettingsContext } from '../../contexts/Settings';
-import { postRingtone } from '../../utils/api';
+import ScrollView from '~/components/ScrollView';
+import { SettingsContext } from '~/contexts/Settings';
+import { postRingtone } from '~/utils/api';
+
 import { Props } from './index';
 
 interface FormSubmitValues {
