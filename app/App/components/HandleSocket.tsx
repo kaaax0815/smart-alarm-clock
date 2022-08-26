@@ -12,6 +12,7 @@ function HandleSocket(): null {
         console.debug('SOCKET:', 'databaseChange');
         queryClient.invalidateQueries(['alarms']);
         queryClient.invalidateQueries(['ringtones']);
+        queryClient.invalidateQueries(['settings']);
       });
       socket.on('connect_error', (err) => {
         console.warn('SOCKET:', `connect_error due to ${err.message}`);

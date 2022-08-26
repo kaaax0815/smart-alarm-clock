@@ -6,6 +6,7 @@ import { Button, Text } from 'react-native-paper';
 import { FormBuilder } from 'react-native-paper-form-builder';
 
 import ScrollView from '~/components/ScrollView';
+import { IP_PATTERN } from '~/constants/patterns';
 import { SettingsContext } from '~/contexts/Settings';
 import fetch from '~/utils/fetch';
 
@@ -54,7 +55,7 @@ export default function IP() {
                 message: 'IP-Adresse ist erforderlich',
               },
               pattern: {
-                value: /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$/,
+                value: IP_PATTERN,
                 message: 'IP-Adresse ist ungültig',
               },
               validate: async (value: string) => {

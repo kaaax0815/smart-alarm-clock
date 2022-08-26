@@ -8,6 +8,7 @@ import { FormBuilder } from 'react-native-paper-form-builder';
 import { LogicProps } from 'react-native-paper-form-builder/dist/Types/Types';
 
 import ScrollView from '~/components/ScrollView';
+import { MP3_PATTERN } from '~/constants/patterns';
 import { SettingsContext } from '~/contexts/Settings';
 import { postRingtone } from '~/utils/api';
 
@@ -60,7 +61,7 @@ export default function RingtoneForm({ navigation }: Props<'RingtoneForm'>) {
             JSX: CustomFilePicker,
             rules: {
               validate: (value: FormSubmitValues['ringtone']) =>
-                /^.*\.mp3$/.test(value.name),
+                MP3_PATTERN.test(value.name),
             },
           },
         ]}

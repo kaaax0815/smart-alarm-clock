@@ -29,11 +29,17 @@ export async function getRingtones(ip: string) {
   return result.ringtones;
 }
 
-export async function deleteRingtones(
-  ip: string,
-  ringtone: Pick<Ringtone, 'name'>,
-) {
+export function deleteRingtones(ip: string, ringtone: Pick<Ringtone, 'name'>) {
   return postData(ip, '/ringtones', 'DELETE', ringtone);
+}
+
+export async function getSettings(ip: string) {
+  const result = await fetchData<{ settings: Settings }>(ip, '/settings');
+  return result.settings;
+}
+
+export async function postSettings(ip: string, settings: PostSettings) {
+  return postData(ip, '/settings', 'POST', settings);
 }
 
 // Helper Function
@@ -143,6 +149,19 @@ export interface Ringtone {
   location: string;
 }
 
+export interface Settings {
+  timezone: string;
+  location: {
+    city: string;
+    countryCode: string;
+    lat: number;
+    lon: number;
+  };
+}
+
+export type PostSettings = Partial<Pick<Settings, 'timezone'>> &
+  Pick2<Settings, 'location', 'city' | 'countryCode'>;
+
 export async function postRingtone(
   ip: string,
   values: {
@@ -174,3 +193,9 @@ export async function postRingtone(
     throw new Error(res.statusText);
   }
 }
+
+type Pick2<T, K1 extends keyof T, K2 extends keyof T[K1]> = {
+  [P1 in K1]: {
+    [P2 in K2]: T[K1][P2];
+  };
+};
