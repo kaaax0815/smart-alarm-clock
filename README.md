@@ -7,6 +7,8 @@
 
 ## Uses Raspberry Pi 4 2GB with a 7" LCD Display
 
+[![wakatime](https://wakatime.com/badge/github/kaaax0815/smart-alarm-clock.svg)](https://wakatime.com/badge/github/kaaax0815/smart-alarm-clock)
+
 Components:
 
 - [Raspberry Pi 4 Model B (2GB)](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
