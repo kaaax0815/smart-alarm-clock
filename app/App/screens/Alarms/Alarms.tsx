@@ -52,16 +52,11 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
   // Check if everything is loaded
   if (
     alarmsStatus !== 'success' ||
-    alarmsEnabled[alarms.length - 1] === undefined
+    (alarms.length > 0 && alarmsEnabled[alarms.length - 1] === undefined)
   ) {
-    // TODO: don't show when no alarms only when not initialized
     return (
       <ScrollView>
-        {alarms?.length === 0 ? (
-          <Text>Keine Alarme</Text>
-        ) : (
-          <ActivityIndicator size="large" animating />
-        )}
+        <ActivityIndicator size="large" animating />
       </ScrollView>
     );
   }
