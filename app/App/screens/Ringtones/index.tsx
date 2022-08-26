@@ -8,7 +8,7 @@ import { useTheme } from 'react-native-paper';
 import RingtoneForm from './RingtoneForm';
 import Ringtones from './Ringtones';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RingtonesParamList>();
 
 export type RingtonesParamList = {
   Ringtones: undefined;

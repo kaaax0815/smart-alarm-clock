@@ -10,7 +10,7 @@ import { Alarm } from '~/utils/api';
 import AlarmForm from './AlarmForm';
 import Alarms from './Alarms';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AlarmsParamList>();
 
 export type AlarmsParamList = {
   Alarms: undefined;
