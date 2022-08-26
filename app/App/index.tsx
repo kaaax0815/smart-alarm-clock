@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import { Provider as PaperProvider, Text } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import socketio from 'socket.io-client';
 
@@ -68,7 +68,7 @@ export default function Start() {
           <SocketContext.Provider value={socket}>
             <SettingsContext.Provider value={{ ip, setIP }}>
               <HandleSocket />
-              {loading ? <Text>Starten...</Text> : <App />}
+              {loading || <App />}
             </SettingsContext.Provider>
           </SocketContext.Provider>
         </QueryClientProvider>
