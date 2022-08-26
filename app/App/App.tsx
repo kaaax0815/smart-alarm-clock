@@ -3,7 +3,12 @@ import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 
 import { SettingsContext } from './contexts/Settings';
-import { AlarmsScreen, IPScreen, RingtonesScreen } from './screens';
+import {
+  AlarmsScreen,
+  IPScreen,
+  RingtonesScreen,
+  SettingsScreen,
+} from './screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -25,6 +30,11 @@ export default function App() {
             name="Klingeltöne"
             component={RingtonesScreen}
             options={{ tabBarIcon: 'bell' }}
+          />
+          <Tab.Screen
+            name="Einstellungen"
+            component={SettingsScreen}
+            options={{ tabBarIcon: 'cog' }}
           />
         </Tab.Navigator>
       ) : (
