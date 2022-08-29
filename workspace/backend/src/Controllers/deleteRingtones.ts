@@ -13,6 +13,9 @@ export default defaultEndpointsFactory.build({
     if (input.name === 'Alarm') {
       throw createHttpError(403, 'Cannot delete default ringtone');
     }
+    if (db.getAlarms().some((alarm) => alarm.ringtone === input.name)) {
+      throw createHttpError(403, 'Cannot delete ringtone in use');
+    }
     db.deleteRingtone(input);
     await rm(join(__dirname, '../../Ringtones', input.name + '.mp3')).catch((e) => {
       logger.error(e.message);
