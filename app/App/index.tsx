@@ -33,10 +33,9 @@ const errorHandler = (e: Error, isFatal: boolean) => {
   if (isFatal) {
     Alert.alert(
       'Ein unerwarteter Fehler ist aufgetreten',
-      `
-        Fehler: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}
-        Sie müssen die App neu starten.
-        `,
+      `Fehler: ${isFatal ? 'Fatal:' : ''} ${e.name} ${
+        e.message
+      }\nSie müssen die App neu starten.`,
       [
         {
           text: 'Schließen',
@@ -90,6 +89,7 @@ export default function Start() {
     console.debug('Initializing socket');
     const sock = socketio(`http://${ip}:3535`, {
       query: { type: 'client' },
+      reconnectionDelay: 2 * 1000,
     });
     setSocket(sock);
   }, [ip, loading]);

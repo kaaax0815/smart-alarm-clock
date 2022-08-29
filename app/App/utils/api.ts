@@ -91,9 +91,12 @@ async function postData<T>(
 
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {
+    console.debug('NETWORK:', state.isConnected);
     setOnline(state.isConnected ?? undefined);
   });
 });
+
+export const isOnline = () => onlineManager.isOnline();
 
 export interface ResponseError {
   status: 'error';

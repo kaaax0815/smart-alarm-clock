@@ -1,12 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 
+import { handleError } from '~/components/Error';
 import { SettingsContext } from '~/contexts/Settings';
-import { getSettings, PostSettings, postSettings, Settings } from '~/utils/api';
+import {
+  getSettings,
+  isOnline,
+  PostSettings,
+  postSettings,
+  Settings,
+} from '~/utils/api';
 
 export function useSettings() {
   const settingsContext = useContext(SettingsContext);
-  return useQuery(['settings'], () => getSettings(settingsContext.ip!));
+  return useQuery(['settings'], () => getSettings(settingsContext.ip!), {
+    onError: (error) => {
+      if (error instanceof Error) {
+        handleError('useSettings', error);
+      }
+    },
+    retry: isOnline,
+  });
 }
 
 export function useUpdateSettings() {
@@ -31,6 +45,9 @@ export function useUpdateSettings() {
         return prev;
       },
       onError: (_error, _vars, prev) => {
+        if (_error instanceof Error) {
+          handleError('updateSettings', _error);
+        }
         queryClient.setQueryData(['settings'], prev);
       },
     },

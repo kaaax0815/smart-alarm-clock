@@ -1,18 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 
+import { handleError } from '~/components/Error';
 import { SettingsContext } from '~/contexts/Settings';
 import {
   Alarm,
   deleteAlarms,
   getAlarms,
+  isOnline,
   patchAlarms,
   postAlarms,
 } from '~/utils/api';
 
 export function useAlarms() {
   const settingsContext = useContext(SettingsContext);
-  return useQuery(['alarms'], () => getAlarms(settingsContext.ip!));
+  return useQuery(['alarms'], () => getAlarms(settingsContext.ip!), {
+    onError: (error) => {
+      if (error instanceof Error) {
+        handleError('useAlarms', error);
+      }
+    },
+    retry: isOnline,
+  });
 }
 
 export function useAddAlarm() {
@@ -30,6 +39,9 @@ export function useAddAlarm() {
         return prev;
       },
       onError: (_error, _vars, prev) => {
+        if (_error instanceof Error) {
+          handleError('addAlarm', _error);
+        }
         queryClient.setQueryData(['alarms'], prev);
       },
     },
@@ -54,6 +66,9 @@ export function useDeleteAlarm() {
         return prev;
       },
       onError: (_error, _vars, prev) => {
+        if (_error instanceof Error) {
+          handleError('deleteAlarm', _error);
+        }
         queryClient.setQueryData(['alarms'], prev);
       },
     },
@@ -78,6 +93,9 @@ export function useUpdateAlarm() {
         return prev;
       },
       onError: (_error, _vars, prev) => {
+        if (_error instanceof Error) {
+          handleError('updateAlarm', _error);
+        }
         queryClient.setQueryData(['alarms'], prev);
       },
     },
