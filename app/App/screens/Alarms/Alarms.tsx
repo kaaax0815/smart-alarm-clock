@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
-import { Button, Text } from 'react-native-paper';
+import { ActivityIndicator, Button, Text } from 'react-native-paper';
 
 import ScrollView from '~/components/ScrollView';
 import { useAlarms, useUpdateAlarm } from '~/hooks/useAlarms';
@@ -62,14 +62,21 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
     };
   }
 
+  if (
+    alarmsStatus !== 'success' ||
+    (alarms.length > 0 && alarmsEnabled[alarms.length - 1] === undefined)
+  ) {
+    return (
+      <ScrollView>
+        <ActivityIndicator animating size="large" />
+      </ScrollView>
+    );
+  }
+
   return (
-    <ScrollView
-      isLoading={
-        alarmsStatus !== 'success' ||
-        (alarms.length > 0 && alarmsEnabled[alarms.length - 1] === undefined)
-      }>
+    <ScrollView>
       <Text style={styles.text}>Aktiviert</Text>
-      {alarms!.map(
+      {alarms.map(
         (alarm, index) =>
           alarmsEnabled[index].enabled && (
             <Alarm
@@ -80,7 +87,7 @@ export default function Alarms({ navigation }: Props<'Alarms'>) {
       )}
       {disabled === alarms!.length && <Text>Keine Alarme aktiviert</Text>}
       <Text style={[styles.text, styles.deactivated]}>Deaktiviert</Text>
-      {alarms!.map(
+      {alarms.map(
         (alarm, index) =>
           alarmsEnabled[index].enabled || (
             <Alarm

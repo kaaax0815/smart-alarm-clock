@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
-import { Button } from 'react-native-paper';
+import { ActivityIndicator, Button } from 'react-native-paper';
 
 import ScrollView from '~/components/ScrollView';
 import { useRingtones } from '~/hooks/useRingtones';
@@ -11,8 +11,16 @@ import Ringtone from './Ringtone';
 export default function Ringtones({ navigation }: Props<'RingtoneForm'>) {
   const { data: ringtones, status: ringtonesStatus } = useRingtones();
 
+  if (ringtonesStatus !== 'success') {
+    return (
+      <ScrollView>
+        <ActivityIndicator animating size="large" />
+      </ScrollView>
+    );
+  }
+
   return (
-    <ScrollView isLoading={ringtonesStatus !== 'success'}>
+    <ScrollView>
       {ringtones!.map((ringtone, index) => (
         <Ringtone ringtone={ringtone} key={index + ringtone.name} />
       ))}

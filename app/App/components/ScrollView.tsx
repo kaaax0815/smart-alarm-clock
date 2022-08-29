@@ -4,14 +4,13 @@ import {
   ScrollViewProps,
   StyleSheet,
 } from 'react-native';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
 export default function ScrollView({
   children,
   style,
-  isLoading,
   ...rest
-}: ScrollViewProps & { isLoading?: boolean }) {
+}: ScrollViewProps) {
   const { colors } = useTheme();
   const styles = React.useMemo(
     () =>
@@ -27,7 +26,7 @@ export default function ScrollView({
 
   return (
     <OldScrollView style={[styles.scrollview, style]} {...rest}>
-      {isLoading ? <ActivityIndicator size="large" animating /> : children}
+      {children}
     </OldScrollView>
   );
 }

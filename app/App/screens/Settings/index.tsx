@@ -1,6 +1,11 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { List, Text, TouchableRipple } from 'react-native-paper';
+import {
+  ActivityIndicator,
+  List,
+  Text,
+  TouchableRipple,
+} from 'react-native-paper';
 
 import ScrollView from '~/components/ScrollView';
 import { SettingsContext } from '~/contexts/Settings';
@@ -15,8 +20,16 @@ export default function Settings() {
   const [tzVisible, setTZVisible] = React.useState(false);
   const [locVisible, setLocVisible] = React.useState(false);
 
+  if (settingsStatus !== 'success') {
+    return (
+      <ScrollView>
+        <ActivityIndicator animating size="large" />
+      </ScrollView>
+    );
+  }
+
   return (
-    <ScrollView isLoading={settingsStatus !== 'success'}>
+    <ScrollView>
       <IPAddressDialog visible={ipVisible} setVisible={setIPVisible} />
       <List.Item
         title="IP-Adresse"
