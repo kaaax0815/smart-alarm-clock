@@ -1,9 +1,9 @@
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import useWeather from '../../hooks/useWeather';
-import WeatherIcon from '../../icons/weather';
-import { relativeDaysFromUnix } from '../../utils/date';
+import useWeather from '../../../hooks/useWeather';
+import WeatherIcon from '../../../icons/weather';
+import { relativeDaysFromUnix } from '../../../utils/date';
 import styles from './Weather.module.css';
 
 function Weather(): JSX.Element {

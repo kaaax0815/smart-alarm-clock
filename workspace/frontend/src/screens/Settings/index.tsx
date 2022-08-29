@@ -1,6 +1,6 @@
 import { Box, List, ListItem, ListItemText, ListSubheader } from '@mui/material';
 
-import { getIPAddresses } from '../utils/api';
+import { getIPAddresses } from '../../utils/api';
 import Reboot from './components/Reboot';
 import SettingsBar from './components/SettingsBar';
 import Shutdown from './components/Shutdown';

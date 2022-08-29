@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 
-import useWeather from '../../hooks/useWeather';
-import WeatherIcon from '../../icons/weather';
+import useWeather from '../../../hooks/useWeather';
+import WeatherIcon from '../../../icons/weather';
 import styles from './Current.module.css';
 
 export default function Current() {

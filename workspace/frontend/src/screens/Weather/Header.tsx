@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-import useSettings from '../hooks/useSettings';
-import { GetSettingsData } from '../utils/api';
+import useSettings from '../../hooks/useSettings';
+import { GetSettingsData } from '../../utils/api';
 import styles from './Header.module.css';
 
 function useDate(settingsData?: GetSettingsData) {

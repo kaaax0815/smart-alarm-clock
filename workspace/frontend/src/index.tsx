@@ -6,14 +6,11 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import ClockFace from './Clock/Face';
 import HandleSocket from './components/HandleSocket';
 import PopUpContext from './contexts/PopUp';
 import { socket, SocketContext } from './contexts/Socket';
-import Settings from './Settings/Settings';
-import Start from './Start';
+import { ClockScreen, SettingsScreen, StartScreen, WeatherScreen } from './screens';
 import ErrorBoundary from './utils/ErrorBoundary';
-import Weather from './Weather';
 
 function App(): JSX.Element {
   const queryClient = new QueryClient();
@@ -29,7 +26,7 @@ function App(): JSX.Element {
                   path="/"
                   element={
                     <ErrorBoundary key={'/'}>
-                      <Start />
+                      <StartScreen />
                     </ErrorBoundary>
                   }
                 />
@@ -37,7 +34,7 @@ function App(): JSX.Element {
                   path="/settings"
                   element={
                     <ErrorBoundary key={'/settings'}>
-                      <Settings />
+                      <SettingsScreen />
                     </ErrorBoundary>
                   }
                 />
@@ -45,7 +42,7 @@ function App(): JSX.Element {
                   path="/clock"
                   element={
                     <ErrorBoundary key={'/clock'}>
-                      <ClockFace />
+                      <ClockScreen />
                     </ErrorBoundary>
                   }
                 />
@@ -53,7 +50,7 @@ function App(): JSX.Element {
                   path="/weather"
                   element={
                     <ErrorBoundary key={'/weather'}>
-                      <Weather />
+                      <WeatherScreen />
                     </ErrorBoundary>
                   }
                 />

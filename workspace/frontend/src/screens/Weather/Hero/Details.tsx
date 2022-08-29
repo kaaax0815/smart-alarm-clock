@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
 
-import useSettings from '../../hooks/useSettings';
-import useWeather from '../../hooks/useWeather';
-import { formatFromUnix } from '../../utils/date';
+import useSettings from '../../../hooks/useSettings';
+import useWeather from '../../../hooks/useWeather';
+import { formatFromUnix } from '../../../utils/date';
 
 export default function Details() {
   const { data: weatherData, status: weatherStatus } = useWeather();

@@ -1,4 +1,4 @@
-import useWeather from '../../hooks/useWeather';
+import useWeather from '../../../hooks/useWeather';
 import styles from './Detail.module.css';
 
 export default function Detail({ selected }: { selected: number }) {

@@ -1,4 +1,4 @@
-import StartButton from '../components/StartButton';
+import StartButton from '../../components/StartButton';
 import Forecast from './Forecast';
 import Header from './Header';
 import Hero from './Hero';

@@ -1,7 +1,7 @@
-import useSettings from '../../hooks/useSettings';
-import useWeather from '../../hooks/useWeather';
-import WeatherIcon from '../../icons/weather';
-import { formatFromUnix } from '../../utils/date';
+import useSettings from '../../../hooks/useSettings';
+import useWeather from '../../../hooks/useWeather';
+import WeatherIcon from '../../../icons/weather';
+import { formatFromUnix } from '../../../utils/date';
 import styles from './index.module.css';
 
 export default function Hourly() {

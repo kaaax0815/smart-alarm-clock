@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 import { createContext, ReactNode, useState } from 'react';
 
-import Alarm from '../Alarm/';
+import Alarm from '../screens/Alarm/';
 import { Alarm as AlarmType } from '../utils/api';
 
 export const popUpContext = createContext({

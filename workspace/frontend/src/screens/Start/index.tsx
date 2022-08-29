@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import SettingsButton from './components/SettingsButton';
-import styles from './Start.module.css';
+import SettingsButton from '../../components/SettingsButton';
+import styles from './index.module.css';
 
 function Start(): JSX.Element {
   return (

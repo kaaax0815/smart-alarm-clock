@@ -1,8 +1,8 @@
 import { Button } from '@mui/material';
 import { useContext, useEffect } from 'react';
 
-import { popUpContext as PopUpContext } from '../contexts/PopUp';
-import Music from '../utils/Music';
+import { popUpContext as PopUpContext } from '../../contexts/PopUp';
+import Music from '../../utils/Music';
 import styles from './index.module.css';
 
 export default function Alarm() {

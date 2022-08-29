@@ -1,6 +1,6 @@
-import useWeather from '../../hooks/useWeather';
-import WeatherIcon from '../../icons/weather';
-import { relativeDaysFromUnix } from '../../utils/date';
+import useWeather from '../../../hooks/useWeather';
+import WeatherIcon from '../../../icons/weather';
+import { relativeDaysFromUnix } from '../../../utils/date';
 import styles from './Forecasts.module.css';
 
 export default function Forecasts({

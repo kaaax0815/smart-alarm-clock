@@ -1,12 +1,13 @@
 import { CircularProgress } from '@mui/material';
 
-import StartButton from '../components/StartButton';
-import useSettings from '../hooks/useSettings';
+import StartButton from '../../components/StartButton';
+import useSettings from '../../hooks/useSettings';
 import Clock from './components/Clock';
 import Date from './components/Date';
 import Weather from './components/Weather';
-import styles from './Face.module.css';
-function Face(): JSX.Element {
+import styles from './index.module.css';
+
+function ClockFace(): JSX.Element {
   const { data: settingsData, status: settingsStatus } = useSettings();
   if (settingsStatus !== 'success') {
     return (
@@ -25,4 +26,4 @@ function Face(): JSX.Element {
   );
 }
 
-export default Face;
+export default ClockFace;
