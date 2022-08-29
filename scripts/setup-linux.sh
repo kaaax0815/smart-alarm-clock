@@ -37,7 +37,7 @@ echo "Configure Bash"
 sed -i '6,9 s/^/#/' .bashrc
 
 echo "Setup and Configure X11"
-sudo apt-get install -y xorg unclutter libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0 onboard dbus-x11
+sudo apt-get install -y xorg unclutter libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0
 sudo raspi-config nonint do_boot_behaviour B2
 echo "# Start X11 on login
 if [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then
