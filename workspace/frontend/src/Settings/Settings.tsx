@@ -1,5 +1,6 @@
-import { Box, List, ListSubheader } from '@mui/material';
+import { Box, List, ListItem, ListItemText, ListSubheader } from '@mui/material';
 
+import { getIPAddresses } from '../utils/api';
 import Reboot from './components/Reboot';
 import SettingsBar from './components/SettingsBar';
 import Shutdown from './components/Shutdown';
@@ -7,6 +8,7 @@ import Shutdown from './components/Shutdown';
 export default function Settings(): JSX.Element {
   const shutdown = Shutdown();
   const reboot = Reboot();
+  const ipAddress = getIPAddresses()[0];
   return (
     <div>
       <SettingsBar />
@@ -18,6 +20,13 @@ export default function Settings(): JSX.Element {
             {reboot.item}
           </List>
         </nav>
+        <ListSubheader disableSticky>System</ListSubheader>
+        <List>
+          <ListItem>
+            <ListItemText>IP-Adresse</ListItemText>
+            <ListItemText>{ipAddress}</ListItemText>
+          </ListItem>
+        </List>
       </Box>
       {shutdown.dialog}
       {reboot.dialog}

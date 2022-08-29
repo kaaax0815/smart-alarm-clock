@@ -112,3 +112,18 @@ type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
   : any;
 
 export type Alarm = Extract<Models.GetAlarmsOutput, { status: 'success' }>['data']['alarms'][0];
+
+export function getIPAddresses() {
+  if (!window.os) {
+    return ['192.178.178.55'];
+  }
+  const ifaces = window.os.networkInterfaces();
+  const ipv4InterfaceInfo = Object.keys(ifaces)
+    .map((name) => ({
+      name,
+      info: ifaces[name] ? ifaces[name]!.filter((ifs) => ifs.family === 'IPv4')[0] : null
+    }))
+    .filter((iface) => iface.info);
+  const ipv4Addresses = ipv4InterfaceInfo.map((iface) => iface.info!.address);
+  return ipv4Addresses;
+}
