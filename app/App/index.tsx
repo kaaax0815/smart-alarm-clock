@@ -14,7 +14,14 @@ import { SocketContext } from '~/contexts/Socket';
 
 import App from './App';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 1000 * 60,
+      cacheTime: 5 * 1000 * 60,
+    },
+  },
+});
 
 if (__DEV__) {
   import('react-query-native-devtools').then(({ addPlugin }) => {
