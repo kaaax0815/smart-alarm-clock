@@ -1,6 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
+import { Alert, BackHandler } from 'react-native';
+import { setJSExceptionHandler } from 'react-native-exception-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import RNSInfo from 'react-native-sensitive-info';
 import socketio from 'socket.io-client';
@@ -19,6 +21,30 @@ if (__DEV__) {
     addPlugin({ queryClient });
   });
 }
+
+const errorHandler = (e: Error, isFatal: boolean) => {
+  if (isFatal) {
+    Alert.alert(
+      'Ein unerwarteter Fehler ist aufgetreten',
+      `
+        Fehler: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}
+        Sie müssen die App neu starten.
+        `,
+      [
+        {
+          text: 'Schließen',
+          onPress: () => {
+            BackHandler.exitApp();
+          },
+        },
+      ],
+    );
+  } else {
+    console.log(e);
+  }
+};
+
+setJSExceptionHandler(errorHandler);
 
 export default function Start() {
   const [socket, setSocket] = React.useState<

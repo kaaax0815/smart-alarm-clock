@@ -21,6 +21,8 @@
     "react-native": "0.69.4",
     "react-native-bootsplash": "^4.3.2",
     "react-native-document-picker": "^8.1.1",
+    "react-native-error-boundary": "^1.1.15",
+    "react-native-exception-handler": "^2.10.10",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-paper": "^4.12.4",
     "react-native-paper-dates": "^0.8.7",

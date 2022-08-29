@@ -6549,6 +6549,16 @@ react-native-document-picker@^8.1.1:
   dependencies:
     invariant "^2.2.4"
 
+react-native-error-boundary@^1.1.15:
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/react-native-error-boundary/-/react-native-error-boundary-1.1.15.tgz#3c30bdadea7eb72c53431e04568f605f363216ca"
+  integrity sha512-ixBUITr28vzoRiTcwMKnYXRAl8yzIN9Pb0nOc71q6yM0qTTwyGFO8yWXz1MdVXsCwdRYyuW4Gl0rRpWovnBJog==
+
+react-native-exception-handler@^2.10.10:
+  version "2.10.10"
+  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.10.tgz#b6bfe2b7e6ea4a4deb1f518f48ce2ee1d4843497"
+  integrity sha512-otAXGoZDl1689OoUJWN/rXxVbdoZ3xcmyF1uq/CsizdLwwyZqVGd6d+p/vbYvnF996FfEyAEBnHrdFxulTn51w==
+
 react-native-flipper@^0.162.0:
   version "0.162.0"
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.162.0.tgz#9919adb743dae50a80d914eaa3a53eb33eaf39ec"
