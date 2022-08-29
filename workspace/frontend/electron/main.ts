@@ -1,7 +1,5 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
-
-import { init as initOnboard } from './onboard';
 
 const PRODUCTION = process.env.ELECTRON === 'production';
 
@@ -31,7 +29,6 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
-  initOnboard(ipcMain);
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
