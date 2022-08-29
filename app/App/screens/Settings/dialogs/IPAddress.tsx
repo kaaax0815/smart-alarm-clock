@@ -5,13 +5,19 @@ import Dialog from '~/components/Dialog';
 import { IP_PATTERN } from '~/constants/patterns';
 import { SettingsContext } from '~/contexts/Settings';
 
+import dialogReducer, {
+  DEFAULT_IP_STATE,
+  DialogActionType,
+  IPState,
+} from './dialogReducer';
 import { DialogProps } from './index';
 
 export default function IPAddress({ visible, setVisible }: DialogProps) {
   const settingsContext = React.useContext(SettingsContext);
-  const [ipAddress, setIpAddress] = React.useState(settingsContext.ip!);
-  const [errorText, setErrorText] = React.useState('');
-  const [isError, setIsError] = React.useState(false);
+  const [state, dispatch] = React.useReducer(dialogReducer<IPState>, {
+    ...DEFAULT_IP_STATE,
+    ip: settingsContext.ip!,
+  });
 
   return (
     <Dialog
@@ -20,27 +26,37 @@ export default function IPAddress({ visible, setVisible }: DialogProps) {
       title="IP-Adresse"
       buttonText="Speichern"
       onDone={() => {
-        const validated = validate(ipAddress);
+        const validated = validate(state.ip);
         if (validated !== true) {
-          setErrorText(validated);
-          setIsError(true);
+          dispatch({
+            type: DialogActionType.ERROR,
+            payload: {
+              errorMessage: validated,
+            },
+          });
           return;
         }
-        settingsContext.setIP(ipAddress);
-        setIsError(false);
+        settingsContext.setIP(state.ip);
         setVisible(false);
       }}
       content={
         <>
           <TextInput
-            value={ipAddress}
+            value={state.ip}
             mode="outlined"
             label="IP-Adresse"
-            onChangeText={(v) => setIpAddress(v)}
-            error={isError}
+            onChangeText={(v) =>
+              dispatch({
+                type: DialogActionType.DATA,
+                payload: {
+                  ip: v,
+                },
+              })
+            }
+            error={state.isError}
           />
-          <HelperText type="error" visible={isError}>
-            {errorText}
+          <HelperText type="error" visible={state.isError}>
+            {state.errorMessage}
           </HelperText>
         </>
       }

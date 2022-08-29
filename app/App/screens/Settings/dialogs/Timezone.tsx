@@ -5,6 +5,11 @@ import timeZones from 'timezones-list';
 import Dialog from '~/components/Dialog';
 import { useSettings, useUpdateSettings } from '~/hooks/useSettings';
 
+import dialogReducer, {
+  DEFAULT_TIMEZONE_STATE,
+  DialogActionType,
+  TimezoneState,
+} from './dialogReducer';
 import { DialogProps } from './index';
 
 const timezones = timeZones.map((tz) => ({
@@ -16,11 +21,19 @@ export default function Timezone({ visible, setVisible }: DialogProps) {
   const { data: settingsData, status: settingsStatus } = useSettings();
   const updateSettings = useUpdateSettings();
   const [showDropDown, setShowDropDown] = React.useState(false);
-  const [timezone, setTimezone] = React.useState('');
+  const [state, dispatch] = React.useReducer(
+    dialogReducer<TimezoneState>,
+    DEFAULT_TIMEZONE_STATE,
+  );
 
   React.useEffect(() => {
     if (settingsStatus === 'success') {
-      setTimezone(settingsData.timezone);
+      dispatch({
+        type: DialogActionType.DATA,
+        payload: {
+          timezone: settingsData.timezone,
+        },
+      });
     }
   }, [settingsData?.timezone, settingsStatus]);
 
@@ -35,7 +48,7 @@ export default function Timezone({ visible, setVisible }: DialogProps) {
       title="Zeitzone"
       buttonText="Speichern"
       onDone={() => {
-        updateSettings.mutate({ timezone });
+        updateSettings.mutate({ timezone: state.timezone });
         setVisible(false);
       }}
       content={
@@ -45,8 +58,10 @@ export default function Timezone({ visible, setVisible }: DialogProps) {
           visible={showDropDown}
           showDropDown={() => setShowDropDown(true)}
           onDismiss={() => setShowDropDown(false)}
-          value={timezone}
-          setValue={setTimezone}
+          value={state.timezone}
+          setValue={(v) =>
+            dispatch({ type: DialogActionType.DATA, payload: { timezone: v } })
+          }
           list={timezones}
         />
       }
