@@ -8,7 +8,7 @@ import { useRingtones } from '~/hooks/useRingtones';
 import { Props } from './index';
 import Ringtone from './Ringtone';
 
-export default function Ringtones({ navigation }: Props<'RingtoneForm'>) {
+export default function Ringtones({ navigation }: Props<'Ringtones'>) {
   const { data: ringtones, status: ringtonesStatus } = useRingtones();
 
   if (ringtonesStatus !== 'success') {
