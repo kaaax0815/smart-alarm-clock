@@ -13,8 +13,8 @@ const invalidateAll = (queryClient: QueryClient) => {
 function HandleSocket(): null {
   const socket = useContext(SocketContext);
   const queryClient = useQueryClient();
-  const options = { wasLastOffline: false };
   useEffect(() => {
+    const options = { wasLastOffline: false };
     if (socket !== undefined) {
       socket.on('databaseChange', () => {
         console.debug('SOCKET:', 'databaseChange');
