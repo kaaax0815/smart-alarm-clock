@@ -16,7 +16,7 @@ function Weather(): JSX.Element {
 
   return (
     <div className={styles.Weather} onClick={() => navigate('/weather')}>
-      {weatherData.daily!.map((item) => (
+      {weatherData!.daily!.map((item) => (
         <div className={styles.WeatherCard} key={item.dt}>
           <div className="__Weather-Card-Date">{relativeDaysFromUnix(item.dt)}</div>
           <WeatherIcon
