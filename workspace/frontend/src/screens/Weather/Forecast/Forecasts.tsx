@@ -26,7 +26,7 @@ export default function Forecasts({
           <br />
           {day.temp.min}°C - {day.temp.max}°C
           <br />
-          <WeatherIcon id={day.weather[0].icon} />
+          <WeatherIcon id={day.weather[0].icon} className={styles.icon} />
           <br />
           {day.pop}%
           <br />

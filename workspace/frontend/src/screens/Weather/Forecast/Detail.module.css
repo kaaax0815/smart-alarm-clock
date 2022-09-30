@@ -1,8 +1,6 @@
 .Detail {
-  display: flex;
-  flex-direction: row;
-}
-
-.Detail > * {
-  border: 1px solid #000;
+  background-color: #9393F9;
+  border-top-left-radius: 1ch;
+  border-top-right-radius: 1ch;
+  padding-bottom: 0.2rem;
 }

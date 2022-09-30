@@ -4,9 +4,30 @@
   display: flex;
   flex-direction: row;
   overflow: scroll;
+  cursor: grab;
+}
+
+.Hourly::-webkit-scrollbar {
+  height: 0.2rem;
+}
+
+.Hourly::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.Hourly::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 1ch;
 }
 
 .Hourly > div {
-  border: 1px solid #000;
+  border-radius: 1ch;
   padding: 1rem;
+  background-color: #f5f5f5;
+  margin: 0rem 0.2rem;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
 }

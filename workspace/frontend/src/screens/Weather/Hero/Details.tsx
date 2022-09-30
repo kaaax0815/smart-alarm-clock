@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import useSettings from '../../../hooks/useSettings';
 import useWeather from '../../../hooks/useWeather';
 import { formatFromUnix } from '../../../utils/date';
+import styles from './Details.module.css';
 
 export default function Details() {
   const { data: weatherData, status: weatherStatus } = useWeather();
@@ -11,7 +12,7 @@ export default function Details() {
     return <div>Lädt...</div>;
   }
   return (
-    <Grid item xs={6}>
+    <Grid item xs={6} className={styles.details}>
       <Grid container alignContent="space-around">
         <Grid item xs={4}>
           <Grid container direction="column">

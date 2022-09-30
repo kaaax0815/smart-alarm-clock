@@ -1,3 +1,5 @@
+import { Grid } from '@mui/material';
+
 import useWeather from '../../../hooks/useWeather';
 import styles from './Detail.module.css';
 
@@ -8,11 +10,31 @@ export default function Detail({ selected }: { selected: number }) {
   }
   const day = weatherData!.daily![selected];
   return (
-    <div className={styles.Detail}>
-      <div>Morgens: {day.temp.morn}°C</div>
-      <div>Mittags: {day.temp.day}°C</div>
-      <div>Abends: {day.temp.eve}°C</div>
-      <div>Nachts: {day.temp.night}°C</div>
-    </div>
+    <Grid container className={styles.Detail} justifyContent={'space-around'}>
+      <Grid item xs={2}>
+        <Grid container flexDirection={'column'} alignItems={'center'}>
+          <div>{day.temp.morn}°C</div>
+          <div>Morgens</div>
+        </Grid>
+      </Grid>
+      <Grid item xs={2}>
+        <Grid container flexDirection={'column'} alignItems={'center'}>
+          <div>{day.temp.day}°C</div>
+          <div>Mittags</div>
+        </Grid>
+      </Grid>
+      <Grid item xs={2}>
+        <Grid container flexDirection={'column'} alignItems={'center'}>
+          <div>{day.temp.eve}°C</div>
+          <div>Abends</div>
+        </Grid>
+      </Grid>
+      <Grid item xs={2}>
+        <Grid container flexDirection={'column'} alignItems={'center'}>
+          <div>{day.temp.night}°C</div>
+          <div>Nachts</div>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }

@@ -10,14 +10,20 @@ export default function Current() {
     return <div>Lädt...</div>;
   }
   return (
-    <Grid item xs={6}>
+    <Grid item xs={6} className={styles.current}>
       <Grid container alignItems="center">
         <Grid item xs={6}>
           <WeatherIcon id={weatherData!.current!.weather[0].icon} className={styles.WeatherIcon} />
         </Grid>
         <Grid item xs={6}>
-          <Grid direction="column" container justifyContent="space-evenly" alignItems="flex-start">
-            <Grid item xs={6}>
+          <Grid
+            direction="column"
+            container
+            justifyContent="space-evenly"
+            alignItems="flex-start"
+            className={styles.text}
+          >
+            <Grid item xs={6} className={styles.temp}>
               {weatherData!.current!.temp}°C
             </Grid>
             <Grid item xs={6}>
