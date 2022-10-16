@@ -3,7 +3,7 @@
   padding: 0;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  overflow-x: scroll;
   cursor: grab;
 }
 
@@ -30,4 +30,9 @@
 .icon {
   width: 3rem;
   height: 3rem;
+}
+
+.HourlyCard {
+  display: flex;
+  flex-direction: column;
 }

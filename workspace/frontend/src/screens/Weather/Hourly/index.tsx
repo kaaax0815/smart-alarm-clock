@@ -65,14 +65,11 @@ export default function Hourly() {
       onMouseLeave={handleMouseExit}
     >
       {weatherData!.hourly!.slice(1, 25).map((hour) => (
-        <div key={hour.dt}>
-          {formatFromUnix(hour.dt, settingsData!.timezone, 'HH:mm')}
-          <br />
-          {hour.temp}°C
-          <br />
+        <div key={hour.dt} className={styles.HourlyCard}>
+          <div>{formatFromUnix(hour.dt, settingsData!.timezone, 'HH:mm')}</div>
+          <div>{hour.temp}°C</div>
           <WeatherIcon id={hour.weather[0].icon} className={styles.icon} />
-          <br />
-          {hour.pop}%
+          <div>{hour.pop}%</div>
         </div>
       ))}
     </div>
