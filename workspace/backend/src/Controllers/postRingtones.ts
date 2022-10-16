@@ -16,7 +16,7 @@ export default defaultEndpointsFactory.build({
     if (!ringtone.name.endsWith('.mp3')) {
       throw createHttpError(415, 'Unsupported file type');
     }
-    const ringtones = await database.getRingtones()
+    const ringtones = await database.getRingtones();
     if (ringtones.findIndex((r) => r.name === ringtone.name) !== -1) {
       throw createHttpError(409, 'Ringtone already exists');
     }

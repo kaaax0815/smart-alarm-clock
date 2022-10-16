@@ -9,7 +9,7 @@ export default defaultEndpointsFactory.build({
   input: postSettingsRequest,
   output: z.object({}),
   handler: async ({ input: { timezone, location } }) => {
-    if (timezone)  {
+    if (timezone) {
       await database.setTimezone(timezone);
     }
     if (location) {
