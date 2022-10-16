@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
 import { Exclude, Language, OpenWeatherMap, Units } from 'owm-onecall-api';
-import { useQuery } from 'react-query';
 
 import useSettings from './useSettings';
 
@@ -10,7 +10,7 @@ const openWeather = new OpenWeatherMap(import.meta.env.VITE_OPEN_WEATHER_API_KEY
 function useWeather() {
   const { data: settingsData } = useSettings();
   return useQuery(
-    'weather',
+    ['weather'],
     () =>
       openWeather
         .builder(settingsData!.location.lat, settingsData!.location.lon)

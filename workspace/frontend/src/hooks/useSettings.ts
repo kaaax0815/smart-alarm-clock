@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getSettings, Models, postAPI, PostEndpoints } from '../utils/api';
 
 export function useSettings() {
-  return useQuery('settings', () => getSettings(), { staleTime: 1000 * 60 * 5 });
+  return useQuery(['settings'], () => getSettings(), { staleTime: 1000 * 60 * 5 });
 }
 
 export function useUpdateSettings() {
@@ -12,18 +12,18 @@ export function useUpdateSettings() {
     (settings) => postAPI(PostEndpoints.Settings, settings),
     {
       onMutate: async (settings) => {
-        await queryClient.cancelQueries('settings');
-        const prev = queryClient.getQueryData('settings');
-        queryClient.setQueryData<Models.PostSettingsInput>('settings', (old) => {
+        await queryClient.cancelQueries(['settings']);
+        const prev = queryClient.getQueryData(['settings']);
+        queryClient.setQueryData<Models.PostSettingsInput>(['settings'], (old) => {
           return { ...old, ...settings };
         });
         return prev;
       },
       onError: (_error, _vars, prev) => {
-        queryClient.setQueryData('settings', prev);
+        queryClient.setQueryData(['settings'], prev);
       },
       onSettled: () => {
-        queryClient.invalidateQueries('settings');
+        queryClient.invalidateQueries(['settings']);
       }
     }
   );

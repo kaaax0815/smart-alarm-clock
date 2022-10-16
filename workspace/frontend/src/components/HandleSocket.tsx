@@ -1,5 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { popUpContext as PopUpContext } from '../contexts/PopUp';
 import { SocketContext } from '../contexts/Socket';

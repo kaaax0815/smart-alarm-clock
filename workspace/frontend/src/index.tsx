@@ -1,9 +1,9 @@
 import './global.css';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import HandleSocket from './components/HandleSocket';

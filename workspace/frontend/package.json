@@ -17,6 +17,8 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.3",
+    "@tanstack/react-query": "^4.12.0",
+    "@tanstack/react-query-devtools": "^4.12.0",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
     "async-mutex": "^0.4.0",
@@ -28,7 +30,6 @@
     "owm-onecall-api": "^1.2.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-query": "^3.34.16",
     "react-router-dom": "^6.2.1",
     "socket.io-client": "^4.4.1",
     "timezones-list": "^3.0.1"
