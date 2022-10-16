@@ -8,13 +8,15 @@ export default defaultEndpointsFactory.build({
   input: postAlarmsRequest,
   output: z.object({}),
   handler: async ({ input }) => {
-    if (database.getAlarms().findIndex((alarm) => alarm.name === input.name) !== -1) {
+    const alarms = await database.getAlarms();
+    if (alarms.findIndex((alarm) => alarm.name === input.name) !== -1) {
       throw createHttpError(409, 'Alarm already exists');
     }
-    if (database.getRingtones().findIndex((ringtone) => ringtone.name === input.ringtone) === -1) {
+    const ringtones = await database.getRingtones();
+    if (ringtones.findIndex((ringtone) => ringtone.name === input.ringtone) === -1) {
       throw createHttpError(409, "Ringtone doesn't exists");
     }
-    database.addAlarm(input);
+    await database.addAlarm(input);
     return {};
   }
 });

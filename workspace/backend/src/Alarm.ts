@@ -18,12 +18,13 @@ export default class Alarm {
       setTimeout(() => this.initializeInterval(), 3000);
     }
   }
-  check() {
-    const alarms = db.getAlarms();
+  async check() {
+    const alarms = await db.getAlarms();
+    const settings = await db.getSettings();
     const date = new Date();
     /** `Day, HH:MM:SS` */
     const currentDate = date.toLocaleTimeString('de-DE', {
-      timeZone: db.getSettings().timezone,
+      timeZone: settings.timezone,
       weekday: 'long'
     });
     /** In `HH:MM` format */

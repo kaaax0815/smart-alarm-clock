@@ -1,6 +1,6 @@
 import { defaultEndpointsFactory, z } from 'express-zod-api';
 
-import db from '../database';
+import database from '../database';
 import { getRingtonesResponse } from '../Models';
 
 export default defaultEndpointsFactory.build({
@@ -8,7 +8,7 @@ export default defaultEndpointsFactory.build({
   input: z.object({}),
   output: getRingtonesResponse,
   handler: async () => {
-    const ringtones = db.getRingtones();
+    const ringtones = await database.getRingtones();
     return { ringtones };
   }
 });

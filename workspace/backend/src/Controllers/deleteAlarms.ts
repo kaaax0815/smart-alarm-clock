@@ -8,11 +8,11 @@ export default defaultEndpointsFactory.build({
   input: deleteAlarmsRequest,
   output: z.object({}),
   handler: async ({ input }) => {
-    const alarms = database.getAlarms();
+    const alarms = await database.getAlarms();
     if (alarms.findIndex((a) => a.name === input.name) === -1) {
       throw createHttpError(404, 'Alarm not found');
     }
-    database.deleteAlarm(input);
+    await database.deleteAlarm(input);
     return {};
   }
 });

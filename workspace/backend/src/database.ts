@@ -1,16 +1,17 @@
-import { JsonDB } from 'node-json-db';
+import { Config, JsonDB } from 'node-json-db';
 
 import { socketIO } from './index';
 import { database } from './Models/database';
 
 class CustomDB extends JsonDB {
   constructor(path: string) {
-    super(path, true);
+    super(new Config(path, true));
     this.initializeDatabase();
   }
-  initializeDatabase() {
+  async initializeDatabase() {
     try {
-      if (super.getData('/initialized') === true) {
+      const initialized = await super.getData('/initialized');
+      if (initialized === true) {
         return;
       }
     } catch {
@@ -27,50 +28,50 @@ class CustomDB extends JsonDB {
     this.push('/alarms', []);
     this.push('/initialized', true);
   }
-  push(dataPath: string, data: unknown, override?: boolean): void {
-    super.push(dataPath, data, override);
+  async push(dataPath: string, data: unknown, override?: boolean): Promise<void> {
+    await super.push(dataPath, data, override);
     socketIO?.emitAll('databaseChange');
   }
   setTimezone(timezone: database['settings']['timezone']) {
-    this.push('/settings/timezone', timezone);
+    return this.push('/settings/timezone', timezone);
   }
   setLocation(location: database['settings']['location']) {
-    this.push('/settings/location', location);
+    return this.push('/settings/location', location);
   }
   addRingtone(ringtone: database['ringtones'][0]) {
-    this.push('/ringtones', [ringtone], false);
+    return this.push('/ringtones', [ringtone], false);
   }
-  deleteRingtone(ringtone: { name: string }) {
-    const oldRingtones = super.getData('/ringtones') as database['ringtones'];
+  async deleteRingtone(ringtone: { name: string }) {
+    const oldRingtones = (await super.getData('/ringtones')) as database['ringtones'];
     const newRingtones = oldRingtones.filter((item) => item.name !== ringtone.name);
-    this.push('/ringtones', newRingtones);
+    return this.push('/ringtones', newRingtones);
   }
   getRingtones() {
-    return super.getData('/ringtones') as database['ringtones'];
+    return super.getData('/ringtones') as Promise<database['ringtones']>;
   }
   getSettings() {
-    return super.getData('/settings') as database['settings'];
+    return super.getData('/settings') as Promise<database['settings']>;
   }
   getAlarms() {
-    return super.getData('/alarms') as database['alarms'];
+    return super.getData('/alarms') as Promise<database['alarms']>;
   }
   addAlarm(alarm: database['alarms'][0]) {
-    this.push('/alarms', [alarm], false);
+    return this.push('/alarms', [alarm], false);
   }
-  updateAlarm(alarm: Partial<database['alarms'][0]> & { name: string }) {
-    const oldAlarms = this.getAlarms();
+  async updateAlarm(alarm: Partial<database['alarms'][0]> & { name: string }) {
+    const oldAlarms = await this.getAlarms();
     const newAlarms = oldAlarms.map((item) => {
       if (item.name === alarm.name) {
         return { ...item, ...alarm };
       }
       return item;
     });
-    this.push('/alarms', newAlarms);
+    return this.push('/alarms', newAlarms);
   }
-  deleteAlarm(alarm: { name: string }) {
-    const oldAlarms = this.getAlarms();
+  async deleteAlarm(alarm: { name: string }) {
+    const oldAlarms = await this.getAlarms();
     const newAlarms = oldAlarms.filter((item) => item.name !== alarm.name);
-    this.push('/alarms', newAlarms);
+    return this.push('/alarms', newAlarms);
   }
 }
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createHttpError, defaultEndpointsFactory, z } from 'express-zod-api';
 
-import db from '../database';
+import database from '../database';
 import { postSettingsRequest } from '../Models';
 
 export default defaultEndpointsFactory.build({
@@ -9,11 +9,13 @@ export default defaultEndpointsFactory.build({
   input: postSettingsRequest,
   output: z.object({}),
   handler: async ({ input: { timezone, location } }) => {
-    timezone && db.setTimezone(timezone);
+    if (timezone)  {
+      await database.setTimezone(timezone);
+    }
     if (location) {
       const [lat, lon] = await getGeoLocation(location.city, location.countryCode);
       if (lat !== undefined && lon !== undefined) {
-        db.setLocation({ ...location, lat, lon });
+        await database.setLocation({ ...location, lat, lon });
       } else {
         throw createHttpError(400, 'Invalid location');
       }

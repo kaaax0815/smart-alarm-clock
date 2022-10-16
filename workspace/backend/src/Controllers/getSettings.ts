@@ -1,6 +1,6 @@
 import { defaultEndpointsFactory, z } from 'express-zod-api';
 
-import db from '../database';
+import database from '../database';
 import { getSettingsResponse } from '../Models';
 
 export default defaultEndpointsFactory.build({
@@ -8,7 +8,7 @@ export default defaultEndpointsFactory.build({
   input: z.object({}),
   output: getSettingsResponse,
   handler: async () => {
-    const settings = db.getSettings();
+    const settings = await database.getSettings();
     return { settings };
   }
 });

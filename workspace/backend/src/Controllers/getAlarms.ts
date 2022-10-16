@@ -8,7 +8,7 @@ export default defaultEndpointsFactory.build({
   input: z.object({}),
   output: getAlarmsResponse,
   handler: async () => {
-    const alarms = database.getAlarms();
+    const alarms = await database.getAlarms();
     return { alarms };
   }
 });

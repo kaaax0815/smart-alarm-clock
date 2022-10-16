@@ -2,7 +2,7 @@ import { createHttpError, defaultEndpointsFactory } from 'express-zod-api';
 import { join } from 'path';
 import { promisify } from 'util';
 
-import db from '../database';
+import database from '../database';
 import { postRingtonesRequest, postRingtonesResponse } from '../Models';
 
 export default defaultEndpointsFactory.build({
@@ -16,14 +16,15 @@ export default defaultEndpointsFactory.build({
     if (!ringtone.name.endsWith('.mp3')) {
       throw createHttpError(415, 'Unsupported file type');
     }
-    if (db.getRingtones().findIndex((r) => r.name === ringtone.name) !== -1) {
+    const ringtones = await database.getRingtones()
+    if (ringtones.findIndex((r) => r.name === ringtone.name) !== -1) {
       throw createHttpError(409, 'Ringtone already exists');
     }
     const move = promisify(ringtone.mv);
     const location = `/ringtones/${ringtone.name}`;
     const moveLocation = join(__dirname, '../../Ringtones', ringtone.name);
     await move(moveLocation);
-    db.addRingtone({ name: ringtone.name.slice(0, -4), location: location });
+    await database.addRingtone({ name: ringtone.name.slice(0, -4), location: location });
     return { location };
   }
 });
