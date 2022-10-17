@@ -23,7 +23,7 @@
     "react-native-document-picker": "^8.1.1",
     "react-native-error-boundary": "^1.1.16",
     "react-native-exception-handler": "^2.10.10",
-    "react-native-gesture-handler": "^2.5.0",
+    "react-native-gesture-handler": "^2.7.1",
     "react-native-paper": "^4.12.4",
     "react-native-paper-dates": "^0.9.2",
     "react-native-paper-dropdown": "^1.0.7",
