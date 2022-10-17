@@ -33,7 +33,7 @@
     "react-native-sensitive-info": "^5.5.8",
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^9.2.0",
-    "socket.io-client": "^4.5.1",
+    "socket.io-client": "^4.5.3",
     "timezones-list": "^3.0.1"
   },
   "devDependencies": {
