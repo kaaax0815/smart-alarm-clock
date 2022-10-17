@@ -37,7 +37,7 @@
     "timezones-list": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.13",
+    "@babel/core": "^7.19.3",
     "@babel/runtime": "^7.19.4",
     "@react-native-community/eslint-config": "^3.0.0",
     "@tsconfig/react-native": "^2.0.2",
