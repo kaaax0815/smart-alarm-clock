@@ -21,12 +21,14 @@ export default function Settings(): JSX.Element {
           </List>
         </nav>
         <ListSubheader disableSticky>System</ListSubheader>
-        <List>
-          <ListItem>
-            <ListItemText>IP-Adresse</ListItemText>
-            <ListItemText>{ipAddress}</ListItemText>
-          </ListItem>
-        </List>
+        <Box sx={{ width: '50%' }}>
+          <List>
+            <ListItem>
+              <ListItemText>IP-Adresse</ListItemText>
+              <ListItemText>{ipAddress}</ListItemText>
+            </ListItem>
+          </List>
+        </Box>
       </Box>
       {shutdown.dialog}
       {reboot.dialog}
