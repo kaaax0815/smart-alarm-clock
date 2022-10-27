@@ -24,9 +24,12 @@ export default function Alarm() {
   return (
     <div className={styles.alarm}>
       <div className={styles.container}>
-        <h2>🔔 Wecker</h2>
-        <h3>{alarm.name}</h3>
-        <Button onClick={() => setPopUp({ alarm: undefined, open: false })}>Beenden</Button>
+        <h1>🔔 Wecker</h1>
+        <h2>{alarm.name}</h2>
+        <h3>{alarm.time}</h3>
+        <Button variant="contained" onClick={() => setPopUp({ alarm: undefined, open: false })}>
+          Beenden
+        </Button>
       </div>
     </div>
   );
