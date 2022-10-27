@@ -59,21 +59,55 @@ export default function Alarm({
     setVisible(false);
   };
 
-  function showDays(days: boolean[]) {
+  function showDays(time: string, days: boolean[]) {
     const isMultipleTrue = days.filter((day) => day === true).length > 1;
+    const closestDay = closestDayOfTheWeek(time, days);
     if (!isMultipleTrue) {
-      return Days[(days.indexOf(true) + 1) as ValidDays];
+      const asWeekday = Days[(days.indexOf(true) + 1) as ValidDays];
+      if (asWeekday === closestDay) {
+        return [{ day: asWeekday, closest: true }];
+      }
+      return [{ day: asWeekday }];
     }
-    return days
-      .reduce((prev, day, i) => {
-        if (!day) {
-          return prev;
-        }
-        const asWeekday = Days[(i + 1) as ValidDays];
-        prev.push(asWeekday.slice(0, 2));
+    return days.reduce((prev, day, i) => {
+      if (!day) {
         return prev;
-      }, [] as string[])
-      .join(' ');
+      }
+      const asWeekday = Days[(i + 1) as ValidDays];
+      const isClosest = asWeekday === closestDay;
+      prev.push({ day: asWeekday.slice(0, 2), closest: isClosest });
+      return prev;
+    }, [] as { day: string; closest?: boolean }[]);
+  }
+
+  /**
+   * get closest day of the week start from the beginning if not found
+   * @param days boolean[] of length 7 where each index represents a day of the week
+   * @returns string day of the week from `Days`
+   */
+  function closestDayOfTheWeek(time: string, days: boolean[]) {
+    // eg: today is 'Mittwoch' and time is '12:00:00'
+    const [today, , _now] = new Date()
+      .toLocaleString('de-DE', {
+        weekday: 'long',
+      })
+      .split(', ');
+    const now = _now.split(':').slice(0, 2).join(':');
+    // weird format because of jsc and rn
+    const nowDate = new Date(`2022-10-27 ${now}`).getTime();
+    const timeDate = new Date(`2022-10-27 ${time}`).getTime();
+    // check if alarm is still today
+    const timeLater = nowDate > timeDate;
+    // calculate the index of the next day of the week the alarm should ring
+    const todayIndex = Object.values(Days).indexOf(today) + (timeLater ? 1 : 0);
+    const daysAfterToday = days.slice(todayIndex);
+    const daysBeforeToday = days.slice(0, todayIndex);
+    const daysAfterTodayTrue = daysAfterToday.indexOf(true);
+    const daysBeforeTodayTrue = daysBeforeToday.indexOf(true);
+    if (daysAfterTodayTrue !== -1) {
+      return Days[(daysAfterTodayTrue + todayIndex + 1) as ValidDays];
+    }
+    return Days[(daysBeforeTodayTrue + 1) as ValidDays];
   }
 
   return (
@@ -81,7 +115,15 @@ export default function Alarm({
       <View style={styles.text}>
         <Text style={styles.name}>{alarm.name}</Text>
         <Text style={styles.time}>{alarm.time}</Text>
-        <Text style={styles.days}>{showDays(alarm.days)}</Text>
+        <View style={styles.daysView}>
+          {showDays(alarm.time, alarm.days).map(({ day, closest }) => (
+            <Text
+              key={day}
+              style={closest ? [styles.days, styles.daysClosest] : styles.days}>
+              {day}{' '}
+            </Text>
+          ))}
+        </View>
       </View>
       <View style={styles.control}>
         <Switch
@@ -107,6 +149,8 @@ interface Styles {
   name: TextStyle;
   time: TextStyle;
   days: TextStyle;
+  daysView: ViewStyle;
+  daysClosest: TextStyle;
 }
 
 const styles = StyleSheet.create<Styles>({
@@ -135,5 +179,11 @@ const styles = StyleSheet.create<Styles>({
   },
   days: {
     fontSize: 18,
+  },
+  daysView: {
+    flexDirection: 'row',
+  },
+  daysClosest: {
+    color: 'lightblue',
   },
 });
