@@ -118,12 +118,12 @@ export function getIPAddresses() {
     return ['192.178.178.55'];
   }
   const ifaces = window.os.networkInterfaces();
-  const ipv4InterfaceInfo = Object.keys(ifaces)
-    .map((name) => ({
-      name,
-      info: ifaces[name] ? ifaces[name]!.filter((ifs) => ifs.family === 'IPv4')[0] : null
-    }))
-    .filter((iface) => iface.info);
-  const ipv4Addresses = ipv4InterfaceInfo.map((iface) => iface.info!.address);
+  const ipv4InterfaceInfo = Object.keys(ifaces).map((name) => ({
+    name,
+    info: ifaces[name]!.filter((ifs) => ifs.family === 'IPv4')[0]
+  }));
+  const ipv4Addresses = ipv4InterfaceInfo
+    .map((iface) => iface.info.address)
+    .filter((addr) => addr !== '127.0.0.1');
   return ipv4Addresses;
 }
