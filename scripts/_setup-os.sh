@@ -1,9 +1,3 @@
-echo "Setup Password"
-passwd
-
-echo "Changing Mirror"
-echo "deb http://ftp.halifax.rwth-aachen.de/raspbian/raspbian/ bullseye main contrib non-free rpi" | sudo tee /etc/apt/sources.list
-
 echo "Update System"
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -18,7 +12,7 @@ echo "Install Node"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-nvm install 16.13.1
+nvm install 16.15.1
 npm install -g yarn
 yarn global add @types/node typescript ts-node
 
@@ -28,7 +22,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 EOF
-sudo -i nvm install 16.13.1
+sudo -i nvm install 16.15.1
 sudo -i npm install -g yarn
 sudo -i yarn global add @types/node typescript ts-node
 
@@ -54,5 +48,4 @@ xhost +
 # start smart-alarm-clock
 /home/pi/smart-alarm-clock/smart-alarm-clock &" >> .xsessionrc
 
-echo "Done. Rebooting..."
-sudo reboot
+echo "Done. Please upload now..."
