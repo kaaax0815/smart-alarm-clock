@@ -44,7 +44,6 @@ mkdir -p $XDG_RUNTIME_DIR
 chmod 0700 $XDG_RUNTIME_DIR
 sudo chown $(id -un):$(id -gn) $XDG_RUNTIME_DIR
 export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
-dbus-daemon --session --address=$DBUS_SESSION_BUS_ADDRESS --nofork --nopidfile --syslog-only &
 " | sudo tee -a /root/.profile
 sudo sed -i 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
 echo "# Disable screen blanking and power saving
@@ -54,5 +53,34 @@ xset -dpms
 xhost +
 # start smart-alarm-clock
 /home/pi/smart-alarm-clock/smart-alarm-clock &" >> .xsessionrc
+
+echo "Setup Fonts"
+sudo -u root -i bash << EOF
+wget https://noto-website-2.storage.googleapis.com/pkgs/NotoColorEmoji-unhinted.zip
+unzip NotoColorEmoji-unhinted.zip
+mkdir ~/.fonts
+mv NotoColorEmoji.ttf ~/.fonts
+echo '<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+   <alias>
+     <family>sans-serif</family>
+     <prefer>
+       <family>Noto Color Emoji</family>
+       <family>Noto Emoji</family>
+     </prefer>
+   </alias>
+
+   <alias>
+     <family>serif</family>
+     <prefer>
+       <family>Noto Color Emoji</family>
+       <family>Noto Emoji</family>
+     </prefer>
+   </alias>
+</fontconfig>' > ~/.fonts.conf
+sudo fc-cache -fv
+rm LICENSE_OFL.txt NotoColorEmoji-unhinted.zip README
+EOF
 
 echo "Done. Please upload now..."

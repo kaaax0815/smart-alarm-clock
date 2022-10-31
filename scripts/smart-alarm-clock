@@ -3,10 +3,10 @@
 build() {
   echo "Building"
   cd /home/pi/smart-alarm-clock
-  cd frontend
-  yarn electron:build
-  cd ../backend
+  cd backend
   yarn build
+  cd ../frontend
+  yarn electron:build
 }
 
 install() {
