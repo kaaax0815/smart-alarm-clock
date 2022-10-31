@@ -38,7 +38,14 @@ if [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then
   exec startx -- -nocursor
 fi
 export DISPLAY=:0.0" >> .profile
-echo "export DISPLAY=:0.0" | sudo tee -a /root/.profile
+echo "export DISPLAY=:0.0
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+mkdir -p $XDG_RUNTIME_DIR
+chmod 0700 $XDG_RUNTIME_DIR
+sudo chown $(id -un):$(id -gn) $XDG_RUNTIME_DIR
+export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
+dbus-daemon --session --address=$DBUS_SESSION_BUS_ADDRESS --nofork --nopidfile --syslog-only &
+" | sudo tee -a /root/.profile
 sudo sed -i 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
 echo "# Disable screen blanking and power saving
 xset s off
