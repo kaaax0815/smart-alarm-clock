@@ -7,7 +7,6 @@ import {
   Alarm,
   deleteAlarms,
   getAlarms,
-  isOnline,
   patchAlarms,
   postAlarms,
 } from '~/utils/api';
@@ -20,7 +19,6 @@ export function useAlarms() {
         handleError('useAlarms', error);
       }
     },
-    retry: isOnline,
   });
 }
 

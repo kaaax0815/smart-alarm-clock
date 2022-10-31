@@ -11,6 +11,7 @@ import HandleSocket from '~/components/HandleSocket';
 import { NavigationTheme, PaperTheme } from '~/constants/theme';
 import { SettingsContext } from '~/contexts/Settings';
 import { SocketContext } from '~/contexts/Socket';
+import { retryHelper } from '~/utils/fetch';
 
 import App from './App';
 
@@ -19,6 +20,7 @@ const queryClient = new QueryClient({
     queries: {
       staleTime: 5 * 1000 * 60,
       cacheTime: 5 * 1000 * 60,
+      retry: retryHelper,
     },
   },
 });

@@ -1,3 +1,5 @@
+import { isOnline } from './api';
+
 export default async function fetchTimeout(
   url: string,
   opts = {} as Omit<RequestInit, 'signal'>,
@@ -10,3 +12,13 @@ export default async function fetchTimeout(
   );
   return res;
 }
+
+export const retryHelper = (failureCount: number) => {
+  if (failureCount >= 3) {
+    return false;
+  }
+  if (!isOnline()) {
+    return false;
+  }
+  return true;
+};

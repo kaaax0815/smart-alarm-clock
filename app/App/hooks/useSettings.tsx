@@ -3,13 +3,7 @@ import { useContext } from 'react';
 
 import { handleError } from '~/components/Error';
 import { SettingsContext } from '~/contexts/Settings';
-import {
-  getSettings,
-  isOnline,
-  PostSettings,
-  postSettings,
-  Settings,
-} from '~/utils/api';
+import { getSettings, PostSettings, postSettings, Settings } from '~/utils/api';
 
 export function useSettings() {
   const settingsContext = useContext(SettingsContext);
@@ -19,7 +13,6 @@ export function useSettings() {
         handleError('useSettings', error);
       }
     },
-    retry: isOnline,
   });
 }
 

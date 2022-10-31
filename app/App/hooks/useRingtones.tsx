@@ -3,7 +3,7 @@ import { useContext } from 'react';
 
 import { handleError } from '~/components/Error';
 import { SettingsContext } from '~/contexts/Settings';
-import { deleteRingtones, getRingtones, isOnline, Ringtone } from '~/utils/api';
+import { deleteRingtones, getRingtones, Ringtone } from '~/utils/api';
 
 export function useRingtones() {
   const settingsContext = useContext(SettingsContext);
@@ -13,7 +13,6 @@ export function useRingtones() {
         handleError('useRingtones', error);
       }
     },
-    retry: isOnline,
   });
 }
 
