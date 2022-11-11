@@ -1,4 +1,8 @@
-⚠️ 🚧 WIP 🚧 this Repo is Work in Progress ⚠️
+This projects is more a POC than a real product. 
+
+Mehr Informationen sind in dem Expose, der Zwischenpräsentation und der Seminararbeit zu finden.
+
+The grade will be added once told
 
 ---
 ---
