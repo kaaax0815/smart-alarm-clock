@@ -1,8 +1,10 @@
 This projects is more a POC than a real product. 
 
-Mehr Informationen sind in dem Expose, der Zwischenpräsentation und der Seminararbeit zu finden.
+Mehr Informationen sind in dem Expose, der Zwischenpräsentation, der Abschlusspräsentation und der Seminararbeit zu finden.
 
-The grade will be added once told
+Grade for Abschlusspräsentation: 13/15 points
+
+Grade for Seminararbeit: 14/15 points
 
 ---
 ---
